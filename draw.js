@@ -196,7 +196,8 @@ $(document).ready(function()
         );
 
         // Slope
-        drawStroke([YCoordinates[0], exitPoint.y, intersection.x, intersection.y]);
+        var fuelSlope = [YCoordinates[0], exitPoint.y, intersection.x, intersection.y];
+        drawStroke(fuelSlope);
 
         // Rest
         drawStroke([intersection.x, intersection.y, 1052, intersection.y]);
@@ -209,7 +210,7 @@ $(document).ready(function()
             drawStroke([YCoordinates[0], exitPoint.y, 1052, exitPoint.y], '#FF0000');
         }
 
-        return { x: 1052, y: intersection.y, noFuel: exitPoint };
+        return { x: 1052, y: intersection.y, noFuel: exitPoint, fuelSlope: fuelSlope };
     }
 
     function calculateAndDrawBaggage(exitPoint)
@@ -252,7 +253,13 @@ $(document).ready(function()
             noFuelIntersectionY = exitPoint.noFuel.y;
         }
 
-        return { x: 1185, y: intersection.y, noFuel: { y: noFuelIntersectionY } };
+        return {
+            x: 1185,
+            y: intersection.y,
+            intersectionX: intersection.x,
+            noFuel: { y: noFuelIntersectionY },
+            fuel: exitPoint
+        };
     }
 
     function calculateAndDrawCG(exitPoint)
@@ -275,7 +282,7 @@ $(document).ready(function()
 
         // Line between the two C.G points.
         var CGMovementCoordinates = [CGX, exitPoint.y, NoFuelX, exitPoint.noFuel.y];
-        drawStroke(CGMovementCoordinates, '#FF9800');
+        drawStroke(CGMovementCoordinates, '#333333');
 
         // C.G Limits
         var FWDLimit = [1220, 692, 1423, 555],
@@ -293,7 +300,28 @@ $(document).ready(function()
         console.log(badCGIntersection);
 
         if (badCGIntersection.onLine1 && badCGIntersection.onLine2) {
-            drawStroke([badCGIntersection.x, badCGIntersection.y, 1220, badCGIntersection.y], '#8BC34A');
+            drawStroke([badCGIntersection.x, badCGIntersection.y, 1220, badCGIntersection.y], '#FF9800');
+
+            
+            // Baggage
+            var baggageSlopeY = exitPoint.fuel.y - exitPoint.y + badCGIntersection.y;
+            drawStroke([1185, badCGIntersection.y, exitPoint.intersectionX, badCGIntersection.y], '#FF9800');
+            drawStroke([exitPoint.intersectionX, badCGIntersection.y, 1068, baggageSlopeY], '#FF9800');
+
+            // Fuel
+            var safeCGFuelLine = [1052, baggageSlopeY, 834, baggageSlopeY]
+            
+            var safeCGFuelIntersection = checkLineIntersection(
+                ...exitPoint.fuel.fuelSlope,
+                ...safeCGFuelLine
+            );
+
+            // Straight line towards fuel slope.
+            drawStroke([safeCGFuelLine[0], safeCGFuelLine[1], safeCGFuelIntersection.x, safeCGFuelLine[3]], '#FF9800');
+            // drawStroke(exitPoint.fuel.fuelSlope, '#00FFCC');
+
+            // Dashed line from fuel slope intersection down.
+            drawStroke([safeCGFuelIntersection.x, safeCGFuelIntersection.y, safeCGFuelIntersection.x, 795], '#FF9800', true);
         }
     }
 
