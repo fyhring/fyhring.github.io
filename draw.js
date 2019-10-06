@@ -99,7 +99,7 @@ $(document).ready(function()
             context.setLineDash([10, 5]);
         }
 
-        context.lineWidth = 1;
+        context.lineWidth = 2;
         context.moveTo(strokeCoordinates[0] * scale, strokeCoordinates[1] * scale);
         context.lineTo(strokeCoordinates[2] * scale, strokeCoordinates[3] * scale);
         context.strokeStyle = color;
@@ -265,10 +265,35 @@ $(document).ready(function()
         drawStroke([CGX, exitPoint.y, CGX, 795], '#333333', true);
 
 
-        if (masses['fuelMass'] > 0) {
-            // No fuel
-            var NoFuelX = (masses['acMass'] - 900 - masses['fuelMass']) * (203/350) + 1220;
-            drawStroke([1220, exitPoint.noFuel.y, NoFuelX, exitPoint.noFuel.y], '#FF0000');
+        if (masses['fuelMass'] <= 0) {
+            return;
+        }
+
+        // No fuel
+        var NoFuelX = (masses['acMass'] - 900 - masses['fuelMass']) * (203/350) + 1220;
+        drawStroke([1220, exitPoint.noFuel.y, NoFuelX, exitPoint.noFuel.y], '#FF0000');
+
+        // Line between the two C.G points.
+        var CGMovementCoordinates = [CGX, exitPoint.y, NoFuelX, exitPoint.noFuel.y];
+        drawStroke(CGMovementCoordinates, '#FF9800');
+
+        // C.G Limits
+        var FWDLimit = [1220, 692, 1423, 555],
+            AFTLimit = [1220, 363, 1423, 99];
+
+        drawStroke(FWDLimit, '#795548');
+        drawStroke(AFTLimit, '#795548');
+
+        // Intersection of CG movement and CG FWD limit.
+        var badCGIntersection = checkLineIntersection(
+            ...CGMovementCoordinates,
+            ...FWDLimit
+        );
+
+        console.log(badCGIntersection);
+
+        if (badCGIntersection.onLine1 && badCGIntersection.onLine2) {
+            drawStroke([badCGIntersection.x, badCGIntersection.y, 1220, badCGIntersection.y], '#8BC34A');
         }
     }
 
