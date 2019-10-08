@@ -33,6 +33,10 @@ $(document).ready(function()
 
     acLoader.addEventListener('change', updateAc, false);
 
+    if (window.innerWidth < 1200) {
+        scaleInput.value = 0.65;
+        triggerUpdate();
+    }
 
 
     // Methods
@@ -102,6 +106,22 @@ $(document).ready(function()
         context.lineWidth = 2;
         context.moveTo(strokeCoordinates[0] * scale, strokeCoordinates[1] * scale);
         context.lineTo(strokeCoordinates[2] * scale, strokeCoordinates[3] * scale);
+        context.strokeStyle = color;
+        context.stroke();
+        context.closePath();
+    }
+
+
+    function drawArc(arcCoordinates, radius, color)
+    {
+        if (typeof color == typeof undefined) {
+            color = '#0000FF';
+        }
+
+        context.beginPath();
+        // context.moveTo(arcCoordinates[0] * scale, arcCoordinates[1] * scale);
+        context.arc(arcCoordinates[0] * scale, arcCoordinates[1] * scale, radius, 0, 2 * Math.PI);
+        context.lineWidth = 2;
         context.strokeStyle = color;
         context.stroke();
         context.closePath();
@@ -267,6 +287,7 @@ $(document).ready(function()
         var CGX = (masses['acMass'] - 900) * (203/350) + 1220;
         // Normal line
         drawStroke([1220, exitPoint.y, CGX, exitPoint.y]);
+        drawArc([CGX, exitPoint.y], 10);
 
         // Dashed line to show mass
         drawStroke([CGX, exitPoint.y, CGX, 795], '#333333', true);
@@ -277,11 +298,12 @@ $(document).ready(function()
         }
 
         // No fuel
-        var NoFuelX = (masses['acMass'] - 900 - masses['fuelMass']) * (203/350) + 1220;
-        drawStroke([1220, exitPoint.noFuel.y, NoFuelX, exitPoint.noFuel.y], '#FF0000');
+        var noFuelX = (masses['acMass'] - 900 - masses['fuelMass']) * (203/350) + 1220;
+        drawStroke([1220, exitPoint.noFuel.y, noFuelX, exitPoint.noFuel.y], '#FF0000');
+        drawArc([noFuelX, exitPoint.noFuel.y], 10, '#FF0000');
 
         // Line between the two C.G points.
-        var CGMovementCoordinates = [CGX, exitPoint.y, NoFuelX, exitPoint.noFuel.y];
+        var CGMovementCoordinates = [CGX, exitPoint.y, noFuelX, exitPoint.noFuel.y];
         drawStroke(CGMovementCoordinates, '#333333');
 
         // C.G Limits
@@ -297,11 +319,10 @@ $(document).ready(function()
             ...FWDLimit
         );
 
-        console.log(badCGIntersection);
 
         if (badCGIntersection.onLine1 && badCGIntersection.onLine2) {
             drawStroke([badCGIntersection.x, badCGIntersection.y, 1220, badCGIntersection.y], '#FF9800');
-
+            drawArc([badCGIntersection.x, badCGIntersection.y], 10, '#FF9800');
             
             // Baggage
             var baggageSlopeY = exitPoint.fuel.y - exitPoint.y + badCGIntersection.y;

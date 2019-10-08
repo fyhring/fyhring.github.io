@@ -4,6 +4,8 @@
     <meta charset="utf-8" />
     <title>M&amp;B P06T</title>
 
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -26,8 +28,45 @@
             overflow: scroll;
         }
 
+        .noPadding {
+            padding-left: 0;
+            padding-right: 0;
+        }
+
         .scaleSlider {
             width: 300px;
+        }
+
+        .colorCodes {
+            text-align: right;
+            padding-top: 25px;
+        }
+
+        .colorCodes span {
+            font-size: 10px;
+            margin-left: 15px;
+            position: relative;
+        }
+
+        .colorCodes span:before {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 2px;
+            top: 6px;
+            left: -10px;
+        }
+
+        .colorCodes span.blue:before {
+            background: #0000FF;
+        }
+
+        .colorCodes span.red:before {
+            background: #FF0000;
+        }
+
+        .colorCodes span.orange:before {
+            background: #FF9800;
         }
 
     </style>
@@ -124,9 +163,18 @@
         <hr />
 
         <div class="col-sm-12">
-            Scale: <span class="scaleIndicator">X</span>
-            <div class="scaleSlider">
-                <input type="range" min="0.5" max="3" step="0.05" value="0.75" id="scale" class="custom-range" />
+            <div class="row">
+                <div class="col-sm-6 noPadding">
+                    Scale: <span class="scaleIndicator">X</span>
+                    <div class="scaleSlider">
+                        <input type="range" min="0.5" max="3" step="0.05" value="0.75" id="scale" class="custom-range" />
+                    </div>
+                </div>
+                <div class="colorCodes noPadding col-sm-6">
+                    <span class="blue">C.G</span>
+                    <span class="orange">Minimum unburned fuel C.G</span>
+                    <span class="red">No fuel C.G</span>
+                </div>
             </div>
             <div class="scrollable">
                 <canvas id="diagram"></canvas>
