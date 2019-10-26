@@ -4,7 +4,6 @@ $(document).ready(function()
     // Set variables
     var diagram = document.querySelector('#diagram'),
         context = diagram.getContext('2d');
-    window.ctx = context; // REMOVE!!
 
     var diagramImageUrl = './diagram.png';
 
@@ -16,6 +15,10 @@ $(document).ready(function()
         masses = [];
 
     var acLoader = form.querySelector('#acSelect');
+
+    var downloadLinks = document.querySelectorAll('.downloadAsImage');
+    var hiddenLink = document.querySelector('#link');
+
 
     // Events
 
@@ -30,6 +33,10 @@ $(document).ready(function()
     });
 
     scaleInput.addEventListener('change', triggerUpdate, false);
+
+    downloadLinks.forEach((link) => {
+        link.addEventListener('click', saveImage, false);
+    });
 
     acLoader.addEventListener('change', updateAc, false);
 
@@ -89,7 +96,6 @@ $(document).ready(function()
         };
     }
 
-
     function drawStroke(strokeCoordinates, color, dashed)
     {
         context.beginPath();
@@ -111,7 +117,6 @@ $(document).ready(function()
         context.closePath();
     }
 
-
     function drawArc(arcCoordinates, radius, color)
     {
         if (typeof color == typeof undefined) {
@@ -125,6 +130,13 @@ $(document).ready(function()
         context.strokeStyle = color;
         context.stroke();
         context.closePath();
+    }
+
+    function drawNumber(textCoordinates, color, text)
+    {
+        context.font = '20px Verdana';
+        context.fillStyle = color;
+        context.fillText(text, textCoordinates[0] * scale, textCoordinates[1] * scale);
     }
 
     function calculateMassPositions()
@@ -171,6 +183,7 @@ $(document).ready(function()
         
         // Dashed line from mass to intersection.
         drawStroke([emptyMassX, intersection.y, emptyMassX, 795], '#000000', true);
+        drawNumber([emptyMassX, 865], '#000000', masses['pilotMass'] + ' KG');
 
         return { x: 494, y: intersection.y };
     }
@@ -197,6 +210,7 @@ $(document).ready(function()
         if (masses['paxMass'] > 0) {
             // Dashed line
             drawStroke([intersection.x, intersection.y, intersection.x, 795], '#000000', true);
+            drawNumber([intersection.x, 865], '#000000', masses['paxMass'] + ' KG');
         }
 
         return { x: 824, y: intersection.y };
@@ -225,6 +239,7 @@ $(document).ready(function()
         if (masses['fuelMass'] > 0) {
             // Dashed line
             drawStroke([intersection.x, intersection.y, intersection.x, 795], '#000000', true);
+            drawNumber([intersection.x, 865], '#000000', masses['fuelMass'] + ' KG');
 
             // No fuel line
             drawStroke([YCoordinates[0], exitPoint.y, 1052, exitPoint.y], '#FF0000');
@@ -259,6 +274,7 @@ $(document).ready(function()
         if (masses['baggageMass'] > 0) {
             // Dashed line
             drawStroke([intersection.x, intersection.y, intersection.x, 795], '#000000', true);
+            drawNumber([intersection.x + 30, 865], '#000000', masses['baggageMass'] + ' KG');
 
             if (masses['fuelMass'] > 0) {
                 // Slope
@@ -310,8 +326,9 @@ $(document).ready(function()
         var FWDLimit = [1220, 692, 1423, 555],
             AFTLimit = [1220, 363, 1423, 99];
 
-        drawStroke(FWDLimit, '#795548');
-        drawStroke(AFTLimit, '#795548');
+        // Can be drawn for visual references, however they aren't needed.
+        // drawStroke(FWDLimit, '#795548');
+        // drawStroke(AFTLimit, '#795548');
 
         // Intersection of CG movement and CG FWD limit.
         var badCGIntersection = checkLineIntersection(
@@ -343,7 +360,23 @@ $(document).ready(function()
 
             // Dashed line from fuel slope intersection down.
             drawStroke([safeCGFuelIntersection.x, safeCGFuelIntersection.y, safeCGFuelIntersection.x, 795], '#FF9800', true);
+            
+            var safeFuelAmountX = safeCGFuelIntersection.x - 834;
+            var safeFuelMass =safeFuelAmountX / (218/150);
+            
+            drawNumber([safeCGFuelIntersection.x, 865], '#FF9800', parseInt(safeFuelMass) + ' KG');
         }
+    }
+
+    function saveImage()
+    {
+        var time = new Date();
+        var minutes = time.getUTCMinutes() < 10 ? '0'+ time.getUTCMinutes() : time.getUTCMinutes();
+        var timeString = time.getFullYear() +'-'+ time.getMonth() +'-'+ time.getDay() +' '+ time.getUTCHours() + minutes +'z';
+
+        hiddenLink.setAttribute('download', timeString +'.png');
+        hiddenLink.setAttribute('href', diagram.toDataURL('image/png').replace('image/png', 'image/octet-stream'));
+        hiddenLink.click();
     }
 
     // Trigger draw
