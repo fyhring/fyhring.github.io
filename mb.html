@@ -205,11 +205,24 @@
             <div class="scrollable">
                 <canvas id="diagram"></canvas>
             </div>
+
+            <div class="row">
+                <small>&copy; Niels Fyhring 2019 - Version <span class="version"></span></small>
+            </div>
         </div>
 
     </div>
 
-    <script src="./draw.js?v=1.35"></script>
+    
+    <script>
+        var version = 1.4;
+
+        var s = document.createElement('script');
+        s.src = './draw.js?v='+ version;
+        document.body.appendChild(s);
+
+        document.querySelectorAll('.version')[0].innerHTML = version;
+    </script>
 
 </body>
 </html>
