@@ -183,7 +183,7 @@ $(document).ready(function()
         
         // Dashed line from mass to intersection.
         drawStroke([emptyMassX, intersection.y, emptyMassX, 795], '#000000', true);
-        drawNumber([emptyMassX, 865], '#000000', masses['pilotMass'] + ' KG');
+        //drawNumber([emptyMassX, 865], '#000000', masses['pilotMass'] + ' KG');
 
         return { x: 494, y: intersection.y };
     }
@@ -210,7 +210,7 @@ $(document).ready(function()
         if (masses['paxMass'] > 0) {
             // Dashed line
             drawStroke([intersection.x, intersection.y, intersection.x, 795], '#000000', true);
-            drawNumber([intersection.x, 865], '#000000', masses['paxMass'] + ' KG');
+            //drawNumber([intersection.x, 865], '#000000', masses['paxMass'] + ' KG');
         }
 
         return { x: 824, y: intersection.y };
@@ -239,7 +239,7 @@ $(document).ready(function()
         if (masses['fuelMass'] > 0) {
             // Dashed line
             drawStroke([intersection.x, intersection.y, intersection.x, 795], '#000000', true);
-            drawNumber([intersection.x, 865], '#000000', masses['fuelMass'] + ' KG');
+            //drawNumber([intersection.x, 865], '#000000', masses['fuelMass'] + ' KG');
 
             // No fuel line
             drawStroke([YCoordinates[0], exitPoint.y, 1052, exitPoint.y], '#FF0000');
@@ -274,7 +274,7 @@ $(document).ready(function()
         if (masses['baggageMass'] > 0) {
             // Dashed line
             drawStroke([intersection.x, intersection.y, intersection.x, 795], '#000000', true);
-            drawNumber([intersection.x + 30, 865], '#000000', masses['baggageMass'] + ' KG');
+            //drawNumber([intersection.x + 30, 865], '#000000', masses['baggageMass'] + ' KG');
 
             if (masses['fuelMass'] > 0) {
                 // Slope
@@ -307,6 +307,7 @@ $(document).ready(function()
 
         // Dashed line to show mass
         drawStroke([CGX, exitPoint.y, CGX, 795], '#333333', true);
+        drawNumber([CGX - 100, 865], '#333333', masses['acMass'] +' KG');
 
 
         if (masses['fuelMass'] <= 0) {
@@ -374,9 +375,21 @@ $(document).ready(function()
         var minutes = time.getUTCMinutes() < 10 ? '0'+ time.getUTCMinutes() : time.getUTCMinutes();
         var timeString = time.getFullYear() +'-'+ time.getMonth() +'-'+ time.getDay() +' '+ time.getUTCHours() + minutes +'z';
 
-        hiddenLink.setAttribute('download', timeString +'.png');
-        hiddenLink.setAttribute('href', diagram.toDataURL('image/png') /*.replace('image/png', 'image/octet-stream')*/ );
-        hiddenLink.click();
+        var oldScale = scale;
+
+        // Set scale to 1 to get full size download.
+        scaleInput.value = 1.0;
+        triggerUpdate();
+
+        setTimeout(() => {
+            hiddenLink.setAttribute('download', timeString +'.png');
+            hiddenLink.setAttribute('href', diagram.toDataURL('image/png') /*.replace('image/png', 'image/octet-stream')*/ );
+            hiddenLink.click();
+
+            // Scale the UI back to the user preference.
+            scaleInput.value = oldScale;
+            triggerUpdate();
+        }, 200);
     }
 
     // Trigger draw
