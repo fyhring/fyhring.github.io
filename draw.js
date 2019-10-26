@@ -375,7 +375,7 @@ $(document).ready(function()
         var timeString = time.getFullYear() +'-'+ time.getMonth() +'-'+ time.getDay() +' '+ time.getUTCHours() + minutes +'z';
 
         hiddenLink.setAttribute('download', timeString +'.png');
-        hiddenLink.setAttribute('href', diagram.toDataURL('image/png').replace('image/png', 'image/octet-stream'));
+        hiddenLink.setAttribute('href', diagram.toDataURL('image/png') /*.replace('image/png', 'image/octet-stream')*/ );
         hiddenLink.click();
     }
 
