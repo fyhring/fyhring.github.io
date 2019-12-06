@@ -19,7 +19,7 @@ var elevationInput,
 
 $(document).ready(function()
 {
-    $('#performaceForm input').on('change', function(e)
+    $('#performanceForm input').on('change', function(e)
     {
         calculateFromInputs();
     });
@@ -27,12 +27,14 @@ $(document).ready(function()
 
 function calculateFromInputs()
 {
-    elevationInput = parseInt($('#performaceForm input[name="elevationInput"]').val(), 10),
-    temperatureInput = parseInt($('#performaceForm input[name="temperatureInput"]').val(), 10),
-    pressureInput  = parseInt($('#performaceForm input[name="pressureInput"]').val(), 10),
-    windDirInput   = parseInt($('#performaceForm input[name="windDirInput"]').val(), 10),
-    windSpdInput   = parseInt($('#performaceForm input[name="windSpdInput"]').val(), 10),
-    rwyDirInput    = parseInt($('#performaceForm input[name="rwyDirInput"]').val(), 10),
+    elevationInput = parseInt($('#performanceForm input[name="elevationInput"]').val(), 10),
+    temperatureInput = parseInt($('#performanceForm input[name="temperatureInput"]').val(), 10),
+    pressureInput  = parseInt($('#performanceForm input[name="pressureInput"]').val(), 10),
+    cruiseInput    = parseInt($('#performanceForm input[name="cruiseAltInput').val(), 10),
+    msaInput       = parseInt($('#performanceForm input[name="msaInput').val(), 10),
+    windDirInput   = parseInt($('#performanceForm input[name="windDirInput"]').val(), 10),
+    windSpdInput   = parseInt($('#performanceForm input[name="windSpdInput"]').val(), 10),
+    rwyDirInput    = parseInt($('#performanceForm input[name="rwyDirInput"]').val(), 10),
     weightInput    = 1203;
 
     if (
@@ -66,7 +68,7 @@ function calculateFromInputs()
         }
     }
 
-    console.log(calculateAll(pressureElevation, tempIsaDeviation, weightInput)); //Test logging to console
+    console.log(calculateAll(pressureElevation, pressureAltitude, tempIsaDeviation, weightInput)); //Test logging to console
 
     var data = calculateAll(pressureElevation, tempIsaDeviation, weightInput);
     $('pre.code').html(JSON.stringify(data));
@@ -284,13 +286,13 @@ function calculateOEIabsoluteCeiling(isaDeviation, tom) {
     return absoluteCeiling;
 }
 
-function calculateAll(pa, isaDeviation, tom)
+function calculateAll(pe, pa, isaDeviation, tom)
 {
     return {
-        'TakeOffGroundRoll': calculateTakeOffGroundRoll(pa, isaDeviation, tom).result,
-        'TakeOffDist': calculateTakeOffDist(pa, isaDeviation, tom).result,
-        'LandingGroundRoll': calculateLandingGroundRoll(pa, isaDeviation, tom).result,
-        'LandingDist': calculateLandingDist(pa, isaDeviation, tom).result,
+        'TakeOffGroundRoll': calculateTakeOffGroundRoll(pe, isaDeviation, tom).result,
+        'TakeOffDist': calculateTakeOffDist(pe, isaDeviation, tom).result,
+        'LandingGroundRoll': calculateLandingGroundRoll(pe, isaDeviation, tom).result,
+        'LandingDist': calculateLandingDist(pe, isaDeviation, tom).result,
         'Vx': calculateVx(pa, isaDeviation, tom).result,
         'RocVx': calculateRocVx(pa, isaDeviation, tom).result,
         'VySe': calculateVySe(pa, isaDeviation, tom).result,

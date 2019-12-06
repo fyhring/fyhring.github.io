@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>M&amp;B P06T</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/icons/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/icons/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/icons/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/icons/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/icons/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/icons/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/icons/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/icons/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="/icons/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/icons/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <style>
+
+        .container {
+            margin-top: 50px;
+            margin-bottom: 20px;
+        }
+
+        .scrollable {
+            width: 100%;
+            width: calc(100% + 30px);
+            height: 700px;
+            border: 1px solid #333;
+            margin: 0 -15px;
+            overflow: scroll;
+        }
+
+        .noPadding {
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        .scaleSlider {
+            width: 300px;
+        }
+
+        .colorCodes {
+            text-align: right;
+            padding-top: 25px;
+        }
+
+        .colorCodes span {
+            font-size: 10px;
+            margin-left: 15px;
+            position: relative;
+        }
+
+        .colorCodes span:before {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 2px;
+            top: 6px;
+            left: -10px;
+        }
+
+        .colorCodes span.blue:before {
+            background: #0000FF;
+        }
+
+        .colorCodes span.red:before {
+            background: #FF0000;
+        }
+
+        .colorCodes span.orange:before {
+            background: #FF9800;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .input-group-text {
+            min-width: 55px;
+        }
+
+    </style>
+</head>
+<body>
+    
+    <div class="container">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab">Intro</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="massAndBalanceTab-tab" data-toggle="tab" href="#massAndBalanceTab" role="tab">Mass &amp; Balance</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="performance-tab" data-toggle="tab" href="#performanceTab" role="tab">Performance</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="results-tab" data-toggle="tab" href="#resultsTab" role="tab">Results</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="tab-content container" id="myTabContent">
+        <div class="tab-pane fade show active" id="home" role="tabpanel">
+            XXX
+        </div>
+        <div class="tab-pane fade" id="massAndBalanceTab" role="tabpanel">
+            <form id="massForm">
+
+                <div class="form-group row">
+                    <label for="acSelect" class="col-form-label col-sm-3">Load A/C</label>
+                    <div class="col-sm-9">
+                        <select id="acSelect" class="custom-select">
+                            <option value="null">N/A</option>
+                            <option value="OY-JME">OY-JME</option>
+                            <option value="OY-JEM">OY-JEM</option>
+                            <option value="OY-GBC">OY-GBC</option>
+                            <option value="SE-MGB">SE-MGB</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="emptyMassMoment" class="col-form-label col-sm-3">Empty Mass Moment</label>
+                    <div class="col-sm-9 input-group">
+                        <input type="number" class="form-control" id="emptyMassMoment" placeholder="Empty Mass Moment.." />
+                        <div class="input-group-append">
+                            <span class="input-group-text" id="basic-addon2">KG</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="emptyMass" class="col-form-label col-sm-3">Empty Mass</label>
+                    <div class="col-sm-9 input-group">
+                        <input type="number" class="form-control" id="emptyMass" placeholder="Empty Mass.." />
+                        <div class="input-group-append">
+                            <span class="input-group-text" id="basic-addon2">KG</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="pilotMass" class="col-form-label col-sm-3">Pilot Mass</label>
+                    <div class="col-sm-9 input-group">
+                        <input type="number" class="form-control" id="pilotMass" placeholder="Pilot Mass.." />
+                        <div class="input-group-append">
+                            <span class="input-group-text" id="basic-addon2">KG</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="paxMass" class="col-form-label col-sm-3">Pax Mass</label>
+                    <div class="col-sm-9 input-group">
+                        <input type="number" class="form-control" id="paxMass" placeholder="Pax Mass.." />
+                        <div class="input-group-append">
+                            <span class="input-group-text" id="basic-addon2">KG</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="baggageMass" class="col-form-label col-sm-3">Baggage Mass</label>
+                    <div class="col-sm-9 input-group">
+                        <input type="number" class="form-control" id="baggageMass" placeholder="Baggage Mass.." />
+                        <div class="input-group-append">
+                            <span class="input-group-text" id="basic-addon2">KG</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="fuelMass" class="col-form-label col-sm-3">Fuel Mass</label>
+                    <div class="col-sm-9 input-group">
+                        <input type="number" class="form-control" id="fuelMass" placeholder="Fuel Mass.." />
+                        <div class="input-group-append">
+                            <span class="input-group-text" id="basic-addon2">KG</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group row">
+                    <label class="col-form-label col-sm-3">T/O Mass</label>
+                    <div class="col-sm-9 input-group">
+                        <input type="number" class="form-control" id="acMass" readonly />
+                        <div class="input-group-append">
+                            <span class="input-group-text">KG</span>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <hr />
+
+            <div class="col-sm-12">
+                <div class="row">
+                    <div class="col-sm-4 noPadding">
+                        Scale: <span class="scaleIndicator">X</span>
+                        <div class="scaleSlider">
+                            <input type="range" min="0.5" max="3" step="0.05" value="0.75" id="scale" class="custom-range" />
+                        </div>
+                    </div>
+                    <div class="col-sm-4 noPadding center">
+                        <button class="downloadAsImage btn btn-primary">Download Result</button>
+                        <a id="link" class="hidden" target="_blank"></a>
+                    </div>
+                    <div class="colorCodes noPadding col-sm-4">
+                        <span class="blue">C.G</span>
+                        <span class="orange">Minimum unburned fuel C.G</span>
+                        <span class="red">No fuel C.G</span>
+                    </div>
+                </div>
+                <div class="scrollable">
+                    <canvas id="diagram"></canvas>
+                </div>
+
+                <div class="row">
+                    <small>&copy; Niels Fyhring 2019 - Version <span class="version"></span></small>
+                </div>
+            </div>
+
+        </div>
+        <div class="tab-pane fade" id="performanceTab" role="tabpanel">
+
+            <h3>Aerodrome &amp; Flight Parameters</h3>
+            <form action="#" id="performanceForm">
+                <div class="form-group row">
+                    <div class="col-sm-6 input-group">
+                        <input type="number" class="form-control" name="rwyDirInput" placeholder="Runway HDG" />
+                        <div class="input-group-append">
+                            <span class="input-group-text">°(T)</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="increasedSpeedsSwitch" checked />
+                            <label class="custom-control-label" for="increasedSpeedsSwitch">Use Increased Approach Speed</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-6 input-group">
+                        <input type="number" class="form-control" name="elevationInput" placeholder="Elevation" />
+                        <div class="input-group-append">
+                            <span class="input-group-text">ft</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 input-group">
+                        <input type="number" class="form-control" name="pressureInput" placeholder="QNH" />
+                        <div class="input-group-append">
+                            <span class="input-group-text">hPa</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-6 input-group">
+                        <input type="number" class="form-control" name="temperatureInput" placeholder="SFC Temperature" />
+                        <div class="input-group-append">
+                            <span class="input-group-text">&deg;C</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 input-group">
+                        <input type="text" class="form-control" id="isaTempDev" placeholder="ISA Deviation" readonly tabindex="-1" />
+                        <div class="input-group-append">
+                            <span class="input-group-text">&deg;C</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-6 input-group">
+                        <input type="number" class="form-control " name="windDirInput" placeholder="SFC Wind Direction" />
+                        <div class="input-group-append">
+                            <span class="input-group-text">° (T)</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 input-group">
+                        <input type="number" class="form-control " name="windSpdInput" placeholder="SFC Wind SPD" />
+                        <div class="input-group-append">
+                            <span class="input-group-text">kts</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-6 input-group">
+                        <input
+                            type="text"
+                            class="form-control"
+                            pattern="\d*"
+                            maxlength="5"
+                            id="cruiseAltInput"
+                            name="cruiseAltInput"
+                            placeholder="Cruise Altitude"
+                        />
+                        <div class="input-group-append">
+                            <span class="input-group-text">
+                                ft&nbsp;&nbsp;
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="flSwitch" />
+                                    <label class="custom-control-label" for="flSwitch">FL</label>
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 input-group">
+                        <input type="number" class="form-control " name="msaInput" placeholder="MSA" />
+                        <div class="input-group-append">
+                            <span class="input-group-text">ft</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <hr />
+
+                <h3>Key numbers</h3>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <p>Corrected Take-off Groundroll:</p>
+                                <p>Corrected Take-off Distance (50 ft):</p>
+                            </div>
+                            <div class="col-sm-6">
+                                <p>{{ takeoff.groundroll }}</p>
+                                <p>{{ takeoff.distance }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <p>Corrected Landing Groundroll:</p>
+                                <p>Corrected Landing Distance (50 ft):</p>
+                            </div>
+                            <div class="col-sm-6">
+                                <p>{{ landing.groundroll }}</p>
+                                <p>{{ landing.distance }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+    
+            </form>
+        </div>
+        <div class="tab-pane fade" id="resultsTab" role="tabpanel">
+            Results...
+        </div>
+    </div>
+
+    <script>
+        var version = 2.0;
+
+        var scripts = [
+            './polyfill.js',
+            './draw.js',
+            './performance.js', './performance/ui.js', './performance/matrixes.js'
+        ];
+
+        for (var i in scripts) {
+            var file = scripts[i];
+            var s = document.createElement('script');
+            s.src = file +'?v='+ version;
+            document.body.appendChild(s);
+        }
+
+        document.querySelectorAll('.version')[0].innerHTML = version;
+    </script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-154047207-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-154047207-1');
+    </script>
+
+</body>
+</html>
