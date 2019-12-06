@@ -348,11 +348,13 @@ function takeoffCorrectedCalculations(pa, isaDeviation, tom, slope) {
         'softSfcCorrection': softSfcCorrection
     }
     var sumCorrections = 0
-    for (var i in corrections){
+    for (var i in corrections){                                 //Sum of all corrections
         sumCorrections += corrections[i]
     }
 
     return {
+        'uncorrectedDist': distance,
+        'uncorrectedGround': groundroll,
         'groundroll': ((groundroll + sumCorrections) * 1.25),   //Groundroll in meters
         'distance': ((distance + sumCorrections) * 1.25),       //Distance to 50ft in meters
         'corrections': corrections                              //List of all corrections applied
@@ -411,11 +413,13 @@ function landingCorrectedCalculations(pa, isaDeviation, tom, slope) {
         'softSfcCorrection': softSfcCorrection
     }
     var sumCorrections = 0
-    for (var i in corrections){
+    for (var i in corrections){                                 //Sum of all corrections
         sumCorrections += corrections[i]
     }
 
     return {
+        'uncorrectedDist': distance,
+        'uncorrectedGround': groundroll,
         'groundroll': ((groundroll + sumCorrections) * 1.25),   //Groundroll in meters
         'distance': ((distance + sumCorrections) * 1.25),       //Distance from 50ft in meters
         'corrections': corrections                              //List of all corrections applied
@@ -425,16 +429,14 @@ function landingCorrectedCalculations(pa, isaDeviation, tom, slope) {
 function calculateAll(pa, isaDeviation, tom)
 {
     return {
-        'TakeOffGroundRoll': calculateTakeOffGroundRoll(pa, isaDeviation, tom).result,
-        'TakeOffDist': calculateTakeOffDist(pa, isaDeviation, tom).result,
-        'LandingGroundRoll': calculateLandingGroundRoll(pa, isaDeviation, tom).result,
-        'LandingDist': calculateLandingDist(pa, isaDeviation, tom).result,
+        'takeoff': takeoffCorrectedCalculations,
+        'landing': landingCorrectedCalculations,
         'Vx': calculateVx(pa, isaDeviation, tom).result,
-        'RocVx': calculateRocVx(pa, isaDeviation, tom).result,
+        'rocVx': calculateRocVx(pa, isaDeviation, tom).result,
         'VySe': calculateVySe(pa, isaDeviation, tom).result,
-        'RocVySe': calculateRocVySe(pa, isaDeviation, tom).result,
+        'rocVySe': calculateRocVySe(pa, isaDeviation, tom).result,
         'VxSe': calculateVxSe(pa, isaDeviation, tom).result,
-        'RoCVxSe': calculateRocVxSe(pa, isaDeviation, tom).result,
+        'roCVxSe': calculateRocVxSe(pa, isaDeviation, tom).result,
         'OEIserviceCeiling': calculateOEIceiling(isaDeviation,tom),
         'OEIabsoluteCeiling': calculateOEIabsoluteCeiling(isaDeviation,tom)
     }
