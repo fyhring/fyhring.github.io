@@ -39,7 +39,7 @@ function calculateFromInputs()
     windDirInput   = parseInt($('#performanceForm input[name="windDirInput"]').val(), 10),
     windSpdInput   = parseInt($('#performanceForm input[name="windSpdInput"]').val(), 10),
     rwyDirInput    = parseInt($('#performanceForm input[name="rwyDirInput"]').val(), 10),
-    weightInput    = 1203;
+    weightInput    = 1230;
 
     if (
         (isNaN(elevationInput)) ||
@@ -321,7 +321,7 @@ function takeoffCorrectedCalculations(pa, isaDeviation, tom, slope)
     if (useSlope) {
         //Correction for Runway slope, according to AFM
         if (slope > 0) {
-            slopeCorrection = slope / 0.01 * 0.05 * groundroll;  //Add 5% of groundroll per 1% upslope
+            slopeCorrection = slope / 0.01 * 0.05 * groundroll.result;  //Add 5% of groundroll per 1% upslope
         }    
     }
     
@@ -329,7 +329,7 @@ function takeoffCorrectedCalculations(pa, isaDeviation, tom, slope)
     //Correction for soft surface, according to GreyBird procedure
     var softSfcCorrection = 0;
     if (useSoftSfc) {                                       //If the surface is soft
-        softSfcCorrection = groundroll * 0.25;               //Add 25% of groundroll
+        softSfcCorrection = groundroll.result * 0.25;               //Add 25% of groundroll
     }
 
     /*
@@ -356,8 +356,8 @@ function takeoffCorrectedCalculations(pa, isaDeviation, tom, slope)
     return {
         'uncorrectedDist': distance,
         'uncorrectedGround': groundroll,
-        'groundroll': ((groundroll + sumCorrections) * 1.25),   //Groundroll in meters
-        'distance': ((distance + sumCorrections) * 1.25),       //Distance to 50ft in meters
+        'groundroll': ((groundroll.result + sumCorrections) * 1.25),   //Groundroll in meters
+        'distance': ((distance.result + sumCorrections) * 1.25),       //Distance to 50ft in meters
         'corrections': corrections                              //List of all corrections applied
     };
 }
@@ -381,21 +381,21 @@ function landingCorrectedCalculations(pa, isaDeviation, tom, slope) {
     //Correction for paved runway, according to AFM
     var pavedRwyCorrection = 0;
     if (usePavedRWY) {                                       //If runway is paved
-        pavedRwyCorrection = groundroll * -0.02             //Remove 2% of Groundroll
+        pavedRwyCorrection = groundroll.result * -0.02             //Remove 2% of Groundroll
     }
 
+    var slopeCorrection = 0;
     if (useSlope) {
         //Correction for Runway slope, according to GreyBird Procedures
-        var slopeCorrection = 0;
         if (slope < 0) {                                                //if there is downslope
-            slopeCorrection = slope / 0.02 * 0.10 * groundroll;  //Add 10% of groundroll per 2% upslope
+            slopeCorrection = slope / 0.02 * 0.10 * groundroll.result;  //Add 10% of groundroll per 2% upslope
         } 
     }
     
     //Correction for soft surface or snow, according to GreyBird procedure
     var softSfcCorrection = 0;
     if (useSoftSfc || useSnowCorrection) {                  //If the surface is soft, or there is snow
-        softSfcCorrection = groundroll * 0.25;               //Add 25% of groundroll
+        softSfcCorrection = groundroll.result * 0.25;               //Add 25% of groundroll
     }
 
     var corrections = {
@@ -415,8 +415,8 @@ function landingCorrectedCalculations(pa, isaDeviation, tom, slope) {
     return {
         'uncorrectedDist': distance,
         'uncorrectedGround': groundroll,
-        'groundroll': ((groundroll + sumCorrections) * 1.25),   //Groundroll in meters
-        'distance': ((distance + sumCorrections) * 1.25),       //Distance from 50ft in meters
+        'groundroll': ((groundroll.result + sumCorrections) * 1.43),   //Groundroll in meters
+        'distance': ((distance.result + sumCorrections) * 1.43),       //Distance from 50ft in meters
         'corrections': corrections                              //List of all corrections applied
     };
 }
