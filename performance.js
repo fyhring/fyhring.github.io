@@ -8,23 +8,32 @@ var useFL = false;
 var usePavedRWY = true;
 
 
+// Global Inputs
+var elevationInput,
+    temperatureInput,
+    pressureInput,
+    windDirInput,
+    windSpdInput,
+    rwyDirInput,
+    weightInput;
+
 $(document).ready(function()
 {
     $('#performaceForm input').on('change', function(e)
     {
-        calculatePerformance();
+        calculateFromInputs();
     });
 });
 
-function calculatePerformance()
+function calculateFromInputs()
 {
-    var elevationInput = parseInt($('#performaceForm input[name="elevationInput"]').val(), 10),
-        temperatureInput = parseInt($('#performaceForm input[name="temperatureInput"]').val(), 10),
-        pressureInput  = parseInt($('#performaceForm input[name="pressureInput"]').val(), 10),
-        windDirInput   = parseInt($('#performaceForm input[name="windDirInput"]').val(), 10),
-        windSpdInput   = parseInt($('#performaceForm input[name="windSpdInput"]').val(), 10),
-        rwyDirInput    = parseInt($('#performaceForm input[name="rwyDirInput"]').val(), 10),
-        weightInput    = 1203;
+    elevationInput = parseInt($('#performaceForm input[name="elevationInput"]').val(), 10),
+    temperatureInput = parseInt($('#performaceForm input[name="temperatureInput"]').val(), 10),
+    pressureInput  = parseInt($('#performaceForm input[name="pressureInput"]').val(), 10),
+    windDirInput   = parseInt($('#performaceForm input[name="windDirInput"]').val(), 10),
+    windSpdInput   = parseInt($('#performaceForm input[name="windSpdInput"]').val(), 10),
+    rwyDirInput    = parseInt($('#performaceForm input[name="rwyDirInput"]').val(), 10),
+    weightInput    = 1203;
 
     if (
         (isNaN(elevationInput)) ||
@@ -35,9 +44,10 @@ function calculatePerformance()
         return false;
     }
 
-    // Calculate HWC/TWC and XWC.
-    var headwindComponent =  Math.cos(rwyDirInput - windDirInput) * windSpdInput;
-    var crosswindComponent = Math.sin(rwyDirInput - windDirInput) * windSpdInput;
+    var windComponents = getWindComponents();
+
+    console.log('HWC: ', windComponents.head);
+    console.log('XWC: ', windComponents.cross);
 
     // Temp ISA Deviation
     var tempIsaDeviation = temperatureInput - 15;
@@ -58,8 +68,38 @@ function calculatePerformance()
 
     console.log(calculateAll(pressureElevation, tempIsaDeviation, weightInput)); //Test logging to console
 
+    var data = calculateAll(pressureElevation, tempIsaDeviation, weightInput);
+    $('pre.code').html(JSON.stringify(data));
 }
 
+function getWindComponents()
+{
+    // Calculate HWC/TWC and XWC.
+    var headwindComponent =  Math.cos(toRadians(windDirInput - rwyDirInput)) * windSpdInput;
+    var crosswindComponent = Math.sin(toRadians(windDirInput - rwyDirInput)) * windSpdInput;
+
+    if (isNaN(headwindComponent)) {
+        headwindComponent = 0;
+    }
+
+    if (isNaN(crosswindComponent)) {
+        crosswindComponent = 0;
+    }
+
+    return {
+        'head': headwindComponent,
+        'cross': crosswindComponent
+    };
+}
+
+
+function toDegrees (angle) {
+    return angle * (180 / Math.PI);
+}
+
+function toRadians (angle) {
+    return angle * (Math.PI / 180);
+}
 
 
 // Functions for interpolation
