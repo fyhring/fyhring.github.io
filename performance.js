@@ -244,6 +244,34 @@ function calculateOEIabsoluteCeiling(isaDeviation, tom) {
     return absoluteCeiling;
 }
 
+function takeoffCorrectedCalculations(pa, isaDeviation, tom) {
+    var groundroll = calculateTakeOffGroundRoll(pa, isaDeviation, tom)
+    var distance = calculateTakeOffDist(pa, isaDeviation, tom)
+    
+    /*
+    TODO Add Corrections for:
+    Wind component (kts)
+    Paved rwy (bool)
+    Rwy slope (%)
+    Soft sfc (bool)
+    Water & Slush (cm)
+    Wet snow (cm)
+    Frozen snow (cm)
+
+    Safty factor (25%)
+    */
+    var windComponents = getWindCompenents()
+    var windcorrection
+    if (windCompnents.head > 0){                        //If there is headwind
+        windcorrection = windComponents.head * -2.5     //Remove 2,5m per kt
+    }
+    else {                                              //Else (If there is tailwind)
+        windcorrection = windComponents.head * 10       //Add 10m per kt
+    }
+
+    var pavedRWY
+}
+
 function calculateAll(pa, isaDeviation, tom)
 {
     return {
