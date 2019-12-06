@@ -10,6 +10,7 @@ var useSoftSfc = false;
 var useSnowCorrection = false;
 var useSlope = false;
 var useWindComponent = true;
+var useIncreaedAppSpeed = true;
 
 
 // Global Inputs
@@ -376,6 +377,12 @@ function landingCorrectedCalculations(pa, isaDeviation, tom, slope) {
         else {                                                  //Else (If there is tailwind)
             windCorrection = windComponents.head * 11;           //Add 11m per kt
         }    
+    }
+
+    var appSpeedCorrection = 0
+    //Correction for increased approach speed
+    if (useIncreaedAppSpeed){
+        appSpeedCorrection = 110                            //10 kts Increased approach speed calculated as tailwind of 10 kts
     }
 
     //Correction for paved runway, according to AFM
