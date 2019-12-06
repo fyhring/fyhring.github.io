@@ -6,6 +6,8 @@ var STD_HECTOPASCAL_HEIGHT = 27; // ft
 // Flags
 var useFL = false;
 var usePavedRWY = true;
+var useSoftSfc = false;
+var useSnowCorrection = false;
 
 
 // Global Inputs
@@ -284,32 +286,129 @@ function calculateOEIabsoluteCeiling(isaDeviation, tom) {
     return absoluteCeiling;
 }
 
-function takeoffCorrectedCalculations(pa, isaDeviation, tom) {
+function takeoffCorrectedCalculations(pa, isaDeviation, tom, slope) {
     var groundroll = calculateTakeOffGroundRoll(pa, isaDeviation, tom)
     var distance = calculateTakeOffDist(pa, isaDeviation, tom)
-    
+
+    //Correction for wind component, according to AFM
+    var windComponents = getWindComponents()
+    var windCorrection
+    if (windCompnents.head > 0){                            //If there is headwind
+        windCorrection = windComponents.head * -2.5         //Remove 2,5m per kt
+    }
+    else {                                                  //Else (If there is tailwind)
+        windCorrection = windComponents.head * 10           //Add 10m per kt
+    }
+
+    //Correction for paved runway, according to AFM
+    var pavedRwyCorrection
+    if (usePavedRWY){                                       //If runway is paved
+        pavedRwyCorrection = groundroll * -0.06             //Remove 6% of Groundroll
+    }
+    else {                                                  //Else (if runway is not paved)
+        pavedRwyCorrection = 0                              //No correction
+    }
+
+    //Correction for Runway slope, according to AFM
+    var slopeCorrection
+    if (slope <= 0){                                        //If there is downslope, or no slope
+        slopeCorrection = 0                                 //No correction
+    }
+    else {                                                  //Else (if there is upslope)
+        slopeCorrection = slope / 0.01 * 0.05 * groundroll  //Add 5% of groundroll per 1% upslope
+    }
+
+    //Correction for soft surface, according to GreyBird procedure
+    var softSfcCorrection
+    if (useSoftSfc) {                                       //If the surface is soft
+        softSfcCorrection = groundroll * 0.25               //Add 25% of groundroll
+    }
+    else {                                                  //Else (surface is not soft)
+        softSfcCorrection = 0                               //No correction
+    }
+
     /*
-    TODO Add Corrections for:
-    Wind component (kts)
-    Paved rwy (bool)
-    Rwy slope (%)
-    Soft sfc (bool)
+    TODO - Add Corrections for:
     Water & Slush (cm)
     Wet snow (cm)
     Frozen snow (cm)
-
-    Safty factor (25%)
     */
-    var windComponents = getWindCompenents()
-    var windcorrection
-    if (windCompnents.head > 0){                        //If there is headwind
-        windcorrection = windComponents.head * -2.5     //Remove 2,5m per kt
+
+    var corrections = {
+        'windCorrection': windCorrection,
+        'pavedRwyCorretion': pavedRwyCorrection,
+        'slopeCorrection': slopeCorrection,
+        'softSfcCorrection': softSfcCorrection
     }
-    else {                                              //Else (If there is tailwind)
-        windcorrection = windComponents.head * 10       //Add 10m per kt
+    var sumCorrections = 0
+    for (var i in corrections){
+        sumCorrections += corrections[i]
     }
 
-    var pavedRWY
+    return {
+        'groundroll': ((groundroll + sumCorrections) * 1.25),   //Groundroll in meters
+        'distance': ((distance + sumCorrections) * 1.25),       //Distance to 50ft in meters
+        'corrections': corrections                              //List of all corrections applied
+    }
+}
+
+function landingCorrectedCalculations(pa, isaDeviation, tom, slope) {
+    var groundroll = calculateLandingGroundRoll(pa, isaDeviation, tom)
+    var distance = calculateLandingDist(pa, isaDeviation, tom)
+
+    //Correction for wind component, according to AFM
+    var windCompnents = getWindComponents()
+    var windCorrection
+    if (windCompnents.head > 0){                            //If there is headwind
+        windCorrection = windComponents.head * -5           //Remove 5m per kt
+    }
+    else {                                                  //Else (If there is tailwind)
+        windCorrection = windComponents.head * 11           //Add 11m per kt
+    }
+
+    //Correction for paved runway, according to AFM
+    var pavedRwyCorrection
+    if (usePavedRWY){                                       //If runway is paved
+        pavedRwyCorrection = groundroll * -0.02             //Remove 2% of Groundroll
+    }
+    else {                                                  //Else (if runway is not paved)
+        pavedRwyCorrection = 0                              //No correction
+    }
+
+    //Correction for Runway slope, according to GreyBird Procedures
+    var slopeCorrection
+    if (slope >= 0){                                        //If there is upslope, or no slope
+        slopeCorrection = 0                                 //No correction
+    }
+    else {                                                  //Else (if there is downslope)
+        slopeCorrection = slope / 0.02 * 0.10 * groundroll  //Add 10% of groundroll per 2% upslope
+    }
+
+    //Correction for soft surface or snow, according to GreyBird procedure
+    var softSfcCorrection
+    if (useSoftSfc || useSnowCorrection) {                  //If the surface is soft, or there is snow
+        softSfcCorrection = groundroll * 0.25               //Add 25% of groundroll
+    }
+    else {                                                  //Else (surface is not soft, and there is not snow)
+        softSfcCorrection = 0                               //No correction
+    }
+
+    var corrections = {
+        'windCorrection': windCorrection,
+        'pavedRwyCorretion': pavedRwyCorrection,
+        'slopeCorrection': slopeCorrection,
+        'softSfcCorrection': softSfcCorrection
+    }
+    var sumCorrections = 0
+    for (var i in corrections){
+        sumCorrections += corrections[i]
+    }
+
+    return {
+        'groundroll': ((groundroll + sumCorrections) * 1.25),   //Groundroll in meters
+        'distance': ((distance + sumCorrections) * 1.25),       //Distance from 50ft in meters
+        'corrections': corrections                              //List of all corrections applied
+    }
 }
 
 function calculateAll(pa, isaDeviation, tom)
