@@ -3,18 +3,18 @@ $(document).ready(function()
 
     // Definitions...
 
-    var perfForm = $('#performaceForm'),
+    var perfForm = $('#performanceForm'),
         flSwitch = $('#flSwitch'),
         cruiseAlt = $('#cruiseAltInput'),
         tempInput = perfForm.find('input[name="temperatureInput"]'),
-        isaDevField = $('#isaTempDev');
-
-
+        isaDevField = $('#isaTempDev'),
+        incSpdSwitch = $('#increasedSpeedsSwitch');
 
     // Add event listeners
     perfForm.on('submit', onSubmit);
     flSwitch.on('change', onChangeFLSwitch);
     tempInput.on('change', onChangeTemp);
+    incSpdSwitch.on('change', onChangeIncSpdSwitch);
 
 
     // Events
@@ -38,6 +38,8 @@ $(document).ready(function()
             cruiseAlt.attr('maxlength', '5');
             cruiseAlt.val(parseInt(cruiseAlt.val(), 10) * 100);
         }
+
+        calculateFromInputs();
     }
 
     function onChangeTemp(e)
@@ -54,6 +56,13 @@ $(document).ready(function()
 
         var isaDevText = temp > 15 ? 'ISA+'+ deviation : 'ISA'+ deviation;
         isaDevField.val(isaDevText);
+    }
+
+    function onChangeIncSpdSwitch(e)
+    {
+        window.useIncreaedAppSpeed = incSpdSwitch.is(':checked');
+
+        calculateFromInputs();
     }
 
 });

@@ -330,33 +330,21 @@
 
                 <h3>Key numbers</h3>
                 <div class="row">
-                    <div class="col-sm-6">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <p>Corrected Take-off Groundroll:</p>
-                                <p>Corrected Take-off Distance (50 ft):</p>
-                            </div>
-                            <div class="col-sm-6">
-                                <p>{{ takeoff.groundroll }}</p>
-                                <p>{{ takeoff.distance }}</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <p>Corrected Landing Groundroll:</p>
-                                <p>Corrected Landing Distance (50 ft):</p>
-                            </div>
-                            <div class="col-sm-6">
-                                <p>{{ landing.groundroll }}</p>
-                                <p>{{ landing.distance }}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-    
+                    <table class="table table-borderless">
+                        <tr>
+                            <td width="40%">Take-off Groundroll:</td>
+                            <td width="10%" class="to-groundroll">-</td>
+                            <td>Take-off Distance (50 ft)</td>
+                            <td class="to-distance">-</td>
+                        </tr>
+                        <tr>
+                            <td>Landing Groundroll:</td>
+                            <td class="ldg-groundroll">-</td>
+                            <td>Landing Distance (50 ft)</td>
+                            <td class="ldg-distance">-</td>
+                        </tr>
+                    </table>
+                </div>   
             </form>
         </div>
         <div class="tab-pane fade" id="resultsTab" role="tabpanel">
@@ -369,7 +357,7 @@
 
         var scripts = [
             './polyfill.js',
-            './draw.js',
+            './massbalance.js',
             './performance.js', './performance/ui.js', './performance/matrixes.js'
         ];
 

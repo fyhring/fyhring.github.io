@@ -1,3 +1,6 @@
+window.acTotalMass = null;
+
+
 $(document).ready(function()
 {
 
@@ -66,6 +69,7 @@ $(document).ready(function()
 
         masses['acMass'] = acMass;
         form.querySelector('#acMass').value = acMass;
+        window.acTotalMass = acMass;
         
         drawBackground();
     }

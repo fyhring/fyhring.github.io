@@ -40,21 +40,34 @@ function calculateFromInputs()
     windDirInput   = parseInt($('#performanceForm input[name="windDirInput"]').val(), 10),
     windSpdInput   = parseInt($('#performanceForm input[name="windSpdInput"]').val(), 10),
     rwyDirInput    = parseInt($('#performanceForm input[name="rwyDirInput"]').val(), 10),
-    weightInput    = 1230;
+    weightInput    = window.acTotalMass;
+
+    console.log(weightInput);
 
     if (
         (isNaN(elevationInput)) ||
         (isNaN(temperatureInput)) ||
-        (isNaN(pressureInput))
-        // TODO Add the rest...
+        (isNaN(pressureInput)) ||
+        (isNaN(cruiseInput)) ||
+        (isNaN(msaInput)) ||
+        (isNaN(windDirInput)) ||
+        (isNaN(windSpdInput)) ||
+        (isNaN(rwyDirInput)) ||
+        (weightInput == null)
     ) {
+
+        var takeOffLandingUIPairs = [
+            ['to-groundroll', null, 'm'],
+            ['to-distance', null, 'm'],
+    
+            ['ldg-groundroll', null, 'm'],
+            ['ldg-distance', null, 'm']
+        ];
+    
+        updateUIValues(takeOffLandingUIPairs);
+
         return false;
     }
-
-    var windComponents = getWindComponents();
-
-    console.log('HWC: ', windComponents.head);
-    console.log('XWC: ', windComponents.cross);
 
     // Temp ISA Deviation
     var tempIsaDeviation = temperatureInput - 15;
@@ -68,7 +81,13 @@ function calculateFromInputs()
         var distanceDiff = pressureDiff * STD_HECTOPASCAL_HEIGHT;
 
         pressureElevation = elevationInput + distanceDiff;
-        pressureAltitude = cruiseInput + distanceDiff;
+
+        // If we use FL we don't correct for pressure.
+        if (!useFL) {
+            pressureAltitude = cruiseInput + distanceDiff;
+        } else {
+            pressureAltitude = cruiseInput * 100;
+        }
 
         // Pressure Elevation must not be less than 0, no data in matrix below 0.
         if (pressureElevation < 0) {
@@ -76,10 +95,38 @@ function calculateFromInputs()
         }
     }
 
-    console.log(calculateAll(pressureElevation, pressureAltitude, tempIsaDeviation, weightInput)); //Test logging to console
+    var data = calculateAll(pressureElevation, pressureAltitude, tempIsaDeviation, weightInput);
+    var takeOffLandingUIPairs = [
+        ['to-groundroll', Math.ceil(data.takeoff.groundroll), 'm'],
+        ['to-distance', Math.ceil(data.takeoff.distance), 'm'],
 
-    var data = calculateAll(pressureElevation, tempIsaDeviation, weightInput);
-    $('pre.code').html(JSON.stringify(data));
+        ['ldg-groundroll', Math.ceil(data.landing.groundroll), 'm'],
+        ['ldg-distance', Math.ceil(data.landing.distance), 'm']
+    ];
+
+    updateUIValues(takeOffLandingUIPairs);
+}
+
+function updateUIValues(dataset)
+{
+    for (var i in dataset) {
+        var item    = dataset[i],
+            element = $('.'+ item[0]),
+            value   = item[1],
+            suffix  = item[2];
+
+        if (
+            value === '' ||
+            isNaN(value) ||
+            value === null
+        ) {
+            value = '-';
+        } else {
+            value = value +' '+ suffix;
+        }
+
+        element.html(value);
+    }
 }
 
 function getWindComponents()
@@ -267,7 +314,7 @@ function calculateRocVxSe(pa, isaDeviation, tom) {
 
 
 function calculateOEIceiling(isaDeviation, tom) {
-    var serviceCeiling = 7000;
+    var serviceCeiling = 7001;
     var fpm = 1;
     while (fpm < 50) {
         fpm = calculateRocVySe(serviceCeiling, isaDeviation, tom).result;
@@ -281,7 +328,7 @@ function calculateOEIceiling(isaDeviation, tom) {
 }
 
 function calculateOEIabsoluteCeiling(isaDeviation, tom) {
-    var absoluteCeiling = 7000;
+    var absoluteCeiling = 7001;
     var fpm = -1;
     while (fpm < 0) {
         fpm = calculateRocVySe(absoluteCeiling, isaDeviation, tom).result;
@@ -307,7 +354,7 @@ function takeoffCorrectedCalculations(pa, isaDeviation, tom, slope)
         if (windComponents.head > 0) {                            //If there is headwind
             windCorrection = windComponents.head * -2.5;         //Remove 2,5m per kt
         } else {                                                  //Else (If there is tailwind)
-            windCorrection = windComponents.head * 10;           //Add 10m per kt
+            windCorrection = (windComponents.head * -1) * 10;           //Add 10m per kt
         }    
     }
     
@@ -375,7 +422,7 @@ function landingCorrectedCalculations(pa, isaDeviation, tom, slope) {
             windCorrection = windComponents.head * -5;           //Remove 5m per kt
         }
         else {                                                  //Else (If there is tailwind)
-            windCorrection = windComponents.head * 11;           //Add 11m per kt
+            windCorrection = (windComponents.head * -1) * 11;           //Add 11m per kt
         }    
     }
 
@@ -409,7 +456,8 @@ function landingCorrectedCalculations(pa, isaDeviation, tom, slope) {
         'windCorrection': windCorrection,
         'pavedRwyCorretion': pavedRwyCorrection,
         'slopeCorrection': slopeCorrection,
-        'softSfcCorrection': softSfcCorrection
+        'softSfcCorrection': softSfcCorrection,
+        'appSpeedCorrection': appSpeedCorrection
     };
 
     var sumCorrections = 0;
