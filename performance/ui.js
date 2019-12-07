@@ -6,6 +6,7 @@ $(document).ready(function()
     var perfForm = $('#performanceForm'),
         flSwitch = $('#flSwitch'),
         cruiseAlt = $('#cruiseAltInput'),
+        msa = $('#msaInput'),
         tempInput = perfForm.find('input[name="temperatureInput"]'),
         isaDevField = $('#isaTempDev'),
         incSpdSwitch = $('#increasedSpeedsSwitch'),

@@ -21,7 +21,9 @@ var elevationInput,
     windDirInput,
     windSpdInput,
     rwyDirInput,
-    weightInput;
+    weightInput,
+    cruiseInput,
+    msaInput;
 
 $(document).ready(function()
 {
