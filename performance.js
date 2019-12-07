@@ -492,3 +492,5 @@ function calculateAll(pe, pa, isaDeviation, tom)
         'OEIabsoluteCeiling': calculateOEIabsoluteCeiling(isaDeviation,tom)
     }
 }
+
+console.log(calculateAll(469,6000,0,1203))
