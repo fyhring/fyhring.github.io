@@ -8,13 +8,15 @@ $(document).ready(function()
         cruiseAlt = $('#cruiseAltInput'),
         tempInput = perfForm.find('input[name="temperatureInput"]'),
         isaDevField = $('#isaTempDev'),
-        incSpdSwitch = $('#increasedSpeedsSwitch');
+        incSpdSwitch = $('#increasedSpeedsSwitch'),
+        MSAROCSwitch = $('#useMSA');
 
     // Add event listeners
     perfForm.on('submit', onSubmit);
     flSwitch.on('change', onChangeFLSwitch);
     tempInput.on('change', onChangeTemp);
     incSpdSwitch.on('change', onChangeIncSpdSwitch);
+    MSAROCSwitch.on('change', onChangeUseMSASwitch);
 
 
     // Events
@@ -61,7 +63,12 @@ $(document).ready(function()
     function onChangeIncSpdSwitch(e)
     {
         window.useIncreaedAppSpeed = incSpdSwitch.is(':checked');
+        calculateFromInputs();
+    }
 
+    function onChangeUseMSASwitch(e)
+    {
+        window.useMSAROC = MSAROCSwitch.is(':checked');
         calculateFromInputs();
     }
 

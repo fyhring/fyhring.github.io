@@ -11,6 +11,7 @@ var useSnowCorrection = false;
 var useSlope = false;
 var useWindComponent = true;
 var useIncreaedAppSpeed = true;
+var useMSAROC = false;
 
 
 // Global Inputs
@@ -42,8 +43,6 @@ function calculateFromInputs()
     rwyDirInput    = parseInt($('#performanceForm input[name="rwyDirInput"]').val(), 10),
     weightInput    = window.acTotalMass;
 
-    console.log(weightInput);
-
     if (
         (isNaN(elevationInput)) ||
         (isNaN(temperatureInput)) ||
@@ -59,7 +58,6 @@ function calculateFromInputs()
         var takeOffLandingUIPairs = [
             ['to-groundroll', null, 'm'],
             ['to-distance', null, 'm'],
-    
             ['ldg-groundroll', null, 'm'],
             ['ldg-distance', null, 'm']
         ];
@@ -89,6 +87,8 @@ function calculateFromInputs()
             pressureAltitude = cruiseInput * 100;
         }
 
+        console.log('PA', pressureAltitude);
+
         // Pressure Elevation must not be less than 0, no data in matrix below 0.
         if (pressureElevation < 0) {
             pressureElevation = 0;
@@ -96,15 +96,29 @@ function calculateFromInputs()
     }
 
     var data = calculateAll(pressureElevation, pressureAltitude, tempIsaDeviation, weightInput);
+    console.log(data);
+
     var takeOffLandingUIPairs = [
         ['to-groundroll', Math.ceil(data.takeoff.groundroll), 'm'],
         ['to-distance', Math.ceil(data.takeoff.distance), 'm'],
-
         ['ldg-groundroll', Math.ceil(data.landing.groundroll), 'm'],
-        ['ldg-distance', Math.ceil(data.landing.distance), 'm']
+        ['ldg-distance', Math.ceil(data.landing.distance), 'm'],
+        ['oei-serviceceil', ceilingCheck(Math.floor(data.OEIserviceCeiling)), 'ft'],
+        ['oei-absceil', ceilingCheck(Math.floor(data.OEIabsoluteCeiling)), 'ft'],
+        ['roc-vyse', Math.floor(data.rocVySe), 'fpm'],
+        ['roc-vy', '---', 'fpm'],
+        ['useMSAOrNotTxt', (useMSAROC ? pressureAltitude : pressureAltitude / 3 * 2), 'ft']
     ];
 
     updateUIValues(takeOffLandingUIPairs);
+}
+
+function ceilingCheck(value)
+{
+    if (value == 7001) {
+        value = '> 7000';
+    }
+    return value;
 }
 
 function updateUIValues(dataset)
@@ -170,18 +184,6 @@ function findKeysForInterpolation(needle, haystack)
     return [parseInt(sortedKeys[0], 10), parseInt(sortedKeys[1], 10)];
 }
 
-function interpolate1D(needle, dataset, keys)
-{
-    var interpolateKeys = findKeysForInterpolation(needle, keys);
-
-    var keyOne = interpolateKeys[0],
-        keyTwo = interpolateKeys[1],
-        valueOne = dataset[keyOne],
-        valueTwo = dataset[keyTwo];
-
-    return (valueTwo - valueOne) / (keyTwo - keyOne) * (needle - keyOne) + valueOne;    
-}
-
 function findDataValuesInDataset(needle, dataset, keys)
 {
     var interpolateKeys = findKeysForInterpolation(needle, keys);
@@ -192,6 +194,18 @@ function findDataValuesInDataset(needle, dataset, keys)
         valueTwo = dataset[keyTwo];
 
     return [valueOne, valueTwo];
+}
+
+function interpolate1D(needle, dataset, keys)
+{
+    var interpolateKeys = findKeysForInterpolation(needle, keys);
+
+    var keyOne = interpolateKeys[0],
+        keyTwo = interpolateKeys[1],
+        valueOne = dataset[keyOne],
+        valueTwo = dataset[keyTwo];
+
+    return (valueTwo - valueOne) / (keyTwo - keyOne) * (needle - keyOne) + valueOne;    
 }
 
 function interpolate2D()
@@ -297,9 +311,21 @@ function calculateVySe(pa, isaDeviation, tom) {
     return interpolate3D(pa, sfcTemp, tom, climbVySeMatrix)
 }
 
-function calculateRocVySe(pa, isaDeviation, tom) {
-    var sfcTemp = isaDeviation + 15
-    return interpolate3D(pa, sfcTemp, tom, ROCVySeMatrix)
+// ROC @ 2/3PA (or MSA) with VySE speed.
+function calculateRocVySe(pa, isaDeviation, tom, useTwoThirds) {
+    var sfcTemp = isaDeviation + 15;
+    var altitude = pa; // As per default, 2/3 PA is used for ROC calculations.
+
+    if (useTwoThirds) {
+        altitude = pa / 3 * 2;
+    }
+
+    if (useMSAROC) {
+        altitude = msaInput;
+    }
+    // console.log(altitude);
+
+    return interpolate3D(altitude, sfcTemp, tom, ROCVySeMatrix);
 }
 
 function calculateVxSe(pa, isaDeviation, tom) {
@@ -483,11 +509,12 @@ function calculateAll(pe, pa, isaDeviation, tom)
         'landing': landingCorrectedCalculations(pe, isaDeviation, tom, null),
 
         'Vx': calculateVx(pa, isaDeviation, tom).result,
-        'rocVx': calculateRocVx(pa, isaDeviation, tom).result,
         'VySe': calculateVySe(pa, isaDeviation, tom).result,
-        'rocVySe': calculateRocVySe(pa, isaDeviation, tom).result,
+        // 'rocVy': calculateRocVy(pa, isaDeviation, tom).result, // Why don't we have this??
+        'rocVySe': calculateRocVySe(pa, isaDeviation, tom, true).result,
         'VxSe': calculateVxSe(pa, isaDeviation, tom).result,
-        'roCVxSe': calculateRocVxSe(pa, isaDeviation, tom).result,
+        'rocVx': calculateRocVx(pa, isaDeviation, tom).result,
+        'rocVxSe': calculateRocVxSe(pa, isaDeviation, tom).result,
         'OEIserviceCeiling': calculateOEIceiling(isaDeviation,tom),
         'OEIabsoluteCeiling': calculateOEIabsoluteCeiling(isaDeviation,tom)
     }

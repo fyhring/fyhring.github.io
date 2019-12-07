@@ -323,12 +323,21 @@
                         <div class="input-group-append">
                             <span class="input-group-text">ft</span>
                         </div>
-                    </div>
+                    </div>    
+                </div>
+                <div class="settings">
+                    <details>
+                        <summary>Settings</summary>
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="useMSA" />
+                            <label class="custom-control-label" for="useMSA">Use MSA for ROC</label>
+                        </div>
+                    </details>
                 </div>
                 
                 <hr />
 
-                <h3>Key numbers</h3>
+                <h3>Start &amp; Landing</h3>
                 <div class="row">
                     <table class="table table-borderless">
                         <tr>
@@ -342,6 +351,27 @@
                             <td class="ldg-groundroll">-</td>
                             <td>Landing Distance (50 ft)</td>
                             <td class="ldg-distance">-</td>
+                        </tr>
+                    </table>
+                </div>
+                <h3>Ceiling &amp; ROC</h3>
+                <div class="row">
+                    <table class="table table-borderless">
+                        <tr>
+                            <td>OEI Service Ceiling:</td>
+                            <td class="oei-serviceceil">-</td>
+                            <td>
+                                OEI ROC @ <span class="useMSAOrNotTxt">-</span> at V<sub>y</sub>
+                            </td>
+                            <td class="roc-vyse"></td>
+                        </tr>
+                        <tr>
+                            <td>OEI Absolute Ceiling:</td>
+                            <td class="oei-absceil">-</td>
+                            <td>
+                                M.E ROC @ <span class="useMSAOrNotTxt">-</span> at V<sub>y</sub>
+                            </td>
+                            <td class="roc-vy">-</td>
                         </tr>
                     </table>
                 </div>   
