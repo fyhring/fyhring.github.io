@@ -311,6 +311,11 @@ function calculateVx(pa, isaDeviation, tom) {
     return interpolate3D(pa, sfcTemp, tom, climbVxMatrix)
 }
 
+function calculateRocVy(pa, isaDeviation, tom) {
+    var sfcTemp = isaDeviation + 15
+    return interpolate3D(pa, sfcTemp, tom, ROCVyMatrix)
+}
+
 function calculateRocVx(pa, isaDeviation, tom) {
     var sfcTemp = isaDeviation + 15
     return interpolate3D(pa, sfcTemp, tom, ROCVxMatrix)
@@ -533,12 +538,13 @@ function calculateAll(pe, pa, msa, isaDeviation, tom)
         'takeoff': takeoffCorrectedCalculations(pe, isaDeviation, tom, null),
         'landing': landingCorrectedCalculations(pe, isaDeviation, tom, null),
 
-        // 'rocVy': calculateRocVy(pa, isaDeviation, tom).result, // Why don't we have this??
+        //'Vy': calculateVy(pa, isaDeviation,tom).result    //Missing Matrix
+        'rocVy': calculateRocVy(pa, isaDeviation, tom).result
+        'Vx': calculateVx(pa, isaDeviation, tom).result,
+        'rocVx': calculateRocVx(rocAltitude, isaDeviation, tom).result,
         'VySe': calculateVySe(pa, isaDeviation, tom).result,
         'rocVySe': calculateRocVySe(rocAltitude, isaDeviation, tom, true).result,
-        'Vx': calculateVx(pa, isaDeviation, tom).result,
         'VxSe': calculateVxSe(pa, isaDeviation, tom).result,
-        'rocVx': calculateRocVx(rocAltitude, isaDeviation, tom).result,
         'rocVxSe': calculateRocVxSe(rocAltitude, isaDeviation, tom).result,
         'OEIserviceCeiling': calculateOEIceiling(isaDeviation,tom),
         'OEIabsoluteCeiling': calculateOEIabsoluteCeiling(isaDeviation,tom)
