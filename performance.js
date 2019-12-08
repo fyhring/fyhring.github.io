@@ -422,38 +422,38 @@ function calculateToGradientVx(pa, isaDeviation, tom) {
 }
 
 function calculateGradientVy(pa, isaDeviation, tom) {
-    var ias = calculateVy(pa, isaDeviation, tom)
+    var ias = calculateVy(pa, isaDeviation, tom).result
     if (!useCalculatedClimbSpeedsInGradients) {
         ias = stdVy
     }
-    var roc = calculateRocVy(pa, isaDeviation, tom)
+    var roc = calculateRocVy(pa, isaDeviation, tom).result
     return calculateGradient(roc, ias)
 }
 
 function calculateGradientVx(pa, isaDeviation, tom) {
-    var ias = calculateVx(pa, isaDeviation,tom) 
+    var ias = calculateVx(pa, isaDeviation,tom) .result
     if (!useCalculatedClimbSpeedsInGradients) {
         ias = stdVx
     }
-    var roc = calculateRocVx(pa, isaDeviation, tom)
+    var roc = calculateRocVx(pa, isaDeviation, tom).result
     return calculateGradient(roc, ias)
 }
 
 function calculateGradientVySe(pa, isaDeviation, tom) {
-    var ias = calculateVySe(pa, isaDeviation, tom)
+    var ias = calculateVySe(pa, isaDeviation, tom).result
     if (!useCalculatedClimbSpeedsInGradients) {
         ias = stdVySe
     }
-    var roc = calculateRocVy(pa, isaDeviation, tom)
+    var roc = calculateRocVy(pa, isaDeviation, tom).result
     return calculateGradient(roc, ias)
 }
 
 function calculateGradientVxSe(pa, isaDeviation, tom) {
-    var ias = calculateVxSe(pa, isaDeviation, tom)
+    var ias = calculateVxSe(pa, isaDeviation, tom).result
     if (!useCalculatedClimbSpeedsInGradients) {
         ias = stdVxSe
     }
-    var roc = calculateRocVx(pa, isaDeviation, tom)
+    var roc = calculateRocVx(pa, isaDeviation, tom).result
     return calculateGradient(roc, ias)
 }
 
