@@ -202,7 +202,7 @@ function findKeysForInterpolation(needle, haystack)
         
     
     for (var i in haystack) {
-        if (haystack[i] == 'spacing') {
+        if (typeof haystack[i] == 'string' && haystack[i].toLowerCase() == 'spacing') {
             continue;
         }
         if (haystack[i] >= needle) {
