@@ -77,14 +77,12 @@ function calculateFromInputs()
         pressureAltitude  = cruiseInput;
 
     if (pressureInput != STD_PRESSURE) {
-        var pressureDiff = STD_PRESSURE - pressureInput;
-        var distanceDiff = pressureDiff * STD_HECTOPASCAL_HEIGHT;
 
-        pressureElevation = elevationInput + distanceDiff;
+        pressureElevation = toPressureAltitude(elevationInput);
 
         // If we use FL we don't correct for pressure.
         if (!useFL) {
-            pressureAltitude = cruiseInput + distanceDiff;
+            pressureAltitude = toPressureAltitude(cruiseInput);
         } else {
             pressureAltitude = cruiseInput * 100;
         }
@@ -165,6 +163,13 @@ function getWindComponents()
     };
 }
 
+function toTrueAltitude(pa) {
+    return pa + ((pressureInput - STD_PRESSURE) * STD_HECTOPASCAL_HEIGHT)
+}
+
+function toPressureAltitude(ta) {
+    return ta - ((pressureInput - STD_PRESSURE) * STD_HECTOPASCAL_HEIGHT)
+}
 
 function toDegrees (angle) {
     return angle * (180 / Math.PI);
@@ -351,8 +356,16 @@ function calculateOEIceiling(isaDeviation, tom) {
             serviceCeiling -= 1;
         }
     }
+
+    var isTopOfData = (serviceCeiling == 7001)
+
+    //convert pressure altitude to true altitude
+    serviceCeiling = toTrueAltitude(serviceCeiling)
     
-    return serviceCeiling;
+    return {
+        'OEIserviceCeiling': serviceCeiling,
+        'isTopOfData': isTopOfData
+    };
 }
 
 function calculateOEIabsoluteCeiling(isaDeviation, tom) {
@@ -366,7 +379,15 @@ function calculateOEIabsoluteCeiling(isaDeviation, tom) {
         }
     }
 
-    return absoluteCeiling;
+    var isTopOfData = (absoluteCeiling == 7001)
+
+    //convert pressure altitude to true altitude
+    absoluteCeiling = toTrueAltitude(absoluteCeiling)
+
+    return {
+        'OEIabsoluteCeiling': absoluteCeiling,
+        'isTopOfData': isTopOfData
+    };
 }
 
 
@@ -519,7 +540,7 @@ function calculateAll(pe, pa, isaDeviation, tom)
         'rocVxSe': calculateRocVxSe(pa, isaDeviation, tom).result,
         'OEIserviceCeiling': calculateOEIceiling(isaDeviation,tom),
         'OEIabsoluteCeiling': calculateOEIabsoluteCeiling(isaDeviation,tom)
-    }
+    };
 }
 
 console.log(calculateAll(469,6000,0,1203))
