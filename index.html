@@ -249,10 +249,6 @@
                         </div>
                     </div>
                     <div class="col-sm-6">
-                        <div class="custom-control custom-switch">
-                            <input type="checkbox" class="custom-control-input" id="increasedSpeedsSwitch" checked />
-                            <label class="custom-control-label" for="increasedSpeedsSwitch">Use Increased Approach Speed</label>
-                        </div>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -332,6 +328,14 @@
                             <input type="checkbox" class="custom-control-input" id="useMSA" />
                             <label class="custom-control-label" for="useMSA">Use MSA for ROC</label>
                         </div>
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="increasedSpeedsSwitch" checked />
+                            <label class="custom-control-label" for="increasedSpeedsSwitch">Use Increased Approach Speed</label>
+                        </div>
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="useActualWeight" checked disabled />
+                            <label class="custom-control-label" for="useActualWeight">Use Actual Weight</label>
+                        </div>
                     </details>
                 </div>
                 
@@ -358,8 +362,8 @@
                 <div class="row">
                     <table class="table table-borderless">
                         <tr>
-                            <td>OEI Service Ceiling:</td>
-                            <td class="oei-serviceceil">-</td>
+                            <td width="40%">OEI Service Ceiling:</td>
+                            <td width="10%" class="oei-serviceceil">-</td>
                             <td>
                                 OEI ROC @ <span class="useMSAOrNotTxt">-</span> at V<sub>y</sub>
                             </td>
@@ -388,7 +392,7 @@
         var scripts = [
             './polyfill.js',
             './massbalance.js',
-            './performance.js', './performance/ui.js', './performance/matrixes.js'
+            './performance/matrixes.js', './performance.js', './performance/ui.js'
         ];
 
         for (var i in scripts) {
