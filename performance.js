@@ -513,10 +513,10 @@ function takeoffCorrectedCalculations(pa, isaDeviation, tom, slope)
     if (useWindComponent) {
         //Correction for wind component, according to AFM
         var windComponents = getWindComponents();
-        if (windComponents.head > 0) {                            //If there is headwind
+        if (windComponents.head > 0) {                           //If there is headwind
             windCorrection = windComponents.head * -2.5;         //Remove 2,5m per kt
-        } else {                                                  //Else (If there is tailwind)
-            windCorrection = (windComponents.head * -1) * 10;           //Add 10m per kt
+        } else {                                                 //Else (If there is tailwind)
+            windCorrection = (windComponents.head * -1) * 10;    //Add 10m per kt
         }    
     }
     
@@ -524,7 +524,7 @@ function takeoffCorrectedCalculations(pa, isaDeviation, tom, slope)
     //Correction for paved runway, according to AFM
     var pavedRwyCorrection = 0;
     if (usePavedRWY) {                                       //If runway is paved
-        pavedRwyCorrection = groundroll.result * -0.06             //Remove 6% of Groundroll
+        pavedRwyCorrection = groundroll.result * -0.06       //Remove 6% of Groundroll
     }
 
     var slopeCorrection = 0;
@@ -539,7 +539,7 @@ function takeoffCorrectedCalculations(pa, isaDeviation, tom, slope)
     //Correction for soft surface, according to GreyBird procedure
     var softSfcCorrection = 0;
     if (useSoftSfc) {                                       //If the surface is soft
-        softSfcCorrection = groundroll.result * 0.25;               //Add 25% of groundroll
+        softSfcCorrection = groundroll.result * 0.25;       //Add 25% of groundroll
     }
 
     /*
@@ -557,7 +557,7 @@ function takeoffCorrectedCalculations(pa, isaDeviation, tom, slope)
     };
 
     var sumCorrections = 0;
-    for (var i in corrections) {                                 //Sum of all corrections
+    for (var i in corrections) {            //Sum of all corrections
         if (!isNaN(corrections[i])) {
             sumCorrections += corrections[i];
         }
@@ -568,7 +568,7 @@ function takeoffCorrectedCalculations(pa, isaDeviation, tom, slope)
         'uncorrectedGround': groundroll,
         'groundroll': ((groundroll.result + sumCorrections) * 1.25),   //Groundroll in meters
         'distance': ((distance.result + sumCorrections) * 1.25),       //Distance to 50ft in meters
-        'corrections': corrections                              //List of all corrections applied
+        'corrections': corrections                                     //List of all corrections applied
     };
 }
 
@@ -580,11 +580,11 @@ function landingCorrectedCalculations(pa, isaDeviation, tom, slope) {
     if (useWindComponent) {
         //Correction for wind component, according to AFM
         var windComponents = getWindComponents()
-        if (windComponents.head > 0) {                            //If there is headwind
-            windCorrection = windComponents.head * -5;           //Remove 5m per kt
+        if (windComponents.head > 0) {                          //If there is headwind
+            windCorrection = windComponents.head * -5;          //Remove 5m per kt
         }
         else {                                                  //Else (If there is tailwind)
-            windCorrection = (windComponents.head * -1) * 11;           //Add 11m per kt
+            windCorrection = (windComponents.head * -1) * 11;   //Add 11m per kt
         }    
     }
 
@@ -597,7 +597,7 @@ function landingCorrectedCalculations(pa, isaDeviation, tom, slope) {
     //Correction for paved runway, according to AFM
     var pavedRwyCorrection = 0;
     if (usePavedRWY) {                                       //If runway is paved
-        pavedRwyCorrection = groundroll.result * -0.02             //Remove 2% of Groundroll
+        pavedRwyCorrection = groundroll.result * -0.02       //Remove 2% of Groundroll
     }
 
     var slopeCorrection = 0;
@@ -611,7 +611,7 @@ function landingCorrectedCalculations(pa, isaDeviation, tom, slope) {
     //Correction for soft surface or snow, according to GreyBird procedure
     var softSfcCorrection = 0;
     if (useSoftSfc || useSnowCorrection) {                  //If the surface is soft, or there is snow
-        softSfcCorrection = groundroll.result * 0.25;               //Add 25% of groundroll
+        softSfcCorrection = groundroll.result * 0.25;       //Add 25% of groundroll
     }
 
     var corrections = {
@@ -623,7 +623,7 @@ function landingCorrectedCalculations(pa, isaDeviation, tom, slope) {
     };
 
     var sumCorrections = 0;
-    for (var i in corrections){                                 //Sum of all corrections
+    for (var i in corrections){                 //Sum of all corrections
         if (!isNaN(corrections[i])) {
             sumCorrections += corrections[i];
         }
@@ -632,9 +632,9 @@ function landingCorrectedCalculations(pa, isaDeviation, tom, slope) {
     return {
         'uncorrectedDist': distance,
         'uncorrectedGround': groundroll,
-        'groundroll': ((groundroll.result + sumCorrections) * 1.43),   //Groundroll in meters
-        'distance': ((distance.result + sumCorrections) * 1.43),       //Distance from 50ft in meters
-        'corrections': corrections                              //List of all corrections applied
+        'groundroll': ((groundroll.result + sumCorrections) * 1.43),    //Groundroll in meters
+        'distance': ((distance.result + sumCorrections) * 1.43),        //Distance from 50ft in meters
+        'corrections': corrections                                      //List of all corrections applied
     };
 }
 
@@ -646,27 +646,37 @@ function calculateAll(pe, pa, msa, isaDeviation, tom)
     }
 
     return {
+        //Takeoff and landing distances
         'takeoff': takeoffCorrectedCalculations(pe, isaDeviation, tom, null),
         'landing': landingCorrectedCalculations(pe, isaDeviation, tom, null),
 
-        'toVy': calculateToVy(pa, isaDeviation, tom).result,
-        'toRocVy': calculateToROCVy(pa, isaDeviation, tom).result,
-        'toGradVy': calculateToGradientVy(pa, isaDeviation,tom),
-        'toVx': calculateToVx(pa, isaDeviation, tom).result,
-        'toRocVx': calculateToROCVx(pa, isaDeviation, tom).result,
-        'toGradVx': calculateToGradientVx(pa, isaDeviation, tom),
-        'Vy': calculateVy(pa, isaDeviation,tom).result,
-        'rocVy': calculateRocVy(pa, isaDeviation, tom).result,
-        'gradVy': calculateGradientVy(pa, isaDeviation,tom),
-        'Vx': calculateVx(pa, isaDeviation, tom).result,
+        //Climb performance numbers, all with max cont. power setting and gear up
+        //Takeoff Vy (flaps takeoff)
+        'toVy': calculateToVy(rocAltitude, isaDeviation, tom).result,
+        'toRocVy': calculateToROCVy(rocAltitude, isaDeviation, tom).result,
+        'toGradVy': calculateToGradientVy(rocAltitude, isaDeviation,tom),
+        //Takeoff Vx (flaps takeoff)
+        'toVx': calculateToVx(rocAltitude, isaDeviation, tom).result,
+        'toRocVx': calculateToROCVx(rocAltitude, isaDeviation, tom).result,
+        'toGradVx': calculateToGradientVx(rocAltitude, isaDeviation, tom),
+        //Enroute Vy (flaps&gear up)
+        'Vy': calculateVy(rocAltitude, isaDeviation,tom).result,
+        'rocVy': calculateRocVy(rocAltitude, isaDeviation, tom).result,
+        'gradVy': calculateGradientVy(rocAltitude, isaDeviation,tom),
+        //Enroute Vx (flaps up)
+        'Vx': calculateVx(rocAltitude, isaDeviation, tom).result,
         'rocVx': calculateRocVx(rocAltitude, isaDeviation, tom).result,
-        'gradVx': calculateGradientVx(pa, isaDeviation,tom),
-        'VySe': calculateVySe(pa, isaDeviation, tom).result,
+        'gradVx': calculateGradientVx(rocAltitude, isaDeviation,tom),
+        //VySe (one engine inoperative, and feathered, flaps up)
+        'VySe': calculateVySe(rocAltitude, isaDeviation, tom).result,
         'rocVySe': calculateRocVySe(rocAltitude, isaDeviation, tom, true).result,
-        'gradVySe': calculateGradientVySe(pa,isaDeviation,tom),
-        'VxSe': calculateVxSe(pa, isaDeviation, tom).result,
+        'gradVySe': calculateGradientVySe(rocAltitude,isaDeviation,tom),
+        //VxSe (one engine inoperative, and feathered, flaps up)
+        'VxSe': calculateVxSe(rocAltitude, isaDeviation, tom).result,
         'rocVxSe': calculateRocVxSe(rocAltitude, isaDeviation, tom).result,
-        'gradVxSe': calculateGradientVxSe(pa, isaDeviation, tom),
+        'gradVxSe': calculateGradientVxSe(rocAltitude, isaDeviation, tom),
+
+        //Ceilings (one engine inoperative, and feathered, flaps up)
         'OEIserviceCeiling': calculateOEIceiling(isaDeviation,tom),
         'OEIabsoluteCeiling': calculateOEIabsoluteCeiling(isaDeviation,tom)
     };
