@@ -256,7 +256,7 @@ var takeoffROCVxMatrix = {
     'spacing': 1000
 }
 
-var ClimbVyMatrix = {   //Contains duplicate data, interpolation btw temp not necessary
+var climbVyMatrix = {   //Contains duplicate data, interpolation btw temp not necessary
     //ClimbVyMatrix[weight][Temp][Alt/2000ft]   //OBS, this is 2000 ft spacing
     //1230 kg (Max takeoff weight)
     1230: {
