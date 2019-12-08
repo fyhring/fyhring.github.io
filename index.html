@@ -95,6 +95,31 @@
             min-width: 55px;
         }
 
+        .result-weight-sector {
+            margin-bottom: 20px;
+            background: rgba(236, 236, 236, 0.3);
+            border: 1px solid #ccc;
+        }
+
+        .result-weight-sector table.table > thead > tr > th {
+            border-top: none;
+        }
+
+        .result-weight-sector,
+        .result-weight-sector th,
+        .result-weight-sector td {
+            color: #375461;
+            /* color: #4a6977; */
+        }
+
+        table.table {
+            margin-bottom: 0;
+        }
+
+        .result-weight-sector > table:nth-child(even) {
+            margin-top: 12px;
+        }
+
     </style>
 </head>
 <body>
@@ -347,8 +372,8 @@
                         <tr>
                             <td width="40%">Take-off Groundroll:</td>
                             <td width="10%" class="to-groundroll">-</td>
-                            <td>Take-off Distance (50 ft)</td>
-                            <td class="to-distance">-</td>
+                            <td width="40%">Take-off Distance (50 ft)</td>
+                            <td width="10%" class="to-distance">-</td>
                         </tr>
                         <tr>
                             <td>Landing Groundroll:</td>
@@ -364,10 +389,10 @@
                         <tr>
                             <td width="40%">OEI Service Ceiling:</td>
                             <td width="10%" class="oei-serviceceil">-</td>
-                            <td>
+                            <td width="40%">
                                 OEI ROC @ <span class="useMSAOrNotTxt">-</span> at V<sub>y</sub>
                             </td>
-                            <td class="roc-vyse"></td>
+                            <td width="10%" class="roc-vyse"></td>
                         </tr>
                         <tr>
                             <td>OEI Absolute Ceiling:</td>
@@ -382,7 +407,110 @@
             </form>
         </div>
         <div class="tab-pane fade" id="resultsTab" role="tabpanel">
-            Results...
+            <h3>Results &amp; Interpolation Data</h3>
+            <hr />
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <h4>Take-Off <small>Ground distance</small></h4>
+                    <b>1230kg</b>
+                    <div class="result-weight-sector">
+                        <table class="table table-sm">
+                            <thead class="">
+                                <tr>
+                                    <th>PA.</th>
+                                    <th class="to-temp1">Temp 1</th>
+                                    <th class="to-temp2">Temp 2</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="to-alt1">S.L</td>
+                                    <td class="to-g-alt1-temp1">-</td>
+                                    <td class="to-g-alt1-temp2">-</td>
+                                </tr>
+                                <tr>
+                                    <td class="to-alt2">1000</td>
+                                    <td class="to-g-alt2-temp1">-</td>
+                                    <td class="to-g-alt2-temp2">-</td>
+                                </tr>
+                                <tr class="table-secondary">
+                                    <td class="to-alt3">469</td>
+                                    <td class="to-g-alt3-temp1">-</td>
+                                    <td class="to-g-alt3-temp2">-</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table class="table table-sm">
+                            <thead>
+                                <th>PA.</th>
+                                <th class="to-g-temp1">Temp 1</th>
+                                <th class="to-g-temp2">Temp 2</th>
+                                <th class="to-g-temp3">Temp 3</th>
+                            </thead>
+                            <tbody>
+                                <tr class="table-secondary">
+                                    <td class="to-g-alt3">469</td>
+                                    <td class="to-g-alt3-temp1">-</td>
+                                    <td class="to-g-alt3-temp2">-</td>
+                                    <td class="to-g-alt3-temp3">xxx</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <b>1080kg</b>
+                    <div class="result-weight-sector">
+                        <table class="table table-sm">
+                            <thead class="">
+                                <tr>
+                                    <th>PA.</th>
+                                    <th>Temp 1</th>
+                                    <th>Temp 2</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>S.L</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                </tr>
+                                <tr>
+                                    <td>1000</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                </tr>
+                                <tr class="table-secondary">
+                                    <td>469</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table class="table table-sm">
+                            <thead>
+                                <th>PA</th>
+                                <th>Temp 1</th>
+                                <th>Temp 2</th>
+                                <th>Temp 3</th>
+                            </thead>
+                            <tbody>
+                                <tr class="table-secondary">
+                                    <td>469</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>xxx</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div style="margin-top: 30px;">&nbsp;</div>
+                    ((X-Y)/1000*469)+X
+                </div>
+            </div>
+
         </div>
     </div>
 

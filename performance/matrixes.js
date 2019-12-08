@@ -157,7 +157,7 @@ var takeoffClimbVyMatrix = {
         50: [290,299,309,328,328,339,350,361,373,386,399]
     },
 
-    'Spacing': 2000
+    'spacing': 2000
 }
 
 

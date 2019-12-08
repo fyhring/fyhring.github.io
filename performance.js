@@ -98,6 +98,8 @@ function calculateFromInputs()
     var data = calculateAll(pressureElevation, pressureAltitude, msaInput, tempIsaDeviation, weightInput);
     console.log(data);
 
+    var temperatures = Object.keys(data.takeoff.uncorrectedGround.data['1D1']);
+
     var takeOffLandingUIPairs = [
         ['to-groundroll', Math.ceil(data.takeoff.groundroll), 'm'],
         ['to-distance', Math.ceil(data.takeoff.distance), 'm'],
@@ -107,7 +109,10 @@ function calculateFromInputs()
         ['oei-absceil', ceilingCheck(data.OEIabsoluteCeiling), 'ft'],
         ['roc-vyse', Math.floor(data.rocVySe), 'fpm'],
         ['roc-vy', '---', 'fpm'],
-        ['useMSAOrNotTxt', (useMSAROC ? 'MSA' : '2/3 cruise alt.'), '']
+        ['useMSAOrNotTxt', (useMSAROC ? 'MSA' : '2/3 cruise alt.'), ''],
+
+        ['to-temp1', temperatures[0], '&deg;C'],
+        ['to-temp2', temperatures[1], '&deg;C']
     ];
 
     updateUIValues(takeOffLandingUIPairs);
@@ -187,11 +192,23 @@ function toRadians (angle) {
 
 function findKeysForInterpolation(needle, haystack)
 {
-    var sortedKeys = haystack.sort((a, b) => {
-        return Math.abs(a - needle) - Math.abs(b - needle);
-    });
+    var largerThan = [],
+        lessThan   = [];
+        
+    
+    for (var i in haystack) {
+        if (haystack[i] == 'spacing') {
+            continue;
+        }
+        if (haystack[i] >= needle) {
+            largerThan.push(parseInt(haystack[i], 10));
+        } else {
+            lessThan.push(parseInt(haystack[i], 10));
+        }
+    }
 
-    return [parseInt(sortedKeys[0], 10), parseInt(sortedKeys[1], 10)];
+    // console.log([Math.min(...largerThan), Math.max(...lessThan)]);
+    return [Math.min(...largerThan), Math.max(...lessThan)];
 }
 
 function findDataValuesInDataset(needle, dataset, keys)
@@ -344,7 +361,7 @@ function calculateRocVxSe(pa, isaDeviation, tom) {
 
 
 function calculateOEIceiling(isaDeviation, tom) {
-    var serviceCeiling = 7001;
+    var serviceCeiling = 7000;
     var fpm = 1;
     while (fpm < 50) {
         fpm = calculateRocVySe(serviceCeiling, isaDeviation, tom).result;
@@ -354,7 +371,7 @@ function calculateOEIceiling(isaDeviation, tom) {
         }
     }
 
-    var isTopOfData = (serviceCeiling == 7001)
+    var isTopOfData = (serviceCeiling == 7000)
 
     //convert pressure altitude to true altitude
     serviceCeiling = toTrueAltitude(serviceCeiling)
@@ -366,7 +383,7 @@ function calculateOEIceiling(isaDeviation, tom) {
 }
 
 function calculateOEIabsoluteCeiling(isaDeviation, tom) {
-    var absoluteCeiling = 7001;
+    var absoluteCeiling = 7000;
     var fpm = -1;
     while (fpm < 0) {
         fpm = calculateRocVySe(absoluteCeiling, isaDeviation, tom).result;
@@ -376,7 +393,7 @@ function calculateOEIabsoluteCeiling(isaDeviation, tom) {
         }
     }
 
-    var isTopOfData = (absoluteCeiling == 7001)
+    var isTopOfData = (absoluteCeiling == 7000)
 
     //convert pressure altitude to true altitude
     absoluteCeiling = toTrueAltitude(absoluteCeiling)
