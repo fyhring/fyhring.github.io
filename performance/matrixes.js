@@ -157,7 +157,7 @@ var takeoffClimbVyMatrix = {   //Contains duplicate data, interpolation btw temp
         50: [85,82,79,75,72,69,65,62]
     },
 
-    'Spacing': 2000
+    'spacing': 2000
 }
 
 var takeoffROCVyMatrix = {
@@ -221,7 +221,7 @@ var takeoffClimbVxMatrix = {   //Contains duplicate data, interpolation btw temp
         50: [918,849,780,712,644,576,508,440]
     },
 
-    'Spacing': 2000
+    'spacing': 2000
 }
 
 var takeoffROCVxMatrix = {
@@ -253,7 +253,7 @@ var takeoffROCVxMatrix = {
         50: [918,849,780,712,644,576,508,440,]
     },
 
-    'Spacing': 1000
+    'spacing': 1000
 }
 
 var ClimbVyMatrix = {   //Contains duplicate data, interpolation btw temp not necessary
@@ -285,7 +285,7 @@ var ClimbVyMatrix = {   //Contains duplicate data, interpolation btw temp not ne
         50: [82,81,79,77,75,73,71,69]
     },
 
-    'Spacing': 2000
+    'spacing': 2000
 }
 
 var climbVxMatrix = {   //Contains duplicate data, interpolation btw temp not necessary
