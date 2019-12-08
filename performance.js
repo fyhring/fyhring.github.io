@@ -95,7 +95,7 @@ function calculateFromInputs()
         }
     }
 
-    var data = calculateAll(pressureElevation, pressureAltitude, tempIsaDeviation, weightInput);
+    var data = calculateAll(pressureElevation, pressureAltitude, msaInput, tempIsaDeviation, weightInput);
     console.log(data);
 
     var takeOffLandingUIPairs = [
@@ -103,22 +103,25 @@ function calculateFromInputs()
         ['to-distance', Math.ceil(data.takeoff.distance), 'm'],
         ['ldg-groundroll', Math.ceil(data.landing.groundroll), 'm'],
         ['ldg-distance', Math.ceil(data.landing.distance), 'm'],
-        ['oei-serviceceil', ceilingCheck(Math.floor(data.OEIserviceCeiling)), 'ft'],
-        ['oei-absceil', ceilingCheck(Math.floor(data.OEIabsoluteCeiling)), 'ft'],
+        ['oei-serviceceil', ceilingCheck(data.OEIserviceCeiling), 'ft'],
+        ['oei-absceil', ceilingCheck(data.OEIabsoluteCeiling), 'ft'],
         ['roc-vyse', Math.floor(data.rocVySe), 'fpm'],
         ['roc-vy', '---', 'fpm'],
-        ['useMSAOrNotTxt', (useMSAROC ? pressureAltitude : pressureAltitude / 3 * 2), 'ft']
+        ['useMSAOrNotTxt', (useMSAROC ? 'MSA' : '2/3 cruise alt.'), '']
     ];
 
     updateUIValues(takeOffLandingUIPairs);
 }
 
-function ceilingCheck(value)
+function ceilingCheck(ceiling)
 {
-    if (value == 7001) {
-        value = '> 7000';
+    var output = Math.floor(ceiling.ceiling);
+
+    if (ceiling.isTopOfData) {
+        output = '> '+ ceiling.ceiling;
     }
-    return value;
+
+    return output;
 }
 
 function updateUIValues(dataset)
@@ -131,7 +134,7 @@ function updateUIValues(dataset)
 
         if (
             value === '' ||
-            isNaN(value) ||
+            (typeof value == 'number' && isNaN(value)) ||
             value === null
         ) {
             value = '-';
@@ -318,19 +321,13 @@ function calculateVySe(pa, isaDeviation, tom) {
     return interpolate3D(pa, sfcTemp, tom, climbVySeMatrix)
 }
 
-// ROC @ 2/3PA (or MSA) with VySE speed.
 function calculateRocVySe(pa, isaDeviation, tom, useTwoThirds) {
     var sfcTemp = isaDeviation + 15;
-    var altitude = pa; // As per default, 2/3 PA is used for ROC calculations.
+    var altitude = pa;
 
-    if (useTwoThirds) {
+    if (useTwoThirds && !useMSAROC) {
         altitude = pa / 3 * 2;
     }
-
-    if (useMSAROC) {
-        altitude = msaInput;
-    }
-    // console.log(altitude);
 
     return interpolate3D(altitude, sfcTemp, tom, ROCVySeMatrix);
 }
@@ -363,7 +360,7 @@ function calculateOEIceiling(isaDeviation, tom) {
     serviceCeiling = toTrueAltitude(serviceCeiling)
     
     return {
-        'OEIserviceCeiling': serviceCeiling,
+        'ceiling': serviceCeiling,
         'isTopOfData': isTopOfData
     };
 }
@@ -385,7 +382,7 @@ function calculateOEIabsoluteCeiling(isaDeviation, tom) {
     absoluteCeiling = toTrueAltitude(absoluteCeiling)
 
     return {
-        'OEIabsoluteCeiling': absoluteCeiling,
+        'ceiling': absoluteCeiling,
         'isTopOfData': isTopOfData
     };
 }
@@ -525,22 +522,25 @@ function landingCorrectedCalculations(pa, isaDeviation, tom, slope) {
     };
 }
 
-function calculateAll(pe, pa, isaDeviation, tom)
+function calculateAll(pe, pa, msa, isaDeviation, tom)
 {
+    var rocAltitude = pa;
+    if (useMSAROC) {
+        rocAltitude = msa;
+    }
+
     return {
         'takeoff': takeoffCorrectedCalculations(pe, isaDeviation, tom, null),
         'landing': landingCorrectedCalculations(pe, isaDeviation, tom, null),
 
-        'Vx': calculateVx(pa, isaDeviation, tom).result,
-        'VySe': calculateVySe(pa, isaDeviation, tom).result,
         // 'rocVy': calculateRocVy(pa, isaDeviation, tom).result, // Why don't we have this??
-        'rocVySe': calculateRocVySe(pa, isaDeviation, tom, true).result,
+        'VySe': calculateVySe(pa, isaDeviation, tom).result,
+        'rocVySe': calculateRocVySe(rocAltitude, isaDeviation, tom, true).result,
+        'Vx': calculateVx(pa, isaDeviation, tom).result,
         'VxSe': calculateVxSe(pa, isaDeviation, tom).result,
-        'rocVx': calculateRocVx(pa, isaDeviation, tom).result,
-        'rocVxSe': calculateRocVxSe(pa, isaDeviation, tom).result,
+        'rocVx': calculateRocVx(rocAltitude, isaDeviation, tom).result,
+        'rocVxSe': calculateRocVxSe(rocAltitude, isaDeviation, tom).result,
         'OEIserviceCeiling': calculateOEIceiling(isaDeviation,tom),
         'OEIabsoluteCeiling': calculateOEIabsoluteCeiling(isaDeviation,tom)
     };
 }
-
-console.log(calculateAll(469,6000,0,1203))
