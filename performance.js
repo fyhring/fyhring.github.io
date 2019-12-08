@@ -657,7 +657,7 @@ function calculateAll(pe, pa, msa, isaDeviation, tom)
         'toGradVx': calculateToGradientVx(pa, isaDeviation, tom),
         'Vy': calculateVy(pa, isaDeviation,tom).result,
         'rocVy': calculateRocVy(pa, isaDeviation, tom).result,
-        'gradVy': calculategientVy(pa, isaDeviation,tom),
+        'gradVy': calculateGradientVy(pa, isaDeviation,tom),
         'Vx': calculateVx(pa, isaDeviation, tom).result,
         'rocVx': calculateRocVx(rocAltitude, isaDeviation, tom).result,
         'gradVx': calculateGradientVx(pa, isaDeviation,tom),
