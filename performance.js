@@ -233,7 +233,7 @@ function interpolate3D(pressureAltitudeInput, degreeInput, massInput, matrixData
         degree2 = degreeKeys2[1];
 
     var pressureAltitudeKeys = Object.keys(matrixData[mass1][degree1]),
-        pressureAltitudeKeys2 = findKeysForInterpolation(pressureAltitudeInput / 1000, pressureAltitudeKeys),
+        pressureAltitudeKeys2 = findKeysForInterpolation(pressureAltitudeInput / matrixData.spacing, pressureAltitudeKeys),
         pressureAltitude1 = pressureAltitudeKeys2[0],
         pressureAltitude2 = pressureAltitudeKeys2[1];
 
@@ -241,19 +241,19 @@ function interpolate3D(pressureAltitudeInput, degreeInput, massInput, matrixData
 
 
     var interpolationData1D1 = {
-        [degree1]: interpolate1D(pressureAltitudeInput / 1000, matrixData[mass1][degree1], pressureAltitudeKeys),
-        [degree2]: interpolate1D(pressureAltitudeInput / 1000, matrixData[mass1][degree2], pressureAltitudeKeys),
+        [degree1]: interpolate1D(pressureAltitudeInput / matrixData.spacing, matrixData[mass1][degree1], pressureAltitudeKeys),
+        [degree2]: interpolate1D(pressureAltitudeInput / matrixData.spacing, matrixData[mass1][degree2], pressureAltitudeKeys),
         
-        [degree1 +'-raw']: findDataValuesInDataset(pressureAltitudeInput / 1000, matrixData[mass1][degree1], pressureAltitudeKeys),
-        [degree2 +'-raw']: findDataValuesInDataset(pressureAltitudeInput / 1000, matrixData[mass1][degree2], pressureAltitudeKeys)
+        [degree1 +'-raw']: findDataValuesInDataset(pressureAltitudeInput / matrixData.spacing, matrixData[mass1][degree1], pressureAltitudeKeys),
+        [degree2 +'-raw']: findDataValuesInDataset(pressureAltitudeInput / matrixData.spacing, matrixData[mass1][degree2], pressureAltitudeKeys)
     };
 
     var interpolationData1D2 = {
-        [degree1]: interpolate1D(pressureAltitudeInput / 1000, matrixData[mass2][degree1], pressureAltitudeKeys),
-        [degree2]: interpolate1D(pressureAltitudeInput / 1000, matrixData[mass2][degree2], pressureAltitudeKeys),
+        [degree1]: interpolate1D(pressureAltitudeInput / matrixData.spacing, matrixData[mass2][degree1], pressureAltitudeKeys),
+        [degree2]: interpolate1D(pressureAltitudeInput / matrixData.spacing, matrixData[mass2][degree2], pressureAltitudeKeys),
 
-        [degree1 +'-raw']: findDataValuesInDataset(pressureAltitudeInput / 1000, matrixData[mass2][degree1], pressureAltitudeKeys),
-        [degree2 +'-raw']: findDataValuesInDataset(pressureAltitudeInput / 1000, matrixData[mass2][degree2], pressureAltitudeKeys)
+        [degree1 +'-raw']: findDataValuesInDataset(pressureAltitudeInput / matrixData.spacing, matrixData[mass2][degree1], pressureAltitudeKeys),
+        [degree2 +'-raw']: findDataValuesInDataset(pressureAltitudeInput / matrixData.spacing, matrixData[mass2][degree2], pressureAltitudeKeys)
     };
 
     var interpolationData2D = {
