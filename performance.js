@@ -2,6 +2,10 @@
 // Constants
 var STD_PRESSURE = 1013; // hPa
 var STD_HECTOPASCAL_HEIGHT = 27; // ft
+var stdVy = 84
+var stdVySe = 84
+var stdVx = 72
+var stdVxSe = 83
 
 // Flags
 var useFL = false;
@@ -12,6 +16,7 @@ var useSlope = false;
 var useWindComponent = true;
 var useIncreaedAppSpeed = true;
 var useMSAROC = false;
+var useCalculatedClimbSpeedsInGradients = false;
 
 
 // Global Inputs
@@ -300,9 +305,14 @@ function interpolate3D(pressureAltitudeInput, degreeInput, massInput, matrixData
     };
 };
 
+function calculateGradient(roc,gs){
+    return roc / (gs / 60 * 6076)
+}
+
 
 // Functions for specifics
 
+//Takeoff distances
 function calculateTakeOffGroundRoll(pa, isaDeviation, tom) {
     var sfcTemp = isaDeviation + 15
     return interpolate3D(pa, sfcTemp, tom, takeOffGroundMatrix);
@@ -313,6 +323,7 @@ function calculateTakeOffDist(pa,isaDeviation,tom) {
     return interpolate3D(pa,sfcTemp,tom,takeOffFiftyFtMatrix)
 }
 
+//Landing distances
 function calculateLandingGroundRoll(pa,isaDeviation,tom) {
     var sfcTemp = isaDeviation + 15
     return interpolate3D(pa,sfcTemp,tom,landingGroundMatrix)
@@ -323,19 +334,56 @@ function calculateLandingDist(pa,isaDeviation,tom) {
     return interpolate3D(pa,sfcTemp,tom,landingFiftyFtMatrix)
 }
 
+//Climb speeds
+function calculateToVy(pa, isaDeviation, tom) {
+    var sfcTemp = isaDeviation + 15
+    return interpolate3D(pa, sfcTemp, tom, takeoffClimbVyMatrix)
+}
+
+function calculateToVx(pa, isaDeviation, tom) {
+    var sfcTemp = isaDeviation + 15
+    return interpolate3D(pa, sfcTemp, tom, takeoffClimbVxMatrix)
+}
+
+function calculateVy(pa, isaDeviation, tom) {
+    var sfcTemp = isaDeviation + 15
+    return interpolate3D(pa, sfcTemp, tom, climbVyMatrix)
+}
+
 function calculateVx(pa, isaDeviation, tom) {
     var sfcTemp = isaDeviation + 15
     return interpolate3D(pa, sfcTemp, tom, climbVxMatrix)
 }
 
-function calculateRocVx(pa, isaDeviation, tom) {
-    var sfcTemp = isaDeviation + 15
-    return interpolate3D(pa, sfcTemp, tom, ROCVxMatrix)
-}
-
 function calculateVySe(pa, isaDeviation, tom) {
     var sfcTemp = isaDeviation + 15
     return interpolate3D(pa, sfcTemp, tom, climbVySeMatrix)
+}
+
+function calculateVxSe(pa, isaDeviation, tom) {
+    var sfcTemp = isaDeviation + 15
+    return interpolate3D(pa, sfcTemp, tom, climbVxSeMatrix)
+}
+
+//Rates of climb
+function calculateToROCVy(pa, isaDeviation, tom) {
+    var sfcTemp = isaDeviation + 15
+    return interpolate3D(pa, sfcTemp, tom, takeoffROCVyMatrix)
+}
+
+function calculateToROCVx(pa, isaDeviation, tom) {
+    var sfcTemp = isaDeviation + 15
+    return interpolate3D(pa, sfcTemp, tom, takeoffROCVxMatrix)
+}
+
+function calculateRocVy(pa, isaDeviation, tom) {
+    var sfcTemp = isaDeviation + 15
+    return interpolate3D(pa, sfcTemp, tom, ROCVyMatrix)
+}
+
+function calculateRocVx(pa, isaDeviation, tom) {
+    var sfcTemp = isaDeviation + 15
+    return interpolate3D(pa, sfcTemp, tom, ROCVxMatrix)
 }
 
 function calculateRocVySe(pa, isaDeviation, tom, useTwoThirds) {
@@ -349,17 +397,68 @@ function calculateRocVySe(pa, isaDeviation, tom, useTwoThirds) {
     return interpolate3D(altitude, sfcTemp, tom, ROCVySeMatrix);
 }
 
-function calculateVxSe(pa, isaDeviation, tom) {
-    var sfcTemp = isaDeviation + 15
-    return interpolate3D(pa, sfcTemp, tom, climbVxSeMatrix)
-}
-
 function calculateRocVxSe(pa, isaDeviation, tom) {
     var sfcTemp = isaDeviation + 15
     return interpolate3D(pa, sfcTemp, tom, ROCVxSeMatrix)
 }
 
+//Gradients
+function calculateToGradientVy(pa, isaDeviation, tom) {
+    var ias = calculateToVy(pa, isaDeviation, tom).result
+    if (!useCalculatedClimbSpeedsInGradients) {
+        ias = stdVy
+    }
+    var roc = calculateToROCVy(pa, isaDeviation, tom).result
+    return calculateGradient(roc, ias)
+}
 
+function calculateToGradientVx(pa, isaDeviation, tom) {
+    var ias = calculateToVx(pa, isaDeviation, tom).result
+    if (!useCalculatedClimbSpeedsInGradients) {
+        ias = stdVx
+    }
+    var roc = calculateToROCVx(pa, isaDeviation, tom).result
+    return calculateGradient(roc, ias)
+}
+
+function calculateGradientVy(pa, isaDeviation, tom) {
+    var ias = calculateVy(pa, isaDeviation, tom)
+    if (!useCalculatedClimbSpeedsInGradients) {
+        ias = stdVy
+    }
+    var roc = calculateRocVy(pa, isaDeviation, tom)
+    return calculateGradient(roc, ias)
+}
+
+function calculateGradientVx(pa, isaDeviation, tom) {
+    var ias = calculateVx(pa, isaDeviation,tom) 
+    if (!useCalculatedClimbSpeedsInGradients) {
+        ias = stdVx
+    }
+    var roc = calculateRocVx(pa, isaDeviation, tom)
+    return calculateGradient(roc, ias)
+}
+
+function calculateGradientVySe(pa, isaDeviation, tom) {
+    var ias = calculateVySe(pa, isaDeviation, tom)
+    if (!useCalculatedClimbSpeedsInGradients) {
+        ias = stdVySe
+    }
+    var roc = calculateRocVy(pa, isaDeviation, tom)
+    return calculateGradient(roc, ias)
+}
+
+function calculateGradientVxSe(pa, isaDeviation, tom) {
+    var ias = calculateVxSe(pa, isaDeviation, tom)
+    if (!useCalculatedClimbSpeedsInGradients) {
+        ias = stdVxSe
+    }
+    var roc = calculateRocVx(pa, isaDeviation, tom)
+    return calculateGradient(roc, ias)
+}
+
+
+//Ceilings
 function calculateOEIceiling(isaDeviation, tom) {
     var serviceCeiling = 7000;
     var fpm = 1;
@@ -404,7 +503,7 @@ function calculateOEIabsoluteCeiling(isaDeviation, tom) {
     };
 }
 
-
+//Corrections
 function takeoffCorrectedCalculations(pa, isaDeviation, tom, slope)
 {
     var groundroll = calculateTakeOffGroundRoll(pa, isaDeviation, tom);
@@ -550,13 +649,24 @@ function calculateAll(pe, pa, msa, isaDeviation, tom)
         'takeoff': takeoffCorrectedCalculations(pe, isaDeviation, tom, null),
         'landing': landingCorrectedCalculations(pe, isaDeviation, tom, null),
 
-        // 'rocVy': calculateRocVy(pa, isaDeviation, tom).result, // Why don't we have this??
+        'toVy': calculateToVy(pa, isaDeviation, tom).result,
+        'toRocVy': calculateToROCVy(pa, isaDeviation, tom).result,
+        'toGradVy': calculateToGradientVy(pa, isaDeviation,tom),
+        'toVx': calculateToVx(pa, isaDeviation, tom).result,
+        'toRocVx': calculateToROCVx(pa, isaDeviation, tom).result,
+        'toGradVx': calculateToGradientVx(pa, isaDeviation, tom),
+        'Vy': calculateVy(pa, isaDeviation,tom).result,
+        'rocVy': calculateRocVy(pa, isaDeviation, tom).result,
+        'gradVy': calculategientVy(pa, isaDeviation,tom),
+        'Vx': calculateVx(pa, isaDeviation, tom).result,
+        'rocVx': calculateRocVx(rocAltitude, isaDeviation, tom).result,
+        'gradVx': calculateGradientVx(pa, isaDeviation,tom),
         'VySe': calculateVySe(pa, isaDeviation, tom).result,
         'rocVySe': calculateRocVySe(rocAltitude, isaDeviation, tom, true).result,
-        'Vx': calculateVx(pa, isaDeviation, tom).result,
+        'gradVySe': calculateGradientVySe(pa,isaDeviation,tom),
         'VxSe': calculateVxSe(pa, isaDeviation, tom).result,
-        'rocVx': calculateRocVx(rocAltitude, isaDeviation, tom).result,
         'rocVxSe': calculateRocVxSe(rocAltitude, isaDeviation, tom).result,
+        'gradVxSe': calculateGradientVxSe(pa, isaDeviation, tom),
         'OEIserviceCeiling': calculateOEIceiling(isaDeviation,tom),
         'OEIabsoluteCeiling': calculateOEIabsoluteCeiling(isaDeviation,tom)
     };
