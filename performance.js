@@ -695,7 +695,6 @@ function calculateAll(pe, pa, msa, isaDeviation, tom)
 
 /*
 KNOWN BUGS:
-We get slightly better climb performance with one engine inop than we do with both engines working...
 
 
 */
