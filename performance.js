@@ -444,7 +444,7 @@ function calculateGradientVySe(pa, isaDeviation, tom) {
     if (!useCalculatedClimbSpeedsInGradients) {
         ias = stdVySe
     }
-    var roc = calculateRocVy(pa, isaDeviation, tom).result
+    var roc = calculateRocVySe(pa, isaDeviation, tom).result
     return calculateGradient(roc, ias)
 }
 
@@ -453,8 +453,13 @@ function calculateGradientVxSe(pa, isaDeviation, tom) {
     if (!useCalculatedClimbSpeedsInGradients) {
         ias = stdVxSe
     }
-    var roc = calculateRocVx(pa, isaDeviation, tom).result
+    var roc = calculateRocVxSe(pa, isaDeviation, tom).result
     return calculateGradient(roc, ias)
+}
+
+//Angles
+function calculateAngle(grad){
+    return toDegrees(Math.atan(grad))
 }
 
 
@@ -655,29 +660,42 @@ function calculateAll(pe, pa, msa, isaDeviation, tom)
         'toVy': calculateToVy(rocAltitude, isaDeviation, tom).result,
         'toRocVy': calculateToROCVy(rocAltitude, isaDeviation, tom).result,
         'toGradVy': calculateToGradientVy(rocAltitude, isaDeviation,tom),
+        'toAngleVy': calculateAngle(calculateToGradientVy(rocAltitude,isaDeviation,tom)),
         //Takeoff Vx (flaps takeoff)
         'toVx': calculateToVx(rocAltitude, isaDeviation, tom).result,
         'toRocVx': calculateToROCVx(rocAltitude, isaDeviation, tom).result,
         'toGradVx': calculateToGradientVx(rocAltitude, isaDeviation, tom),
+        'toAngleVx': calculateAngle(calculateToGradientVx(rocAltitude,isaDeviation,tom)),
         //Enroute Vy (flaps&gear up)
         'Vy': calculateVy(rocAltitude, isaDeviation,tom).result,
         'rocVy': calculateRocVy(rocAltitude, isaDeviation, tom).result,
         'gradVy': calculateGradientVy(rocAltitude, isaDeviation,tom),
+        'angleVy': calculateAngle(calculateGradientVy(rocAltitude,isaDeviation,tom)),
         //Enroute Vx (flaps up)
         'Vx': calculateVx(rocAltitude, isaDeviation, tom).result,
         'rocVx': calculateRocVx(rocAltitude, isaDeviation, tom).result,
         'gradVx': calculateGradientVx(rocAltitude, isaDeviation,tom),
+        'angleVx': calculateAngle(calculateGradientVx(rocAltitude,isaDeviation,tom)),
         //VySe (one engine inoperative, and feathered, flaps up)
         'VySe': calculateVySe(rocAltitude, isaDeviation, tom).result,
         'rocVySe': calculateRocVySe(rocAltitude, isaDeviation, tom, true).result,
         'gradVySe': calculateGradientVySe(rocAltitude,isaDeviation,tom),
+        'angleVySe': calculateAngle(calculateGradientVySe(rocAltitude,isaDeviation,tom)),
         //VxSe (one engine inoperative, and feathered, flaps up)
         'VxSe': calculateVxSe(rocAltitude, isaDeviation, tom).result,
         'rocVxSe': calculateRocVxSe(rocAltitude, isaDeviation, tom).result,
         'gradVxSe': calculateGradientVxSe(rocAltitude, isaDeviation, tom),
+        'angleVxSe': calculateAngle(calculateGradientVxSe(rocAltitude,isaDeviation,tom)),
 
         //Ceilings (one engine inoperative, and feathered, flaps up)
         'OEIserviceCeiling': calculateOEIceiling(isaDeviation,tom),
         'OEIabsoluteCeiling': calculateOEIabsoluteCeiling(isaDeviation,tom)
     };
 }
+
+/*
+KNOWN BUGS:
+We get slightly better climb performance with one engine inop than we do with both engines working...
+
+
+*/
