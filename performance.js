@@ -112,8 +112,30 @@ function calculateFromInputs()
         ['ldg-distance', Math.ceil(data.landing.distance), 'm'],
         ['oei-serviceceil', ceilingCheck(data.OEIserviceCeiling), 'ft'],
         ['oei-absceil', ceilingCheck(data.OEIabsoluteCeiling), 'ft'],
+        ['vyse', Math.round(data.VySe), 'kias'],
         ['roc-vyse', Math.floor(data.rocVySe), 'fpm'],
-        ['roc-vy', '---', 'fpm'],
+        ['grad-vyse',(Math.floor(data.gradVySe * 10000)/100),'%'],
+        ['angle-vyse',(Math.floor(data.angleVySe * 100)/100),'&#176'],
+        ['vy',Math.round(data.Vy),'kias'],
+        ['roc-vy', Math.floor(data.rocVy), 'fpm'],
+        ['grad-vy',(Math.floor(data.gradVy * 10000)/100),'%'],
+        ['angle-vy',(Math.floor(data.angleVy * 100)/100),'&#176'],
+        ['to-vy',Math.round(data.toVy),'kias'],
+        ['to-roc-vy',Math.round(data.toRocVy),'fpm'],
+        ['to-grad-vy',(Math.floor(data.toGradVy * 10000)/100),'%'],
+        //['to-angle-vy',(Math.floor(data.angleToVy * 100)/100),'&#176'],   //Calculation not yet made
+        ['vxse', Math.round(data.VxSe), 'kias'],
+        ['roc-vxse', Math.floor(data.rocVxSe), 'fpm'],
+        ['grad-vxse',(Math.floor(data.gradVxSe * 10000)/100),'%'],
+        ['angle-vxse',(Math.floor(data.angleVxSe * 100)/100),'&#176'],
+        ['vx',Math.round(data.Vx),'kias'],
+        ['roc-vx', Math.floor(data.rocVx), 'fpm'],
+        ['grad-vx',(Math.floor(data.gradVx * 10000)/100),'%'],
+        ['angle-vx',(Math.floor(data.angleVx * 100)/100),'&#176'],
+        ['to-vx',Math.round(data.toVx),'kias'],
+        ['to-roc-vx',Math.round(data.toRocVx),'fpm'],
+        ['to-grad-vx',(Math.floor(data.toGradVx * 10000)/100),'%'],
+        //['to-angle-vx',(Math.floor(data.angleToVx * 100)/100),'&#176'],   //Calculation not yet made
         ['useMSAOrNotTxt', (useMSAROC ? 'MSA' : '2/3 cruise alt.'), ''],
 
         ['to-temp1', temperatures[0], '&deg;C'],
@@ -695,6 +717,6 @@ function calculateAll(pe, pa, msa, isaDeviation, tom)
 
 /*
 KNOWN BUGS:
-
+There is something wrong with the "use msa for climb" flag, or with the 2/3 pa, it seems the calculations are off
 
 */
