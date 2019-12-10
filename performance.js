@@ -162,6 +162,8 @@ function calculateFromInputs()
     ];
 
     updateUIValues(takeOffLandingUIPairs);
+
+    $('.to-g-w1-temp1-equation').html(MathJax.tex2svg('\\frac{1}{x^2-1}', {display: true}));
 }
 
 function ceilingCheck(ceiling)
@@ -253,7 +255,6 @@ function findKeysForInterpolation(needle, haystack)
         }
     }
 
-    // console.log([Math.min(...largerThan), Math.max(...lessThan)]);
     return [Math.min(...largerThan), Math.max(...lessThan)];
 }
 
@@ -341,7 +342,15 @@ function interpolate3D(pressureAltitudeInput, degreeInput, massInput, matrixData
             '1D1': interpolationData1D1,
             '1D2': interpolationData1D2,
             '2D': interpolationData2D,
-            '3D': interpolationData3D
+            '3D': interpolationData3D,
+        },
+        'keys': {
+            'mass1': mass1,
+            'mass2': mass2,
+            'temp1': degree1,
+            'temp2': degree2,
+            'alt1': pressureAltitude1,
+            'alt2': pressureAltitude2
         }
     };
 };
@@ -608,8 +617,7 @@ function takeoffCorrectedCalculations(pa, isaDeviation, tom, slope)
         'uncorrectedGround': groundroll,
         'groundroll': ((groundroll.result + sumCorrections) * 1.25),   //Groundroll in meters
         'distance': ((distance.result + sumCorrections) * 1.25),       //Distance to 50ft in meters
-        'corrections': corrections,                                    //List of all corrections applied
-        'altitudes': altitudes
+        'corrections': corrections                                     //List of all corrections applied
     };
 }
 
