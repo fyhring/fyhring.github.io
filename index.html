@@ -120,6 +120,10 @@
             margin-top: 12px;
         }
 
+        .bold {
+            font-weight: bold;
+        }
+
     </style>
 </head>
 <body>
@@ -143,7 +147,11 @@
 
     <div class="tab-content container" id="myTabContent">
         <div class="tab-pane fade show active" id="home" role="tabpanel">
-            XXX
+            <h1>P2006T Calculator</h1>
+            <h4 class="text-secondary">Calculate performance, mass &amp; balance for Tecnam P2006T</h4>
+
+            <p>&nbsp;</p>
+            <p>Use this calculator with caution at your own risk. We strive to ensure everything is correct as long as you're within AFM parameters.</p>
         </div>
         <div class="tab-pane fade" id="massAndBalanceTab" role="tabpanel">
             <form id="massForm">
@@ -340,7 +348,7 @@
                         </div>
                     </div>
                     <div class="col-sm-6 input-group">
-                        <input type="number" class="form-control " name="msaInput" placeholder="MSA" />
+                        <input type="number" class="form-control" step="100" name="msaInput" placeholder="MSA" />
                         <div class="input-group-append">
                             <span class="input-group-text">ft</span>
                         </div>
@@ -387,8 +395,8 @@
                 <div class="row">
                     <table class="table table-borderless">
                         <tr>
-                            <td width="40%">OEI Service Ceiling:</td>
-                            <td width="10%" class="oei-serviceceil">-</td>
+                            <td class="bold" width="40%">OEI Service Ceiling:</td>
+                            <td width="10%" class="bold oei-serviceceil">-</td>
 
                             <td>
                                 M.E ROC Flaps T/O @ <span class="useMSAOrNotTxt">-</span> at V<sub>y</sub> <span class="to-vy">-</span>
@@ -408,27 +416,27 @@
 
                         </tr>
                         <tr>
-                            <td width="40%">
+                            <td class="bold" width="40%">
                                 OEI ROC @ <span class="useMSAOrNotTxt">-</span> at V<sub>y<sub>se</sub></sub> <span class="vyse">-</span>
                             </td>
-                            <td width="10%" class="roc-vyse">-</td>
+                            <td width="10%" class="bold roc-vyse">-</td>
 
-                            <td>
+                            <td class="bold">
                                 M.E ROC @ <span class="useMSAOrNotTxt">-</span> at V<sub>y</sub> <span class="vy">-</span>
                             </td>
-                            <td class="roc-vy">-</td>
+                            <td class="roc-vy bold">-</td>
                             
                         </tr>
                         <tr>
-                            <td>
+                            <td class="bold">
                                 OEI Gradient @ <span class="useMSAOrNotTxt">-</span> at V<sub>y<sub>se</sub></sub> <span class="vyse">-</span>
                             </td>
-                            <td class="grad-vyse">-</td>
+                            <td class="bold grad-vyse">-</td>
 
-                            <td>
+                            <td class="bold">
                                     M.E Gradient @ <span class="useMSAOrNotTxt">-</span> at V<sub>y</sub> <span class="vy">-</span>
                             </td>
-                            <td class="grad-vy">-</td>
+                            <td class="bold grad-vy">-</td>
                         </tr>
                         <tr>
                             <td>
