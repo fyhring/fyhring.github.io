@@ -172,6 +172,15 @@
                 <li>
                     Results gives detailed information about the interpolation, including all meta data.
                 </li>
+            </ul> <br>
+            <p>The Takeoff and landing groundroll and distance data is interpolated by use of the following equations: </p>
+            <ul>
+                <li>First, the distances are interpolated between altitudes, for each temperature and weight:<br>
+                    $$value_{actual} = {value_{high} - value_{low} \over altitude_{high} - altitude_{low}} \cdot (altitude_{actual} - altitude_{low})+value_{low}$$</li>
+                <li>Then, the results of these formulas are interpolated between temperatures, for each weight:<br>
+                    $$value_{actual} = {value_{hot} - value_{cold} \over temp_{hot} - temp_{cold}} \cdot (temp_{actual} - temp_{cold})+value_{cold}$$</li>
+                <li>Finally, the result of those formulas are interpolated between weights:<br>
+                    $$value_{actual} = {value_{heavy} - value_{light} \over mass_{heavy} - mass_{light}} \cdot (mass_{actual} - mass_{light})+value_{light}$$</li>
             </ul>
 
         </div>
@@ -547,7 +556,7 @@
                             </thead>
                             <tbody>
                                 <tr class="table-secondary">
-                                    <td class="to-g-w1-alt3">469</td>
+                                    <td class="to-alt3">-</td>
                                     <td class="to-g-w1-alt3-temp1">-</td>
                                     <td class="to-g-w1-alt3-temp2">-</td>
                                     <td class="to-g-w1-alt3-temp3">-</td>
@@ -578,7 +587,7 @@
                                     <td class="to-g-w2-alt2-temp2">-</td>
                                 </tr>
                                 <tr class="table-secondary">
-                                    <td class="to-alt3">469</td>
+                                    <td class="to-alt3">-</td>
                                     <td class="to-g-w2-alt3-temp1">-</td>
                                     <td class="to-g-w2-alt3-temp2">-</td>
                                 </tr>
@@ -593,7 +602,7 @@
                             </thead>
                             <tbody>
                                 <tr class="table-secondary">
-                                    <td class="to-g-w2-alt3">469</td>
+                                    <td class="to-alt3">-</td>
                                     <td class="to-g-w2-alt3-temp1">-</td>
                                     <td class="to-g-w2-alt3-temp2">-</td>
                                     <td class="to-g-w2-alt3-temp3">-</td>
