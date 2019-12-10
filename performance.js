@@ -171,7 +171,7 @@ function calculateFromInputs()
 
     updateUIValues(takeOffLandingUIPairs);
 
-    $('.to-g-w1-temp1-equation').html(MathJax.tex2svg('value_{1230kg ,'+ temperatures[0] +'} = \\frac{ '+ takeOffLandingUIPairs['to-g-w1-alt1-temp1'] +' - value_{low} }{ altitude_{high} - altitude_{low} } \\cdot (altitude_{actual} - altitude_{low})+value_{low}', {display: true}));
+    $('.to-g-w1-temp1-equation').html(MathJax.tex2svg('groundroll_{'+ takeOffLandingUIPairs['to-mass1'][1] +'kg ,'+ takeOffLandingUIPairs['to-temp1'][1] +'^\\circ C} = \\frac{ '+ takeOffLandingUIPairs['to-g-w1-alt2-temp1'][1] +'m - '+ takeOffLandingUIPairs['to-g-w1-alt1-temp1'][1] +'m }{ '+ takeOffLandingUIPairs['to-alt2'][1] +'ft - '+ takeOffLandingUIPairs['to-alt1'][1] +'ft } \\cdot ('+ takeOffLandingUIPairs['to-alt3'][1] +'ft - '+ takeOffLandingUIPairs['to-alt1'][1] +'ft) + '+ takeOffLandingUIPairs['to-g-w1-alt1-temp1'][1] +'m = ', {display: true}));
 }
 
 function ceilingCheck(ceiling)
