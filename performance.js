@@ -104,6 +104,8 @@ function calculateFromInputs()
     console.log(data);
 
     var temperatures = Object.keys(data.takeoff.uncorrectedGround.data['1D1']);
+    var weights = Object.keys(data.takeoff.uncorrectedGround.data['2D']);
+    console.log(weights);
 
     var takeOffLandingUIPairs = [
         ['to-groundroll', Math.ceil(data.takeoff.groundroll), 'm'],
@@ -139,7 +141,23 @@ function calculateFromInputs()
         ['useMSAOrNotTxt', (useMSAROC ? 'MSA' : '2/3 cruise alt.'), ''],
 
         ['to-temp1', temperatures[0], '&deg;C'],
-        ['to-temp2', temperatures[1], '&deg;C']
+        ['to-temp2', temperatures[1], '&deg;C'],
+        ['to-temp3', '--', '&deg;C'],
+        ['to-g-w1-alt1-temp1', Math.ceil(data.takeoff.uncorrectedGround.data['1D1'][temperatures[0]+'-raw'][1]), 'm'],
+        ['to-g-w1-alt1-temp2', Math.ceil(data.takeoff.uncorrectedGround.data['1D1'][temperatures[1]+'-raw'][1]), 'm'],
+        ['to-g-w1-alt2-temp1', Math.ceil(data.takeoff.uncorrectedGround.data['1D1'][temperatures[0]+'-raw'][0]), 'm'],
+        ['to-g-w1-alt2-temp2', Math.ceil(data.takeoff.uncorrectedGround.data['1D1'][temperatures[1]+'-raw'][0]), 'm'],
+        ['to-g-w1-alt3-temp1', Math.ceil(data.takeoff.uncorrectedGround.data['1D1'][temperatures[0]]), 'm'],
+        ['to-g-w1-alt3-temp2', Math.ceil(data.takeoff.uncorrectedGround.data['1D1'][temperatures[1]]), 'm'],
+        ['to-g-w1-alt3-temp3', Math.ceil(data.takeoff.uncorrectedGround.data['2D'][weights[1]]), 'm'],
+
+        ['to-g-w2-alt1-temp1', Math.ceil(data.takeoff.uncorrectedGround.data['1D2'][temperatures[0]+'-raw'][1]), 'm'],
+        ['to-g-w2-alt1-temp2', Math.ceil(data.takeoff.uncorrectedGround.data['1D2'][temperatures[1]+'-raw'][1]), 'm'],
+        ['to-g-w2-alt2-temp1', Math.ceil(data.takeoff.uncorrectedGround.data['1D2'][temperatures[0]+'-raw'][0]), 'm'],
+        ['to-g-w2-alt2-temp2', Math.ceil(data.takeoff.uncorrectedGround.data['1D2'][temperatures[1]+'-raw'][0]), 'm'],
+        ['to-g-w2-alt3-temp1', Math.ceil(data.takeoff.uncorrectedGround.data['1D2'][temperatures[0]]), 'm'],
+        ['to-g-w2-alt3-temp2', Math.ceil(data.takeoff.uncorrectedGround.data['1D2'][temperatures[1]]), 'm'],
+        ['to-g-w2-alt3-temp3', Math.ceil(data.takeoff.uncorrectedGround.data['2D'][weights[0]]), 'm'],
     ];
 
     updateUIValues(takeOffLandingUIPairs);
@@ -455,7 +473,6 @@ function calculateGradientVx(pa, isaDeviation, tom) {
 }
 
 function calculateGradientVySe(pa, isaDeviation, tom) {
-    debugger;
     var ias = calculateVySe(pa, isaDeviation, tom).result
     if (!useCalculatedClimbSpeedsInGradients) {
         ias = stdVySe
@@ -529,6 +546,7 @@ function takeoffCorrectedCalculations(pa, isaDeviation, tom, slope)
 {
     var groundroll = calculateTakeOffGroundRoll(pa, isaDeviation, tom);
     var distance = calculateTakeOffDist(pa, isaDeviation, tom);
+    var altitudes = findKeysForInterpolation(pa, landingGroundMatrix[1230][0]);
     
     var windCorrection;
     if (useWindComponent) {
@@ -589,7 +607,8 @@ function takeoffCorrectedCalculations(pa, isaDeviation, tom, slope)
         'uncorrectedGround': groundroll,
         'groundroll': ((groundroll.result + sumCorrections) * 1.25),   //Groundroll in meters
         'distance': ((distance.result + sumCorrections) * 1.25),       //Distance to 50ft in meters
-        'corrections': corrections                                     //List of all corrections applied
+        'corrections': corrections,                                    //List of all corrections applied
+        'altitudes': altitudes
     };
 }
 
@@ -661,7 +680,6 @@ function landingCorrectedCalculations(pa, isaDeviation, tom, slope) {
 
 function calculateAll(pe, pa, msa, isaDeviation, tom, useTwoThirds)
 {
-    debugger;
     var rocAltitude = msa;
     if (!useMSAROC) {
         rocAltitude = (pa - pe) / 3 * 2 + pe;
