@@ -141,9 +141,16 @@ function calculateFromInputs()
         //['to-angle-vx',(Math.floor(data.angleToVx * 100)/100),'&#176'],   //Calculation not yet made
         ['useMSAOrNotTxt', (useMSAROC ? 'MSA' : '2/3 cruise alt.'), ''],
 
-        ['to-temp1', temperatures[0], '&deg;C'],
-        ['to-temp2', temperatures[1], '&deg;C'],
-        ['to-temp3', '--', '&deg;C'],
+        ['to-temp1', data.takeoff.uncorrectedGround.keys.temp1, '&deg;C'],
+        ['to-temp2', data.takeoff.uncorrectedGround.keys.temp2, '&deg;C'],
+        ['to-temp3', data.takeoff.uncorrectedGround.keys.temp3, '&deg;C'],
+        ['to-alt1', data.takeoff.uncorrectedGround.keys.alt1, 'ft'],
+        ['to-alt2', data.takeoff.uncorrectedGround.keys.alt2, 'ft'],
+        ['to-alt3', data.takeoff.uncorrectedGround.keys.alt3, 'ft'],
+        ['to-mass1', data.takeoff.uncorrectedGround.keys.mass1, 'kg'],
+        ['to-mass2', data.takeoff.uncorrectedGround.keys.mass2, 'kg'],
+        ['to-mass3', data.takeoff.uncorrectedGround.keys.mass3, 'kg'],
+
         ['to-g-w1-alt1-temp1', Math.ceil(data.takeoff.uncorrectedGround.data['1D1'][temperatures[0]+'-raw'][1]), 'm'],
         ['to-g-w1-alt1-temp2', Math.ceil(data.takeoff.uncorrectedGround.data['1D1'][temperatures[1]+'-raw'][1]), 'm'],
         ['to-g-w1-alt2-temp1', Math.ceil(data.takeoff.uncorrectedGround.data['1D1'][temperatures[0]+'-raw'][0]), 'm'],
@@ -347,10 +354,14 @@ function interpolate3D(pressureAltitudeInput, degreeInput, massInput, matrixData
         'keys': {
             'mass1': mass1,
             'mass2': mass2,
-            'temp1': degree1,
-            'temp2': degree2,
-            'alt1': pressureAltitude1,
-            'alt2': pressureAltitude2
+            'mass3': massInput,
+            'temp1': degree2,
+            'temp2': degree1,
+            'temp3': degreeInput,
+            'alt1': pressureAltitude2 * matrixData.spacing,
+            'alt2': pressureAltitude1 * matrixData.spacing,
+            'alt3': pressureAltitudeInput,
+            'altSpacing': matrixData.spacing
         }
     };
 };
