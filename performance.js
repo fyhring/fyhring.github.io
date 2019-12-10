@@ -108,62 +108,62 @@ function calculateFromInputs()
     var weights = Object.keys(data.takeoff.uncorrectedGround.data['2D']);
     console.log(weights);
 
-    var takeOffLandingUIPairs = [
-        ['to-groundroll', Math.ceil(data.takeoff.groundroll), 'm'],
-        ['to-distance', Math.ceil(data.takeoff.distance), 'm'],
-        ['ldg-groundroll', Math.ceil(data.landing.groundroll), 'm'],
-        ['ldg-distance', Math.ceil(data.landing.distance), 'm'],
-        ['oei-serviceceil', ceilingCheck(data.OEIserviceCeiling), 'ft'],
-        ['oei-absceil', ceilingCheck(data.OEIabsoluteCeiling), 'ft'],
-        ['vyse', Math.round(data.VySe), 'kias'],
-        ['roc-vyse', Math.floor(data.rocVySe), 'fpm'],
-        ['grad-vyse',(Math.floor(data.gradVySe * 10000)/100),'%'],
-        ['angle-vyse',(Math.floor(data.angleVySe * 100)/100),'&#176'],
-        ['vy',Math.round(data.Vy),'kias'],
-        ['roc-vy', Math.floor(data.rocVy), 'fpm'],
-        ['grad-vy',(Math.floor(data.gradVy * 10000)/100),'%'],
-        ['angle-vy',(Math.floor(data.angleVy * 100)/100),'&#176'],
-        ['to-vy',Math.round(data.toVy),'kias'],
-        ['to-roc-vy',Math.round(data.toRocVy),'fpm'],
-        ['to-grad-vy',(Math.floor(data.toGradVy * 10000)/100),'%'],
-        //['to-angle-vy',(Math.floor(data.angleToVy * 100)/100),'&#176'],   //Calculation not yet made
-        ['vxse', Math.round(data.VxSe), 'kias'],
-        ['roc-vxse', Math.floor(data.rocVxSe), 'fpm'],
-        ['grad-vxse',(Math.floor(data.gradVxSe * 10000)/100),'%'],
-        ['angle-vxse',(Math.floor(data.angleVxSe * 100)/100),'&#176'],
-        ['vx',Math.round(data.Vx),'kias'],
-        ['roc-vx', Math.floor(data.rocVx), 'fpm'],
-        ['grad-vx',(Math.floor(data.gradVx * 10000)/100),'%'],
-        ['angle-vx',(Math.floor(data.angleVx * 100)/100),'&#176'],
-        ['to-vx',Math.round(data.toVx),'kias'],
-        ['to-roc-vx',Math.round(data.toRocVx),'fpm'],
-        ['to-grad-vx',(Math.floor(data.toGradVx * 10000)/100),'%'],
-        //['to-angle-vx',(Math.floor(data.angleToVx * 100)/100),'&#176'],   //Calculation not yet made
-        ['useMSAOrNotTxt', (useMSAROC ? 'MSA' : '2/3 cruise alt.'), ''],
+    var takeOffLandingUIPairs = {
+        'to-groundroll': ['to-groundroll', Math.ceil(data.takeoff.groundroll), 'm'],
+        'to-distance': ['to-distance', Math.ceil(data.takeoff.distance), 'm'],
+        'ldg-groundroll': ['ldg-groundroll', Math.ceil(data.landing.groundroll), 'm'],
+        'ldg-distance': ['ldg-distance', Math.ceil(data.landing.distance), 'm'],
+        'oei-serviceceil': ['oei-serviceceil', ceilingCheck(data.OEIserviceCeiling), 'ft'],
+        'oei-absceil': ['oei-absceil', ceilingCheck(data.OEIabsoluteCeiling), 'ft'],
+        'vyse': ['vyse', Math.round(data.VySe), 'kias'],
+        'roc-vyse': ['roc-vyse', Math.floor(data.rocVySe), 'fpm'],
+        'grad-vyse': ['grad-vyse',(Math.floor(data.gradVySe * 10000)/100),'%'],
+        'angle-vyse': ['angle-vyse',(Math.floor(data.angleVySe * 100)/100),'&#176'],
+        'vy': ['vy',Math.round(data.Vy),'kias'],
+        'roc-vy': ['roc-vy', Math.floor(data.rocVy), 'fpm'],
+        'grad-vy': ['grad-vy',(Math.floor(data.gradVy * 10000)/100),'%'],
+        'angle-vy': ['angle-vy',(Math.floor(data.angleVy * 100)/100),'&#176'],
+        'o-vy': ['to-vy',Math.round(data.toVy),'kias'],
+        'to-roc-vy': ['to-roc-vy',Math.round(data.toRocVy),'fpm'],
+        'to-grad-vy': ['to-grad-vy',(Math.floor(data.toGradVy * 10000)/100),'%'],
+        //'to-angle-vy': ['to-angle-vy',(Math.floor(data.angleToVy * 100)/100),'&#176'],   //Calculation not yet made
+        'vxse': ['vxse', Math.round(data.VxSe), 'kias'],
+        'roc-vxse': ['roc-vxse', Math.floor(data.rocVxSe), 'fpm'],
+        'grad-vxse': ['grad-vxse',(Math.floor(data.gradVxSe * 10000)/100),'%'],
+        'angle-vxse': ['angle-vxse',(Math.floor(data.angleVxSe * 100)/100),'&#176'],
+        'vx': ['vx',Math.round(data.Vx),'kias'],
+        'roc-vx': ['roc-vx', Math.floor(data.rocVx), 'fpm'],
+        'grad-vx': ['grad-vx',(Math.floor(data.gradVx * 10000)/100),'%'],
+        'angle-vx': ['angle-vx',(Math.floor(data.angleVx * 100)/100),'&#176'],
+        'to-vx': ['to-vx',Math.round(data.toVx),'kias'],
+        'to-roc-vx': ['to-roc-vx',Math.round(data.toRocVx),'fpm'],
+        'to-grad-vx': ['to-grad-vx',(Math.floor(data.toGradVx * 10000)/100),'%'],
+        //'to-angle-vx': ['to-angle-vx',(Math.floor(data.angleToVx * 100)/100),'&#176'],   //Calculation not yet made
+        'useMSAOrNotTxt': ['useMSAOrNotTxt', (useMSAROC ? 'MSA' : '2/3 cruise alt.'), ''],
 
-        ['to-temp1', temperatures[0], '&deg;C'],
-        ['to-temp2', temperatures[1], '&deg;C'],
-        ['to-temp3', '--', '&deg;C'],
-        ['to-g-w1-alt1-temp1', Math.ceil(data.takeoff.uncorrectedGround.data['1D1'][temperatures[0]+'-raw'][1]), 'm'],
-        ['to-g-w1-alt1-temp2', Math.ceil(data.takeoff.uncorrectedGround.data['1D1'][temperatures[1]+'-raw'][1]), 'm'],
-        ['to-g-w1-alt2-temp1', Math.ceil(data.takeoff.uncorrectedGround.data['1D1'][temperatures[0]+'-raw'][0]), 'm'],
-        ['to-g-w1-alt2-temp2', Math.ceil(data.takeoff.uncorrectedGround.data['1D1'][temperatures[1]+'-raw'][0]), 'm'],
-        ['to-g-w1-alt3-temp1', Math.ceil(data.takeoff.uncorrectedGround.data['1D1'][temperatures[0]]), 'm'],
-        ['to-g-w1-alt3-temp2', Math.ceil(data.takeoff.uncorrectedGround.data['1D1'][temperatures[1]]), 'm'],
-        ['to-g-w1-alt3-temp3', Math.ceil(data.takeoff.uncorrectedGround.data['2D'][weights[1]]), 'm'],
+        'to-temp1': ['to-temp1', temperatures[0], '&deg;C'],
+        'to-temp2': ['to-temp2', temperatures[1], '&deg;C'],
+        'to-temp3': ['to-temp3', '--', '&deg;C'],
+        'to-g-w1-alt1-temp1': ['to-g-w1-alt1-temp1', Math.ceil(data.takeoff.uncorrectedGround.data['1D1'][temperatures[0]+'-raw'][1]), 'm'],
+        'to-g-w1-alt1-temp2': ['to-g-w1-alt1-temp2', Math.ceil(data.takeoff.uncorrectedGround.data['1D1'][temperatures[1]+'-raw'][1]), 'm'],
+        'to-g-w1-alt2-temp1': ['to-g-w1-alt2-temp1', Math.ceil(data.takeoff.uncorrectedGround.data['1D1'][temperatures[0]+'-raw'][0]), 'm'],
+        'to-g-w1-alt2-temp2': ['to-g-w1-alt2-temp2', Math.ceil(data.takeoff.uncorrectedGround.data['1D1'][temperatures[1]+'-raw'][0]), 'm'],
+        'to-g-w1-alt3-temp1': ['to-g-w1-alt3-temp1', Math.ceil(data.takeoff.uncorrectedGround.data['1D1'][temperatures[0]]), 'm'],
+        'to-g-w1-alt3-temp2': ['to-g-w1-alt3-temp2', Math.ceil(data.takeoff.uncorrectedGround.data['1D1'][temperatures[1]]), 'm'],
+        'to-g-w1-alt3-temp3': ['to-g-w1-alt3-temp3', Math.ceil(data.takeoff.uncorrectedGround.data['2D'][weights[1]]), 'm'],
 
-        ['to-g-w2-alt1-temp1', Math.ceil(data.takeoff.uncorrectedGround.data['1D2'][temperatures[0]+'-raw'][1]), 'm'],
-        ['to-g-w2-alt1-temp2', Math.ceil(data.takeoff.uncorrectedGround.data['1D2'][temperatures[1]+'-raw'][1]), 'm'],
-        ['to-g-w2-alt2-temp1', Math.ceil(data.takeoff.uncorrectedGround.data['1D2'][temperatures[0]+'-raw'][0]), 'm'],
-        ['to-g-w2-alt2-temp2', Math.ceil(data.takeoff.uncorrectedGround.data['1D2'][temperatures[1]+'-raw'][0]), 'm'],
-        ['to-g-w2-alt3-temp1', Math.ceil(data.takeoff.uncorrectedGround.data['1D2'][temperatures[0]]), 'm'],
-        ['to-g-w2-alt3-temp2', Math.ceil(data.takeoff.uncorrectedGround.data['1D2'][temperatures[1]]), 'm'],
-        ['to-g-w2-alt3-temp3', Math.ceil(data.takeoff.uncorrectedGround.data['2D'][weights[0]]), 'm'],
-    ];
+        'to-g-w2-alt1-temp1': ['to-g-w2-alt1-temp1', Math.ceil(data.takeoff.uncorrectedGround.data['1D2'][temperatures[0]+'-raw'][1]), 'm'],
+        'to-g-w2-alt1-temp2': ['to-g-w2-alt1-temp2', Math.ceil(data.takeoff.uncorrectedGround.data['1D2'][temperatures[1]+'-raw'][1]), 'm'],
+        'to-g-w2-alt2-temp1': ['to-g-w2-alt2-temp1', Math.ceil(data.takeoff.uncorrectedGround.data['1D2'][temperatures[0]+'-raw'][0]), 'm'],
+        'to-g-w2-alt2-temp2': ['to-g-w2-alt2-temp2', Math.ceil(data.takeoff.uncorrectedGround.data['1D2'][temperatures[1]+'-raw'][0]), 'm'],
+        'to-g-w2-alt3-temp1': ['to-g-w2-alt3-temp1', Math.ceil(data.takeoff.uncorrectedGround.data['1D2'][temperatures[0]]), 'm'],
+        'to-g-w2-alt3-temp2': ['to-g-w2-alt3-temp2', Math.ceil(data.takeoff.uncorrectedGround.data['1D2'][temperatures[1]]), 'm'],
+        'to-g-w2-alt3-temp3': ['to-g-w2-alt3-temp3', Math.ceil(data.takeoff.uncorrectedGround.data['2D'][weights[0]]), 'm'],
+    };
 
     updateUIValues(takeOffLandingUIPairs);
 
-    $('.to-g-w1-temp1-equation').html(MathJax.tex2svg('\\frac{1}{x^2-1}', {display: true}));
+    $('.to-g-w1-temp1-equation').html(MathJax.tex2svg('value_{1230kg ,'+ temperatures[0] +'} = \\frac{ '+ takeOffLandingUIPairs['to-g-w1-alt1-temp1'] +' - value_{low} }{ altitude_{high} - altitude_{low} } \\cdot (altitude_{actual} - altitude_{low})+value_{low}', {display: true}));
 }
 
 function ceilingCheck(ceiling)
