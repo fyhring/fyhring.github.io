@@ -331,7 +331,6 @@ function calculateGradient(roc,gs){
     return roc / (gs / 60 * 6076)
 }
 
-
 // Functions for specifics
 
 //Takeoff distances
@@ -408,19 +407,13 @@ function calculateRocVx(pa, isaDeviation, tom) {
     return interpolate3D(pa, sfcTemp, tom, ROCVxMatrix)
 }
 
-function calculateRocVySe(pa, isaDeviation, tom, useTwoThirds) {
+function calculateRocVySe(pa, isaDeviation, tom) {
     var sfcTemp = isaDeviation + 15;
-    var altitude = pa;
-
-    if (useTwoThirds && !useMSAROC) {
-        altitude = pa / 3 * 2;
-    }
-
-    return interpolate3D(altitude, sfcTemp, tom, ROCVySeMatrix);
+    return interpolate3D(pa, sfcTemp, tom, ROCVySeMatrix);
 }
 
 function calculateRocVxSe(pa, isaDeviation, tom) {
-    var sfcTemp = isaDeviation + 15
+    var sfcTemp = isaDeviation + 15;
     return interpolate3D(pa, sfcTemp, tom, ROCVxSeMatrix)
 }
 
@@ -462,11 +455,12 @@ function calculateGradientVx(pa, isaDeviation, tom) {
 }
 
 function calculateGradientVySe(pa, isaDeviation, tom) {
+    debugger;
     var ias = calculateVySe(pa, isaDeviation, tom).result
     if (!useCalculatedClimbSpeedsInGradients) {
         ias = stdVySe
     }
-    var roc = calculateRocVySe(pa, isaDeviation, tom).result
+    var roc = calculateRocVySe(pa, isaDeviation, tom, true).result
     return calculateGradient(roc, ias)
 }
 
@@ -665,11 +659,12 @@ function landingCorrectedCalculations(pa, isaDeviation, tom, slope) {
     };
 }
 
-function calculateAll(pe, pa, msa, isaDeviation, tom)
+function calculateAll(pe, pa, msa, isaDeviation, tom, useTwoThirds)
 {
-    var rocAltitude = pa;
-    if (useMSAROC) {
-        rocAltitude = msa;
+    debugger;
+    var rocAltitude = msa;
+    if (!useMSAROC) {
+        rocAltitude = (pa - pe) / 3 * 2 + pe;
     }
 
     return {
