@@ -35,6 +35,7 @@ $(document).ready(function()
     $('#performanceForm input').on('change', function(e)
     {
         calculateFromInputs();
+        MathJax.typeset();
     });
 });
 
