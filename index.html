@@ -153,6 +153,11 @@
             height: 350px;
         }
 
+        .jump-to-heading {
+            margin-top: 15px;
+            margin-bottom: 5px;
+        }
+
     </style>
 </head>
 <body>
@@ -544,12 +549,21 @@
         </div>
         <div class="tab-pane fade" id="resultsTab" role="tabpanel">
             <h3>Results &amp; Interpolation Data</h3>
+
+            <p class="jump-to-heading">Jump to section:</p>
+            <ul>
+                <li><a href="#take-off-ground">Take-off Groundroll</a></li>
+                <li><a href="#take-off-distance">Take-off Distance</a></li>
+                <li><a href="#take-off-corrections">Take-off Corrections</a></li>
+            </ul>
+
+            <p>&nbsp;</p>
             <hr />
 
-            <div class="row">
+            <div class="row" id="take-off-ground">
                 <div class="col-sm-6">
-                    <h4>Take-Off <small>Ground distance</small></h4>
-                    <b class="to-mass1">1230kg</b>
+                    <h4>Take-Off <small class="text-muted">Groundroll</small></h4>
+                    <b class="to-mass1">-</b>
                     <div class="result-weight-sector">
                         <table class="table table-sm">
                             <thead class="">
@@ -561,17 +575,17 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td class="to-alt1">S.L</td>
+                                    <td class="to-alt1">-</td>
                                     <td class="to-g-w1-alt1-temp1">-</td>
                                     <td class="to-g-w1-alt1-temp2">-</td>
                                 </tr>
                                 <tr>
-                                    <td class="to-alt2">1000</td>
+                                    <td class="to-alt2">-</td>
                                     <td class="to-g-w1-alt2-temp1">-</td>
                                     <td class="to-g-w1-alt2-temp2">-</td>
                                 </tr>
                                 <tr class="table-secondary">
-                                    <td class="to-alt3">469</td>
+                                    <td class="to-alt3">-</td>
                                     <td class="to-g-w1-alt3-temp1">-</td>
                                     <td class="to-g-w1-alt3-temp2">-</td>
                                 </tr>
@@ -595,7 +609,7 @@
                         </table>
                     </div>
 
-                    <b class="to-mass2">1080kg</b>
+                    <b class="to-mass2">-</b>
                     <div class="result-weight-sector">
                         <table class="table table-sm">
                             <thead class="">
@@ -607,12 +621,12 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td class="to-alt1">S.L</td>
+                                    <td class="to-alt1">-</td>
                                     <td class="to-g-w2-alt1-temp1">-</td>
                                     <td class="to-g-w2-alt1-temp2">-</td>
                                 </tr>
                                 <tr>
-                                    <td class="to-alt2">1000</td>
+                                    <td class="to-alt2">-</td>
                                     <td class="to-g-w2-alt2-temp1">-</td>
                                     <td class="to-g-w2-alt2-temp2">-</td>
                                 </tr>
@@ -640,7 +654,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <b class="to-mass3">1203kg</b>
+                    <b class="to-mass3">-</b>
                     <div class="result-weight-sector">
                         <table class="table table-sm">
                             <thead>
@@ -675,6 +689,137 @@
                     <div class="to-g-w3-temp3-equation"></div>
                 </div>
             </div>
+
+            <hr />
+            <div class="row" id="take-off-distance">
+                    <div class="col-sm-6">
+                        <h4>Take-Off <small class="text-muted">50ft Distance</small></h4>
+                        <b class="to-mass1">-</b>
+                        <div class="result-weight-sector">
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>PA.</th>
+                                        <th class="to-temp1">Temp 1</th>
+                                        <th class="to-temp2">Temp 2</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="to-alt1">-</td>
+                                        <td class="to-d-w1-alt1-temp1">-</td>
+                                        <td class="to-d-w1-alt1-temp2">-</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="to-alt2">-</td>
+                                        <td class="to-d-w1-alt2-temp1">-</td>
+                                        <td class="to-d-w1-alt2-temp2">-</td>
+                                    </tr>
+                                    <tr class="table-secondary">
+                                        <td class="to-alt3">-</td>
+                                        <td class="to-d-w1-alt3-temp1">-</td>
+                                        <td class="to-d-w1-alt3-temp2">-</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table class="table table-sm">
+                                <thead>
+                                    <th>PA.</th>
+                                    <th class="to-temp1">Temp 1</th>
+                                    <th class="to-temp2">Temp 2</th>
+                                    <th class="to-temp3">Temp 3</th>
+                                </thead>
+                                <tbody>
+                                    <tr class="table-secondary">
+                                        <td class="to-alt3">-</td>
+                                        <td class="to-d-w1-alt3-temp1">-</td>
+                                        <td class="to-d-w1-alt3-temp2">-</td>
+                                        <td class="to-d-w1-alt3-temp3">-</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+    
+                        <b class="to-mass2">-</b>
+                        <div class="result-weight-sector">
+                            <table class="table table-sm">
+                                <thead class="">
+                                    <tr>
+                                        <th>PA.</th>
+                                        <th class="to-temp1">Temp 1</th>
+                                        <th class="to-temp2">Temp 2</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="to-alt1">-</td>
+                                        <td class="to-d-w2-alt1-temp1">-</td>
+                                        <td class="to-d-w2-alt1-temp2">-</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="to-alt2">-</td>
+                                        <td class="to-d-w2-alt2-temp1">-</td>
+                                        <td class="to-d-w2-alt2-temp2">-</td>
+                                    </tr>
+                                    <tr class="table-secondary">
+                                        <td class="to-alt3">-</td>
+                                        <td class="to-d-w2-alt3-temp1">-</td>
+                                        <td class="to-d-w2-alt3-temp2">-</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table class="table table-sm">
+                                <thead>
+                                    <th>PA</th>
+                                    <th class="to-temp1">Temp 1</th>
+                                    <th class="to-temp2">Temp 2</th>
+                                    <th class="to-temp3">Temp 3</th>
+                                </thead>
+                                <tbody>
+                                    <tr class="table-secondary">
+                                        <td class="to-alt3">-</td>
+                                        <td class="to-d-w2-alt3-temp1">-</td>
+                                        <td class="to-d-w2-alt3-temp2">-</td>
+                                        <td class="to-d-w2-alt3-temp3">-</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <b class="to-mass3">-</b>
+                        <div class="result-weight-sector">
+                            <table class="table table-sm">
+                                <thead>
+                                    <th>PA</th>
+                                    <th class="to-mass1">Mass 1</th>
+                                    <th class="to-mass2">Mass 2</th>
+                                    <th class="to-mass3">Mass 3</th>
+                                </thead>
+                                <tbody>
+                                    <tr class="table-secondary">
+                                        <td class="to-alt3">-</td>
+                                        <td class="to-d-w1-alt3-temp3">-</td>
+                                        <td class="to-d-w2-alt3-temp3">-</td>
+                                        <td class="to-d-w3-alt3-temp3">-</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div style="margin-top: 30px;">&nbsp;</div>
+                        <div class="to-d-w1-temp1-equation"></div>
+                        <div class="to-d-w1-temp2-equation"></div>
+                        <hr>
+                        <div class="to-d-w1-temp3-equation"></div>
+                        <br><br>
+                        <div class="to-d-w2-temp1-equation"></div>
+                        <div class="to-d-w2-temp2-equation"></div>
+                        <hr>
+                        <div class="to-d-w2-temp3-equation"></div>
+                        <br><br>
+                        <div class="to-d-w3-temp3-equation"></div>
+                    </div>
+                </div>
 
         </div>
     </div>
