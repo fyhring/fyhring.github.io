@@ -183,17 +183,14 @@
         <div class="tab-pane fade show active" id="home" role="tabpanel">
             <h1>P2006T Calculator</h1>
             <h4 class="text-secondary">Calculate performance, mass &amp; balance for Tecnam P2006T</h4>
+            <p><em><font size="2">Use this calculator with caution at your own risk. We strive to ensure everything is correct as long as you're within AFM parameters.</font></em></p>
 
             <div class="aircraft_image_wrapper">
                 <img src="./NASA_P2006T_image.jpg" class="img-fluid" />
                 <figcaption class="text-secondary ">Credit: NASA Photo/Carla Thomas.</figcaption>
             </div>
-
-            <p>&nbsp;</p>
-            <p><em>Use this calculator with caution at your own risk. We strive to ensure everything is correct as long as you're within AFM parameters.</em></p>
-            
-            <p>&nbsp;</p>
-            <p>On the following tabs (above), you will find calculations for:</p>
+            <br>
+            <h5>This site contains the following calculations</h5>
             <ul>
                 <li>Mass & Balance; using the graph from the AFM</li>
                 <li>Performance tab:
@@ -207,8 +204,9 @@
                 <li>
                     Results gives detailed information about the interpolation, including all meta data.
                 </li>
-            </ul> <br>
-            <p>The Takeoff and landing groundroll and distance data is interpolated by use of the following equations: </p>
+            </ul>
+            <h5>Methods of calculation</h5>
+            <h6>Takeoff and landing groundroll and distance interpolation </h6>
             <ul>
                 <li>First, the distances are interpolated between altitudes, for each temperature and weight:<br>
                     $$value_{actual} = {value_{high} - value_{low} \over altitude_{high} - altitude_{low}} \cdot (altitude_{actual} - altitude_{low})+value_{low}$$</li>
@@ -217,6 +215,8 @@
                 <li>Finally, the result of those formulas are interpolated between weights:<br>
                     $$value_{actual} = {value_{heavy} - value_{light} \over mass_{heavy} - mass_{light}} \cdot (mass_{actual} - mass_{light})+value_{light}$$</li>
             </ul>
+            <h6>Other calculations</h6>
+            .....
 
         </div>
         <div class="tab-pane fade" id="massAndBalanceTab" role="tabpanel">
