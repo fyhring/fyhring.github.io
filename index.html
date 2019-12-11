@@ -128,6 +128,22 @@
             outline: none;
         }
 
+        .settings-box {
+            border: 1px solid #ccc;
+            background: rgba(236, 236, 236, 0.3);
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+
+        .settings-box label {
+            cursor: pointer;
+        }
+
+        .settings-box label:hover {
+            cursor: pointer;
+            color: #607D8B;
+        }
+
     </style>
 </head>
 <body>
@@ -382,7 +398,7 @@
                     </div>    
                 </div>
                 <div class="settings">
-                    <details>
+                    <details class="settings-box">
                         <summary>Settings</summary>
                         <div class="custom-control custom-switch">
                             <input type="checkbox" class="custom-control-input" id="useMSA" />
