@@ -106,7 +106,6 @@ function calculateFromInputs()
 
     var temperatures = Object.keys(data.takeoff.uncorrectedGround.data['1D1']);
     var weights = Object.keys(data.takeoff.uncorrectedGround.data['2D']);
-    console.log(weights);
 
     var takeOffLandingUIPairs = {
         'to-groundroll': [Math.ceil(data.takeoff.groundroll), 'm'],
@@ -195,7 +194,7 @@ function calculateFromInputs()
         'to-corrections-sloped-rwy': [Math.ceil(data.takeoff.corrections.slopeCorrection), 'm'],
         'to-corrections-soft-rwy': [Math.ceil(data.takeoff.corrections.softSfcCorrection), 'm'],
         'to-corrections-wind': [Math.ceil(data.takeoff.corrections.windCorrection), 'm'],
-        'to-corrections-combined': [Math.ceil(data.takeoff.corrections.combined), 'm'],
+        'to-corrections-combined': [floorOrCeil(data.takeoff.corrections.combined), 'm'],
 
         'to-g-corrected': [Math.ceil(data.takeoff.uncorrectedGround.data['3D']['result'] + data.takeoff.corrections.combined), 'm'],
         'to-d-corrected': [Math.ceil(data.takeoff.uncorrectedDist.data['3D']['result'] + data.takeoff.corrections.combined), 'm'],
@@ -219,6 +218,15 @@ function calculateFromInputs()
     $('.to-g-w2-temp3-equation').html(MathJax.tex2svg('\\frac{ '+ takeOffLandingUIPairs['to-g-w2-alt3-temp2'][0] +'m - '+ takeOffLandingUIPairs['to-g-w2-alt3-temp1'][0] +'m }{ '+ takeOffLandingUIPairs['to-temp2'][0] +'^\\circ C - '+ takeOffLandingUIPairs['to-temp1'][0] +'^\\circ C } \\cdot ('+ takeOffLandingUIPairs['to-temp3'][0] +'^\\circ C - '+ takeOffLandingUIPairs['to-temp1'][0] +'^\\circ C) + '+ takeOffLandingUIPairs['to-g-w2-alt3-temp1'][0] +'m = '+ takeOffLandingUIPairs['to-g-w2-alt3-temp3'][0] +'m', {display: true}));
     //Interpolation between masses
     $('.to-g-w3-temp3-equation').html(MathJax.tex2svg('\\frac{ '+ takeOffLandingUIPairs['to-g-w1-alt3-temp3'][0] +'m - '+ takeOffLandingUIPairs['to-g-w2-alt3-temp3'][0] +'m }{ '+ takeOffLandingUIPairs['to-mass1'][0] +'kg - '+ takeOffLandingUIPairs['to-mass2'][0] +'kg } \\cdot ('+ takeOffLandingUIPairs['to-mass3'][0] +'kg - '+ takeOffLandingUIPairs['to-mass2'][0] +'kg) + '+ takeOffLandingUIPairs['to-g-w2-alt3-temp3'][0] +'m = '+ takeOffLandingUIPairs['to-g-w3-alt3-temp3'][0] +'m', {display: true}));
+}
+
+function floorOrCeil(value)
+{
+    if (value > 0) {
+        return Math.ceil(value);
+    }
+
+    return Math.floor(value);
 }
 
 function ceilingCheck(ceiling)
