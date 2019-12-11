@@ -14,7 +14,7 @@ var useSoftSfc = false;
 var useSnowCorrection = false;
 var useSlope = false;
 var useWindComponent = true;
-var useIncreaedAppSpeed = true;
+var useIncreasedAppSpeed = true;
 var useMSAROC = false;
 var useCalculatedClimbSpeedsInGradients = false;
 
@@ -109,82 +109,116 @@ function calculateFromInputs()
     console.log(weights);
 
     var takeOffLandingUIPairs = {
-        'to-groundroll': ['to-groundroll', Math.ceil(data.takeoff.groundroll), 'm'],
-        'to-distance': ['to-distance', Math.ceil(data.takeoff.distance), 'm'],
-        'ldg-groundroll': ['ldg-groundroll', Math.ceil(data.landing.groundroll), 'm'],
-        'ldg-distance': ['ldg-distance', Math.ceil(data.landing.distance), 'm'],
-        'oei-serviceceil': ['oei-serviceceil', ceilingCheck(data.OEIserviceCeiling), 'ft'],
-        'oei-absceil': ['oei-absceil', ceilingCheck(data.OEIabsoluteCeiling), 'ft'],
-        'vyse': ['vyse', Math.round(data.VySe), 'kias'],
-        'roc-vyse': ['roc-vyse', Math.floor(data.rocVySe), 'fpm'],
-        'grad-vyse': ['grad-vyse',(Math.floor(data.gradVySe * 10000)/100),'%'],
-        'angle-vyse': ['angle-vyse',(Math.floor(data.angleVySe * 100)/100),'&#176'],
-        'vy': ['vy',Math.round(data.Vy),'kias'],
-        'roc-vy': ['roc-vy', Math.floor(data.rocVy), 'fpm'],
-        'grad-vy': ['grad-vy',(Math.floor(data.gradVy * 10000)/100),'%'],
-        'angle-vy': ['angle-vy',(Math.floor(data.angleVy * 100)/100),'&#176'],
-        'o-vy': ['to-vy',Math.round(data.toVy),'kias'],
-        'to-roc-vy': ['to-roc-vy',Math.round(data.toRocVy),'fpm'],
-        'to-grad-vy': ['to-grad-vy',(Math.floor(data.toGradVy * 10000)/100),'%'],
-        //'to-angle-vy': ['to-angle-vy',(Math.floor(data.angleToVy * 100)/100),'&#176'],   //Calculation not yet made
-        'vxse': ['vxse', Math.round(data.VxSe), 'kias'],
-        'roc-vxse': ['roc-vxse', Math.floor(data.rocVxSe), 'fpm'],
-        'grad-vxse': ['grad-vxse',(Math.floor(data.gradVxSe * 10000)/100),'%'],
-        'angle-vxse': ['angle-vxse',(Math.floor(data.angleVxSe * 100)/100),'&#176'],
-        'vx': ['vx',Math.round(data.Vx),'kias'],
-        'roc-vx': ['roc-vx', Math.floor(data.rocVx), 'fpm'],
-        'grad-vx': ['grad-vx',(Math.floor(data.gradVx * 10000)/100),'%'],
-        'angle-vx': ['angle-vx',(Math.floor(data.angleVx * 100)/100),'&#176'],
-        'to-vx': ['to-vx',Math.round(data.toVx),'kias'],
-        'to-roc-vx': ['to-roc-vx',Math.round(data.toRocVx),'fpm'],
-        'to-grad-vx': ['to-grad-vx',(Math.floor(data.toGradVx * 10000)/100),'%'],
-        //'to-angle-vx': ['to-angle-vx',(Math.floor(data.angleToVx * 100)/100),'&#176'],   //Calculation not yet made
-        'useMSAOrNotTxt': ['useMSAOrNotTxt', (useMSAROC ? 'MSA' : '2/3 cruise alt.'), ''],
+        'to-groundroll': [Math.ceil(data.takeoff.groundroll), 'm'],
+        'to-distance': [Math.ceil(data.takeoff.distance), 'm'],
+        'ldg-groundroll': [Math.ceil(data.landing.groundroll), 'm'],
+        'ldg-distance': [Math.ceil(data.landing.distance), 'm'],
+        'oei-serviceceil': [ceilingCheck(data.OEIserviceCeiling), 'ft'],
+        'oei-absceil': [ceilingCheck(data.OEIabsoluteCeiling), 'ft'],
+        'vyse': [Math.round(data.VySe), 'kias'],
+        'roc-vyse': [Math.floor(data.rocVySe), 'fpm'],
+        'grad-vyse': [(Math.floor(data.gradVySe * 10000)/100),'%'],
+        'angle-vyse': [(Math.floor(data.angleVySe * 100)/100),'&#176'],
+        'vy': [Math.round(data.Vy),'kias'],
+        'roc-vy': [Math.floor(data.rocVy), 'fpm'],
+        'grad-vy': [(Math.floor(data.gradVy * 10000)/100),'%'],
+        'angle-vy': [(Math.floor(data.angleVy * 100)/100),'&#176'],
+        'to-vy': [Math.round(data.toVy),'kias'],
+        'to-roc-vy': [Math.round(data.toRocVy),'fpm'],
+        'to-grad-vy': [(Math.floor(data.toGradVy * 10000)/100),'%'],
+        //'to-angle-vy': [(Math.floor(data.angleToVy * 100)/100),'&#176'],   //Calculation not yet made
+        'vxse': [Math.round(data.VxSe), 'kias'],
+        'roc-vxse': [Math.floor(data.rocVxSe), 'fpm'],
+        'grad-vxse': [(Math.floor(data.gradVxSe * 10000)/100),'%'],
+        'angle-vxse': [(Math.floor(data.angleVxSe * 100)/100),'&#176'],
+        'vx': [Math.round(data.Vx),'kias'],
+        'roc-vx': [Math.floor(data.rocVx), 'fpm'],
+        'grad-vx': [(Math.floor(data.gradVx * 10000)/100),'%'],
+        'angle-vx': [(Math.floor(data.angleVx * 100)/100),'&#176'],
+        'to-vx': [Math.round(data.toVx),'kias'],
+        'to-roc-vx': [Math.round(data.toRocVx),'fpm'],
+        'to-grad-vx': [(Math.floor(data.toGradVx * 10000)/100),'%'],
+        //'to-angle-vx': [(Math.floor(data.angleToVx * 100)/100),'&#176'],   //Calculation not yet made
+        'useMSAOrNotTxt': [(useMSAROC ? 'MSA' : '2/3 cruise alt.'), ''],
 
-        
-        'to-temp1': ['to-temp1', data.takeoff.uncorrectedGround.keys.temp1, '&deg;C'],
-        'to-temp2': ['to-temp2', data.takeoff.uncorrectedGround.keys.temp2, '&deg;C'],
-        'to-temp3': ['to-temp3', data.takeoff.uncorrectedGround.keys.temp3, '&deg;C'],
-        'to-alt1': ['to-alt1', data.takeoff.uncorrectedGround.keys.alt1, 'ft'],
-        'to-alt2': ['to-alt2', data.takeoff.uncorrectedGround.keys.alt2, 'ft'],
-        'to-alt3': ['to-alt3', data.takeoff.uncorrectedGround.keys.alt3, 'ft'],
-        'to-mass1': ['to-mass1', data.takeoff.uncorrectedGround.keys.mass1, 'kg'],
-        'to-mass2': ['to-mass2', data.takeoff.uncorrectedGround.keys.mass2, 'kg'],
-        'to-mass3': ['to-mass3', data.takeoff.uncorrectedGround.keys.mass3, 'kg'],
+        // General interpolation data
+        'to-temp1': [data.takeoff.uncorrectedGround.keys.temp1, '&deg;C'],
+        'to-temp2': [data.takeoff.uncorrectedGround.keys.temp2, '&deg;C'],
+        'to-temp3': [data.takeoff.uncorrectedGround.keys.temp3, '&deg;C'],
+        'to-alt1': [data.takeoff.uncorrectedGround.keys.alt1, 'ft'],
+        'to-alt2': [data.takeoff.uncorrectedGround.keys.alt2, 'ft'],
+        'to-alt3': [data.takeoff.uncorrectedGround.keys.alt3, 'ft'],
+        'to-mass1': [data.takeoff.uncorrectedGround.keys.mass1, 'kg'],
+        'to-mass2': [data.takeoff.uncorrectedGround.keys.mass2, 'kg'],
+        'to-mass3': [data.takeoff.uncorrectedGround.keys.mass3, 'kg'],
 
-        'to-g-w1-alt1-temp1': ['to-g-w1-alt1-temp1', Math.ceil(data.takeoff.uncorrectedGround.data['1D1'][temperatures[0]+'-raw'][1]), 'm'],
-        'to-g-w1-alt1-temp2': ['to-g-w1-alt1-temp2', Math.ceil(data.takeoff.uncorrectedGround.data['1D1'][temperatures[1]+'-raw'][1]), 'm'],
-        'to-g-w1-alt2-temp1': ['to-g-w1-alt2-temp1', Math.ceil(data.takeoff.uncorrectedGround.data['1D1'][temperatures[0]+'-raw'][0]), 'm'],
-        'to-g-w1-alt2-temp2': ['to-g-w1-alt2-temp2', Math.ceil(data.takeoff.uncorrectedGround.data['1D1'][temperatures[1]+'-raw'][0]), 'm'],
-        'to-g-w1-alt3-temp1': ['to-g-w1-alt3-temp1', Math.ceil(data.takeoff.uncorrectedGround.data['1D1'][temperatures[0]]), 'm'],
-        'to-g-w1-alt3-temp2': ['to-g-w1-alt3-temp2', Math.ceil(data.takeoff.uncorrectedGround.data['1D1'][temperatures[1]]), 'm'],
-        'to-g-w1-alt3-temp3': ['to-g-w1-alt3-temp3', Math.ceil(data.takeoff.uncorrectedGround.data['2D'][weights[1]]), 'm'],
+        // T/O Groundroll
+        'to-g-w1-alt1-temp1': [Math.ceil(data.takeoff.uncorrectedGround.data['1D1'][temperatures[0]+'-raw'][1]), 'm'],
+        'to-g-w1-alt1-temp2': [Math.ceil(data.takeoff.uncorrectedGround.data['1D1'][temperatures[1]+'-raw'][1]), 'm'],
+        'to-g-w1-alt2-temp1': [Math.ceil(data.takeoff.uncorrectedGround.data['1D1'][temperatures[0]+'-raw'][0]), 'm'],
+        'to-g-w1-alt2-temp2': [Math.ceil(data.takeoff.uncorrectedGround.data['1D1'][temperatures[1]+'-raw'][0]), 'm'],
+        'to-g-w1-alt3-temp1': [Math.ceil(data.takeoff.uncorrectedGround.data['1D1'][temperatures[0]]), 'm'],
+        'to-g-w1-alt3-temp2': [Math.ceil(data.takeoff.uncorrectedGround.data['1D1'][temperatures[1]]), 'm'],
+        'to-g-w1-alt3-temp3': [Math.ceil(data.takeoff.uncorrectedGround.data['2D'][weights[1]]), 'm'],
 
-        'to-g-w2-alt1-temp1': ['to-g-w2-alt1-temp1', Math.ceil(data.takeoff.uncorrectedGround.data['1D2'][temperatures[0]+'-raw'][1]), 'm'],
-        'to-g-w2-alt1-temp2': ['to-g-w2-alt1-temp2', Math.ceil(data.takeoff.uncorrectedGround.data['1D2'][temperatures[1]+'-raw'][1]), 'm'],
-        'to-g-w2-alt2-temp1': ['to-g-w2-alt2-temp1', Math.ceil(data.takeoff.uncorrectedGround.data['1D2'][temperatures[0]+'-raw'][0]), 'm'],
-        'to-g-w2-alt2-temp2': ['to-g-w2-alt2-temp2', Math.ceil(data.takeoff.uncorrectedGround.data['1D2'][temperatures[1]+'-raw'][0]), 'm'],
-        'to-g-w2-alt3-temp1': ['to-g-w2-alt3-temp1', Math.ceil(data.takeoff.uncorrectedGround.data['1D2'][temperatures[0]]), 'm'],
-        'to-g-w2-alt3-temp2': ['to-g-w2-alt3-temp2', Math.ceil(data.takeoff.uncorrectedGround.data['1D2'][temperatures[1]]), 'm'],
-        'to-g-w2-alt3-temp3': ['to-g-w2-alt3-temp3', Math.ceil(data.takeoff.uncorrectedGround.data['2D'][weights[0]]), 'm'],
+        'to-g-w2-alt1-temp1': [Math.ceil(data.takeoff.uncorrectedGround.data['1D2'][temperatures[0]+'-raw'][1]), 'm'],
+        'to-g-w2-alt1-temp2': [Math.ceil(data.takeoff.uncorrectedGround.data['1D2'][temperatures[1]+'-raw'][1]), 'm'],
+        'to-g-w2-alt2-temp1': [Math.ceil(data.takeoff.uncorrectedGround.data['1D2'][temperatures[0]+'-raw'][0]), 'm'],
+        'to-g-w2-alt2-temp2': [Math.ceil(data.takeoff.uncorrectedGround.data['1D2'][temperatures[1]+'-raw'][0]), 'm'],
+        'to-g-w2-alt3-temp1': [Math.ceil(data.takeoff.uncorrectedGround.data['1D2'][temperatures[0]]), 'm'],
+        'to-g-w2-alt3-temp2': [Math.ceil(data.takeoff.uncorrectedGround.data['1D2'][temperatures[1]]), 'm'],
+        'to-g-w2-alt3-temp3': [Math.ceil(data.takeoff.uncorrectedGround.data['2D'][weights[0]]), 'm'],
 
-        'to-g-w3-alt3-temp3': ['to-g-w3-alt3-temp3', Math.ceil(data.takeoff.uncorrectedGround.data['3D']['result']), 'm'],
+        'to-g-w3-alt3-temp3': [Math.ceil(data.takeoff.uncorrectedGround.data['3D']['result']), 'm'],
+
+        // T/O Distance
+        'to-d-w1-alt1-temp1': [Math.ceil(data.takeoff.uncorrectedDist.data['1D1'][temperatures[0]+'-raw'][1]), 'm'],
+        'to-d-w1-alt1-temp2': [Math.ceil(data.takeoff.uncorrectedDist.data['1D1'][temperatures[1]+'-raw'][1]), 'm'],
+        'to-d-w1-alt2-temp1': [Math.ceil(data.takeoff.uncorrectedDist.data['1D1'][temperatures[0]+'-raw'][0]), 'm'],
+        'to-d-w1-alt2-temp2': [Math.ceil(data.takeoff.uncorrectedDist.data['1D1'][temperatures[1]+'-raw'][0]), 'm'],
+        'to-d-w1-alt3-temp1': [Math.ceil(data.takeoff.uncorrectedDist.data['1D1'][temperatures[0]]), 'm'],
+        'to-d-w1-alt3-temp2': [Math.ceil(data.takeoff.uncorrectedDist.data['1D1'][temperatures[1]]), 'm'],
+        'to-d-w1-alt3-temp3': [Math.ceil(data.takeoff.uncorrectedDist.data['2D'][weights[1]]), 'm'],
+
+        'to-d-w2-alt1-temp1': [Math.ceil(data.takeoff.uncorrectedDist.data['1D2'][temperatures[0]+'-raw'][1]), 'm'],
+        'to-d-w2-alt1-temp2': [Math.ceil(data.takeoff.uncorrectedDist.data['1D2'][temperatures[1]+'-raw'][1]), 'm'],
+        'to-d-w2-alt2-temp1': [Math.ceil(data.takeoff.uncorrectedDist.data['1D2'][temperatures[0]+'-raw'][0]), 'm'],
+        'to-d-w2-alt2-temp2': [Math.ceil(data.takeoff.uncorrectedDist.data['1D2'][temperatures[1]+'-raw'][0]), 'm'],
+        'to-d-w2-alt3-temp1': [Math.ceil(data.takeoff.uncorrectedDist.data['1D2'][temperatures[0]]), 'm'],
+        'to-d-w2-alt3-temp2': [Math.ceil(data.takeoff.uncorrectedDist.data['1D2'][temperatures[1]]), 'm'],
+        'to-d-w2-alt3-temp3': [Math.ceil(data.takeoff.uncorrectedDist.data['2D'][weights[0]]), 'm'],
+
+        'to-d-w3-alt3-temp3': [Math.ceil(data.takeoff.uncorrectedDist.data['3D']['result']), 'm'],
+
+        // T/O Corrections
+        'to-corrections-paved-rwy': [Math.ceil(data.takeoff.corrections.pavedRwyCorrection), 'm'],
+        'to-corrections-sloped-rwy': [Math.ceil(data.takeoff.corrections.slopeCorrection), 'm'],
+        'to-corrections-soft-rwy': [Math.ceil(data.takeoff.corrections.softSfcCorrection), 'm'],
+        'to-corrections-wind': [Math.ceil(data.takeoff.corrections.windCorrection), 'm'],
+        'to-corrections-combined': [Math.ceil(data.takeoff.corrections.combined), 'm'],
+
+        'to-g-corrected': [Math.ceil(data.takeoff.uncorrectedGround.data['3D']['result'] + data.takeoff.corrections.combined), 'm'],
+        'to-d-corrected': [Math.ceil(data.takeoff.uncorrectedDist.data['3D']['result'] + data.takeoff.corrections.combined), 'm'],
+
+        'to-g-final': [Math.ceil(data.takeoff.groundroll), 'm'],
+        'to-d-final': [Math.ceil(data.takeoff.distance), 'm']
+
     };
 
     updateUIValues(takeOffLandingUIPairs);
 
     //Interpolation between altitudes for mass1, temp1&2
-    $('.to-g-w1-temp1-equation').html(MathJax.tex2svg('\\frac{ '+ takeOffLandingUIPairs['to-g-w1-alt2-temp1'][1] +'m - '+ takeOffLandingUIPairs['to-g-w1-alt1-temp1'][1] +'m }{ '+ takeOffLandingUIPairs['to-alt2'][1] +'ft - '+ takeOffLandingUIPairs['to-alt1'][1] +'ft } \\cdot ('+ takeOffLandingUIPairs['to-alt3'][1] +'ft - '+ takeOffLandingUIPairs['to-alt1'][1] +'ft) + '+ takeOffLandingUIPairs['to-g-w1-alt1-temp1'][1] +'m = '+ takeOffLandingUIPairs['to-g-w1-alt3-temp1'][1] +'m', {display: true}));
-    $('.to-g-w1-temp2-equation').html(MathJax.tex2svg('\\frac{ '+ takeOffLandingUIPairs['to-g-w1-alt2-temp2'][1] +'m - '+ takeOffLandingUIPairs['to-g-w1-alt1-temp2'][1] +'m }{ '+ takeOffLandingUIPairs['to-alt2'][1] +'ft - '+ takeOffLandingUIPairs['to-alt1'][1] +'ft } \\cdot ('+ takeOffLandingUIPairs['to-alt3'][1] +'ft - '+ takeOffLandingUIPairs['to-alt1'][1] +'ft) + '+ takeOffLandingUIPairs['to-g-w1-alt1-temp2'][1] +'m = '+ takeOffLandingUIPairs['to-g-w1-alt3-temp2'][1] +'m', {display: true}));
+    $('.to-g-w1-temp1-equation').html(MathJax.tex2svg('\\frac{ '+ takeOffLandingUIPairs['to-g-w1-alt2-temp1'][0] +'m - '+ takeOffLandingUIPairs['to-g-w1-alt1-temp1'][0] +'m }{ '+ takeOffLandingUIPairs['to-alt2'][0] +'ft - '+ takeOffLandingUIPairs['to-alt1'][0] +'ft } \\cdot ('+ takeOffLandingUIPairs['to-alt3'][0] +'ft - '+ takeOffLandingUIPairs['to-alt1'][0] +'ft) + '+ takeOffLandingUIPairs['to-g-w1-alt1-temp1'][0] +'m = '+ takeOffLandingUIPairs['to-g-w1-alt3-temp1'][0] +'m', {display: true}));
+    $('.to-g-w1-temp2-equation').html(MathJax.tex2svg('\\frac{ '+ takeOffLandingUIPairs['to-g-w1-alt2-temp2'][0] +'m - '+ takeOffLandingUIPairs['to-g-w1-alt1-temp2'][0] +'m }{ '+ takeOffLandingUIPairs['to-alt2'][0] +'ft - '+ takeOffLandingUIPairs['to-alt1'][0] +'ft } \\cdot ('+ takeOffLandingUIPairs['to-alt3'][0] +'ft - '+ takeOffLandingUIPairs['to-alt1'][0] +'ft) + '+ takeOffLandingUIPairs['to-g-w1-alt1-temp2'][0] +'m = '+ takeOffLandingUIPairs['to-g-w1-alt3-temp2'][0] +'m', {display: true}));
     //Interpolation between temperatures for mass1
-    $('.to-g-w1-temp3-equation').html(MathJax.tex2svg('\\frac{ '+ takeOffLandingUIPairs['to-g-w1-alt3-temp2'][1] +'m - '+ takeOffLandingUIPairs['to-g-w1-alt3-temp1'][1] +'m }{ '+ takeOffLandingUIPairs['to-temp2'][1] +'^\\circ C - '+ takeOffLandingUIPairs['to-temp1'][1] +'^\\circ C } \\cdot ('+ takeOffLandingUIPairs['to-temp3'][1] +'^\\circ C - '+ takeOffLandingUIPairs['to-temp1'][1] +'^\\circ C) + '+ takeOffLandingUIPairs['to-g-w1-alt3-temp1'][1] +'m = '+ takeOffLandingUIPairs['to-g-w1-alt3-temp3'][1] +'m', {display: true}));
+    $('.to-g-w1-temp3-equation').html(MathJax.tex2svg('\\frac{ '+ takeOffLandingUIPairs['to-g-w1-alt3-temp2'][0] +'m - '+ takeOffLandingUIPairs['to-g-w1-alt3-temp1'][0] +'m }{ '+ takeOffLandingUIPairs['to-temp2'][0] +'^\\circ C - '+ takeOffLandingUIPairs['to-temp1'][0] +'^\\circ C } \\cdot ('+ takeOffLandingUIPairs['to-temp3'][0] +'^\\circ C - '+ takeOffLandingUIPairs['to-temp1'][0] +'^\\circ C) + '+ takeOffLandingUIPairs['to-g-w1-alt3-temp1'][0] +'m = '+ takeOffLandingUIPairs['to-g-w1-alt3-temp3'][0] +'m', {display: true}));
     //Interpolation between altitudes for mass2 temp1&2
-    $('.to-g-w2-temp1-equation').html(MathJax.tex2svg('\\frac{ '+ takeOffLandingUIPairs['to-g-w2-alt2-temp1'][1] +'m - '+ takeOffLandingUIPairs['to-g-w2-alt1-temp1'][1] +'m }{ '+ takeOffLandingUIPairs['to-alt2'][1] +'ft - '+ takeOffLandingUIPairs['to-alt1'][1] +'ft } \\cdot ('+ takeOffLandingUIPairs['to-alt3'][1] +'ft - '+ takeOffLandingUIPairs['to-alt1'][1] +'ft) + '+ takeOffLandingUIPairs['to-g-w2-alt1-temp1'][1] +'m = '+ takeOffLandingUIPairs['to-g-w2-alt3-temp1'][1] +'m', {display: true}));
-    $('.to-g-w2-temp2-equation').html(MathJax.tex2svg('\\frac{ '+ takeOffLandingUIPairs['to-g-w2-alt2-temp2'][1] +'m - '+ takeOffLandingUIPairs['to-g-w2-alt1-temp2'][1] +'m }{ '+ takeOffLandingUIPairs['to-alt2'][1] +'ft - '+ takeOffLandingUIPairs['to-alt1'][1] +'ft } \\cdot ('+ takeOffLandingUIPairs['to-alt3'][1] +'ft - '+ takeOffLandingUIPairs['to-alt1'][1] +'ft) + '+ takeOffLandingUIPairs['to-g-w2-alt1-temp2'][1] +'m = '+ takeOffLandingUIPairs['to-g-w2-alt3-temp2'][1] +'m', {display: true}));
+    $('.to-g-w2-temp1-equation').html(MathJax.tex2svg('\\frac{ '+ takeOffLandingUIPairs['to-g-w2-alt2-temp1'][0] +'m - '+ takeOffLandingUIPairs['to-g-w2-alt1-temp1'][0] +'m }{ '+ takeOffLandingUIPairs['to-alt2'][0] +'ft - '+ takeOffLandingUIPairs['to-alt1'][0] +'ft } \\cdot ('+ takeOffLandingUIPairs['to-alt3'][0] +'ft - '+ takeOffLandingUIPairs['to-alt1'][0] +'ft) + '+ takeOffLandingUIPairs['to-g-w2-alt1-temp1'][0] +'m = '+ takeOffLandingUIPairs['to-g-w2-alt3-temp1'][0] +'m', {display: true}));
+    $('.to-g-w2-temp2-equation').html(MathJax.tex2svg('\\frac{ '+ takeOffLandingUIPairs['to-g-w2-alt2-temp2'][0] +'m - '+ takeOffLandingUIPairs['to-g-w2-alt1-temp2'][0] +'m }{ '+ takeOffLandingUIPairs['to-alt2'][0] +'ft - '+ takeOffLandingUIPairs['to-alt1'][0] +'ft } \\cdot ('+ takeOffLandingUIPairs['to-alt3'][0] +'ft - '+ takeOffLandingUIPairs['to-alt1'][0] +'ft) + '+ takeOffLandingUIPairs['to-g-w2-alt1-temp2'][0] +'m = '+ takeOffLandingUIPairs['to-g-w2-alt3-temp2'][0] +'m', {display: true}));
     //Interpolation between temperatures for mass2
-    $('.to-g-w2-temp3-equation').html(MathJax.tex2svg('\\frac{ '+ takeOffLandingUIPairs['to-g-w2-alt3-temp2'][1] +'m - '+ takeOffLandingUIPairs['to-g-w2-alt3-temp1'][1] +'m }{ '+ takeOffLandingUIPairs['to-temp2'][1] +'^\\circ C - '+ takeOffLandingUIPairs['to-temp1'][1] +'^\\circ C } \\cdot ('+ takeOffLandingUIPairs['to-temp3'][1] +'^\\circ C - '+ takeOffLandingUIPairs['to-temp1'][1] +'^\\circ C) + '+ takeOffLandingUIPairs['to-g-w2-alt3-temp1'][1] +'m = '+ takeOffLandingUIPairs['to-g-w2-alt3-temp3'][1] +'m', {display: true}));
+    $('.to-g-w2-temp3-equation').html(MathJax.tex2svg('\\frac{ '+ takeOffLandingUIPairs['to-g-w2-alt3-temp2'][0] +'m - '+ takeOffLandingUIPairs['to-g-w2-alt3-temp1'][0] +'m }{ '+ takeOffLandingUIPairs['to-temp2'][0] +'^\\circ C - '+ takeOffLandingUIPairs['to-temp1'][0] +'^\\circ C } \\cdot ('+ takeOffLandingUIPairs['to-temp3'][0] +'^\\circ C - '+ takeOffLandingUIPairs['to-temp1'][0] +'^\\circ C) + '+ takeOffLandingUIPairs['to-g-w2-alt3-temp1'][0] +'m = '+ takeOffLandingUIPairs['to-g-w2-alt3-temp3'][0] +'m', {display: true}));
     //Interpolation between masses
-    $('.to-g-w3-temp3-equation').html(MathJax.tex2svg('\\frac{ '+ takeOffLandingUIPairs['to-g-w1-alt3-temp3'][1] +'m - '+ takeOffLandingUIPairs['to-g-w2-alt3-temp3'][1] +'m }{ '+ takeOffLandingUIPairs['to-mass1'][1] +'kg - '+ takeOffLandingUIPairs['to-mass2'][1] +'kg } \\cdot ('+ takeOffLandingUIPairs['to-mass3'][1] +'kg - '+ takeOffLandingUIPairs['to-mass2'][1] +'kg) + '+ takeOffLandingUIPairs['to-g-w2-alt3-temp3'][1] +'m = '+ takeOffLandingUIPairs['to-g-w3-alt3-temp3'][1] +'m', {display: true}));
+    $('.to-g-w3-temp3-equation').html(MathJax.tex2svg('\\frac{ '+ takeOffLandingUIPairs['to-g-w1-alt3-temp3'][0] +'m - '+ takeOffLandingUIPairs['to-g-w2-alt3-temp3'][0] +'m }{ '+ takeOffLandingUIPairs['to-mass1'][0] +'kg - '+ takeOffLandingUIPairs['to-mass2'][0] +'kg } \\cdot ('+ takeOffLandingUIPairs['to-mass3'][0] +'kg - '+ takeOffLandingUIPairs['to-mass2'][0] +'kg) + '+ takeOffLandingUIPairs['to-g-w2-alt3-temp3'][0] +'m = '+ takeOffLandingUIPairs['to-g-w3-alt3-temp3'][0] +'m', {display: true}));
 }
 
 function ceilingCheck(ceiling)
@@ -202,9 +236,9 @@ function updateUIValues(dataset)
 {
     for (var i in dataset) {
         var item    = dataset[i],
-            element = $('.'+ item[0]),
-            value   = item[1],
-            suffix  = item[2];
+            element = $('.'+ i),
+            value   = item[0],
+            suffix  = item[1];
 
         if (
             value === '' ||
@@ -625,7 +659,7 @@ function takeoffCorrectedCalculations(pa, isaDeviation, tom, slope)
 
     var corrections = {
         'windCorrection': windCorrection,
-        'pavedRwyCorretion': pavedRwyCorrection,
+        'pavedRwyCorrection': pavedRwyCorrection,
         'slopeCorrection': slopeCorrection,
         'softSfcCorrection': softSfcCorrection
     };
@@ -636,6 +670,8 @@ function takeoffCorrectedCalculations(pa, isaDeviation, tom, slope)
             sumCorrections += corrections[i];
         }
     }
+
+    corrections['combined'] = sumCorrections;
 
     return {
         'uncorrectedDist': distance,
@@ -664,7 +700,7 @@ function landingCorrectedCalculations(pa, isaDeviation, tom, slope) {
 
     var appSpeedCorrection = 0
     //Correction for increased approach speed
-    if (useIncreaedAppSpeed){
+    if (useIncreasedAppSpeed){
         appSpeedCorrection = 110                            //10 kts Increased approach speed calculated as tailwind of 10 kts
     }
 
@@ -690,7 +726,7 @@ function landingCorrectedCalculations(pa, isaDeviation, tom, slope) {
 
     var corrections = {
         'windCorrection': windCorrection,
-        'pavedRwyCorretion': pavedRwyCorrection,
+        'pavedRwyCorrection': pavedRwyCorrection,
         'slopeCorrection': slopeCorrection,
         'softSfcCorrection': softSfcCorrection,
         'appSpeedCorrection': appSpeedCorrection
