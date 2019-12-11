@@ -144,6 +144,15 @@
             color: #607D8B;
         }
 
+        .aircraft_image_wrapper {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .aircraft_image_wrapper > img {
+            height: 350px;
+        }
+
     </style>
 </head>
 <body>
@@ -169,6 +178,11 @@
         <div class="tab-pane fade show active" id="home" role="tabpanel">
             <h1>P2006T Calculator</h1>
             <h4 class="text-secondary">Calculate performance, mass &amp; balance for Tecnam P2006T</h4>
+
+            <div class="aircraft_image_wrapper">
+                <img src="./NASA_P2006T_image.jpg" class="img-fluid" />
+                <figcaption class="text-secondary ">Credit: NASA Photo/Carla Thomas.</figcaption>
+            </div>
 
             <p>&nbsp;</p>
             <p><em>Use this calculator with caution at your own risk. We strive to ensure everything is correct as long as you're within AFM parameters.</em></p>
@@ -398,7 +412,7 @@
                     </div>    
                 </div>
                 <div class="settings">
-                    <details class="settings-box">
+                    <details class="settings-box" open>
                         <summary>Settings</summary>
                         <div class="custom-control custom-switch">
                             <input type="checkbox" class="custom-control-input" id="useMSA" />
