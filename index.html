@@ -183,17 +183,14 @@
         <div class="tab-pane fade show active" id="home" role="tabpanel">
             <h1>P2006T Calculator</h1>
             <h4 class="text-secondary">Calculate performance, mass &amp; balance for Tecnam P2006T</h4>
+            <p><em><font size="2">Use this calculator with caution at your own risk. We strive to ensure everything is correct as long as you're within AFM parameters.</font></em></p>
 
             <div class="aircraft_image_wrapper">
                 <img src="./NASA_P2006T_image.jpg" class="img-fluid" />
                 <figcaption class="text-secondary ">Credit: NASA Photo/Carla Thomas.</figcaption>
             </div>
-
-            <p>&nbsp;</p>
-            <p><em>Use this calculator with caution at your own risk. We strive to ensure everything is correct as long as you're within AFM parameters.</em></p>
-            
-            <p>&nbsp;</p>
-            <p>On the following tabs (above), you will find calculations for:</p>
+            <br>
+            <h5>This site contains the following calculations</h5>
             <ul>
                 <li>Mass & Balance; using the graph from the AFM</li>
                 <li>Performance tab:
@@ -207,8 +204,9 @@
                 <li>
                     Results gives detailed information about the interpolation, including all meta data.
                 </li>
-            </ul> <br>
-            <p>The Takeoff and landing groundroll and distance data is interpolated by use of the following equations: </p>
+            </ul>
+            <h5>Methods of calculation</h5>
+            <h6>Takeoff and landing groundroll and distance interpolation </h6>
             <ul>
                 <li>First, the distances are interpolated between altitudes, for each temperature and weight:<br>
                     $$value_{actual} = {value_{high} - value_{low} \over altitude_{high} - altitude_{low}} \cdot (altitude_{actual} - altitude_{low})+value_{low}$$</li>
@@ -217,6 +215,8 @@
                 <li>Finally, the result of those formulas are interpolated between weights:<br>
                     $$value_{actual} = {value_{heavy} - value_{light} \over mass_{heavy} - mass_{light}} \cdot (mass_{actual} - mass_{light})+value_{light}$$</li>
             </ul>
+            <h6>Other calculations</h6>
+            .....
 
         </div>
         <div class="tab-pane fade" id="massAndBalanceTab" role="tabpanel">
@@ -866,7 +866,7 @@
                                     <td class="to-corrections-soft-rwy">-</td>
                                 </tr>
                                 <tr>
-                                    <td>Wind</td>
+                                    <td class="to-corrections-windlabel">Wind</td>
                                     <td><em>According to AFM</em></td>
                                     <td class="to-corrections-wind">-</td>
                                 </tr>
@@ -913,9 +913,387 @@
                         </table>
                     </div>
                 </div>
+                <div class="col-sm-6">
+                    <div style="margin-top: 165px;">&nbsp;</div>
+                    <div class="to-correction-paved-equation"></div>
+                    <div class="to-correction-slope-equation"></div>
+                    <div class="to-correction-soft-equation"></div>
+                    <div class="to-correction-wind-equation"></div>
+                    <br><br>
+                    <div class="to-g-corrected-equation"></div>
+                    <div class="to-d-corrected-equation"></div>
+                    <br><br>
+                    <div class="to-g-factorized-equation"></div>
+                    <div class="to-d-factorized-equation"></div>
+                </div>
 
             </div>
-
+            <hr>
+            <div class="row" id="landing-ground">
+                    <div class="col-sm-6">
+                        <h4>Landing <small class="text-muted">Groundroll</small></h4>
+                        <b class="to-mass1">-</b>
+                        <div class="result-weight-sector">
+                            <table class="table table-sm">
+                                <thead class="">
+                                    <tr>
+                                        <th>PA.</th>
+                                        <th class="ldg-temp1">Temp 1</th>
+                                        <th class="ldg-temp2">Temp 2</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="ldg-alt1">-</td>
+                                        <td class="ldg-g-w1-alt1-temp1">-</td>
+                                        <td class="ldg-g-w1-alt1-temp2">-</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="ldg-alt2">-</td>
+                                        <td class="ldg-g-w1-alt2-temp1">-</td>
+                                        <td class="ldg-g-w1-alt2-temp2">-</td>
+                                    </tr>
+                                    <tr class="table-secondary">
+                                        <td class="ldg-alt3">-</td>
+                                        <td class="ldg-g-w1-alt3-temp1">-</td>
+                                        <td class="ldg-g-w1-alt3-temp2">-</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table class="table table-sm">
+                                <thead>
+                                    <th>PA.</th>
+                                    <th class="ldg-temp1">Temp 1</th>
+                                    <th class="ldg-temp2">Temp 2</th>
+                                    <th class="ldg-temp3">Temp 3</th>
+                                </thead>
+                                <tbody>
+                                    <tr class="table-secondary">
+                                        <td class="ldg-alt3">-</td>
+                                        <td class="ldg-g-w1-alt3-temp1">-</td>
+                                        <td class="ldg-g-w1-alt3-temp2">-</td>
+                                        <td class="ldg-g-w1-alt3-temp3">-</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+    
+                        <b class="ldg-mass2">-</b>
+                        <div class="result-weight-sector">
+                            <table class="table table-sm">
+                                <thead class="">
+                                    <tr>
+                                        <th>PA.</th>
+                                        <th class="ldg-temp1">Temp 1</th>
+                                        <th class="ldg-temp2">Temp 2</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="ldg-alt1">-</td>
+                                        <td class="ldg-g-w2-alt1-temp1">-</td>
+                                        <td class="ldg-g-w2-alt1-temp2">-</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="ldg-alt2">-</td>
+                                        <td class="ldg-g-w2-alt2-temp1">-</td>
+                                        <td class="ldg-g-w2-alt2-temp2">-</td>
+                                    </tr>
+                                    <tr class="table-secondary">
+                                        <td class="ldg-alt3">-</td>
+                                        <td class="ldg-g-w2-alt3-temp1">-</td>
+                                        <td class="ldg-g-w2-alt3-temp2">-</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table class="table table-sm">
+                                <thead>
+                                    <th>PA</th>
+                                    <th class="ldg-temp1">Temp 1</th>
+                                    <th class="ldg-temp2">Temp 2</th>
+                                    <th class="ldg-temp3">Temp 3</th>
+                                </thead>
+                                <tbody>
+                                    <tr class="table-secondary">
+                                        <td class="ldg-alt3">-</td>
+                                        <td class="ldg-g-w2-alt3-temp1">-</td>
+                                        <td class="ldg-g-w2-alt3-temp2">-</td>
+                                        <td class="ldg-g-w2-alt3-temp3">-</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <b class="ldg-mass3">-</b>
+                        <div class="result-weight-sector">
+                            <table class="table table-sm">
+                                <thead>
+                                    <th>PA</th>
+                                    <th class="ldg-mass1">Mass 1</th>
+                                    <th class="ldg-mass2">Mass 2</th>
+                                    <th class="ldg-mass3">Mass 3</th>
+                                </thead>
+                                <tbody>
+                                    <tr class="table-secondary">
+                                        <td class="ldg-alt3">-</td>
+                                        <td class="ldg-g-w1-alt3-temp3">-</td>
+                                        <td class="ldg-g-w2-alt3-temp3">-</td>
+                                        <td class="ldg-g-w3-alt3-temp3">-</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div style="margin-top: 30px;">&nbsp;</div>
+                        <div class="ldg-g-w1-temp1-equation"></div>
+                        <div class="ldg-g-w1-temp2-equation"></div>
+                        <hr>
+                        <div class="ldg-g-w1-temp3-equation"></div>
+                        <br><br>
+                        <div class="ldg-g-w2-temp1-equation"></div>
+                        <div class="ldg-g-w2-temp2-equation"></div>
+                        <hr>
+                        <div class="ldg-g-w2-temp3-equation"></div>
+                        <br><br>
+                        <div class="ldg-g-w3-temp3-equation"></div>
+                    </div>
+                </div>
+    
+                <hr />
+                <div class="row" id="landing-distance">
+                    <div class="col-sm-6">
+                        <h4>Landing <small class="text-muted">50ft Distance</small></h4>
+                        <b class="ldg-mass1">-</b>
+                        <div class="result-weight-sector">
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>PA.</th>
+                                        <th class="ldg-temp1">Temp 1</th>
+                                        <th class="ldg-temp2">Temp 2</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="ldg-alt1">-</td>
+                                        <td class="ldg-d-w1-alt1-temp1">-</td>
+                                        <td class="ldg-d-w1-alt1-temp2">-</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="ldg-alt2">-</td>
+                                        <td class="ldg-d-w1-alt2-temp1">-</td>
+                                        <td class="ldg-d-w1-alt2-temp2">-</td>
+                                    </tr>
+                                    <tr class="table-secondary">
+                                        <td class="ldg-alt3">-</td>
+                                        <td class="ldg-d-w1-alt3-temp1">-</td>
+                                        <td class="ldg-d-w1-alt3-temp2">-</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table class="table table-sm">
+                                <thead>
+                                    <th>PA.</th>
+                                    <th class="ldg-temp1">Temp 1</th>
+                                    <th class="ldg-temp2">Temp 2</th>
+                                    <th class="ldg-temp3">Temp 3</th>
+                                </thead>
+                                <tbody>
+                                    <tr class="table-secondary">
+                                        <td class="ldg-alt3">-</td>
+                                        <td class="ldg-d-w1-alt3-temp1">-</td>
+                                        <td class="ldg-d-w1-alt3-temp2">-</td>
+                                        <td class="ldg-d-w1-alt3-temp3">-</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+    
+                        <b class="ldg-mass2">-</b>
+                        <div class="result-weight-sector">
+                            <table class="table table-sm">
+                                <thead class="">
+                                    <tr>
+                                        <th>PA.</th>
+                                        <th class="ldg-temp1">Temp 1</th>
+                                        <th class="ldg-temp2">Temp 2</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="ldg-alt1">-</td>
+                                        <td class="ldg-d-w2-alt1-temp1">-</td>
+                                        <td class="ldg-d-w2-alt1-temp2">-</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="ldg-alt2">-</td>
+                                        <td class="ldg-d-w2-alt2-temp1">-</td>
+                                        <td class="ldg-d-w2-alt2-temp2">-</td>
+                                    </tr>
+                                    <tr class="table-secondary">
+                                        <td class="ldg-alt3">-</td>
+                                        <td class="ldg-d-w2-alt3-temp1">-</td>
+                                        <td class="ldg-d-w2-alt3-temp2">-</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table class="table table-sm">
+                                <thead>
+                                    <th>PA</th>
+                                    <th class="ldg-temp1">Temp 1</th>
+                                    <th class="ldg-temp2">Temp 2</th>
+                                    <th class="ldg-temp3">Temp 3</th>
+                                </thead>
+                                <tbody>
+                                    <tr class="table-secondary">
+                                        <td class="ldg-alt3">-</td>
+                                        <td class="ldg-d-w2-alt3-temp1">-</td>
+                                        <td class="ldg-d-w2-alt3-temp2">-</td>
+                                        <td class="ldg-d-w2-alt3-temp3">-</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <b class="ldg-mass3">-</b>
+                        <div class="result-weight-sector">
+                            <table class="table table-sm">
+                                <thead>
+                                    <th>PA</th>
+                                    <th class="ldg-mass1">Mass 1</th>
+                                    <th class="ldg-mass2">Mass 2</th>
+                                    <th class="ldg-mass3">Mass 3</th>
+                                </thead>
+                                <tbody>
+                                    <tr class="table-secondary">
+                                        <td class="ldg-alt3">-</td>
+                                        <td class="ldg-d-w1-alt3-temp3">-</td>
+                                        <td class="ldg-d-w2-alt3-temp3">-</td>
+                                        <td class="ldg-d-w3-alt3-temp3">-</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div style="margin-top: 30px;">&nbsp;</div>
+                        <div class="ldg-d-w1-temp1-equation"></div>
+                        <div class="ldg-d-w1-temp2-equation"></div>
+                        <hr>
+                        <div class="ldg-d-w1-temp3-equation"></div>
+                        <br><br>
+                        <div class="ldg-d-w2-temp1-equation"></div>
+                        <div class="ldg-d-w2-temp2-equation"></div>
+                        <hr>
+                        <div class="ldg-d-w2-temp3-equation"></div>
+                        <br><br>
+                        <div class="ldg-d-w3-temp3-equation"></div>
+                    </div>
+                </div>
+                
+                <hr />
+                <div class="row" id="take-off-corrections">
+    
+                    <div class="col-sm-6">
+                        <h4>Landing <small class="text-muted">Corrections</small></h4>
+                        <b class="bold">Uncorrected Landing</b>
+                        <div class="result-weight-sector">
+                            <table class="table table-sm">
+                                <tr>
+                                    <td>Groundroll</td>
+                                    <td class="ldg-g-w3-alt3-temp3">-</td>
+                                </tr>
+                                <tr>
+                                    <td>50ft Distance</td>
+                                    <td class="ldg-d-w3-alt3-temp3">-</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <b class="bold">Corrections</b>
+                        <div class="result-weight-sector">
+                            <table class="table table-sm">
+                                <thead>
+                                    <th>Correction</th>
+                                    <th>Factor</th>
+                                    <th>Distance</th>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Paved RWY</td>
+                                        <td><em>According to AFM</em></td>
+                                        <td class="ldg-corrections-paved-rwy">-</td>
+                                    </tr>
+                                    <tr>
+                                        <td>RWY Slope</td>
+                                        <td><em>According to AFM</em></td>
+                                        <td class="ldg-corrections-sloped-rwy">-</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Soft Surface</td>
+                                        <td>-</td>
+                                        <td class="ldg-corrections-soft-rwy">-</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="ldg-corrections-windlabel">Wind</td>
+                                        <td><em>According to AFM</em></td>
+                                        <td class="ldg-corrections-wind">-</td>
+                                    </tr>
+                                    <tfoot>
+                                        <tr class="table-secondary">
+                                            <th colspan="2">Combined</th>
+                                            <th class="ldg-corrections-combined">-</th>
+                                        </tr>
+                                    </tfoot>
+                                </tbody>
+                            </table>
+                        </div>
+                        <b class="bold">Corrected T/O</b>
+                        <div class="result-weight-sector">
+                            <table class="table table-sm">
+                                <tr>
+                                    <td>Groundroll</td>
+                                    <td class="ldg-g-corrected">-</td>
+                                </tr>
+                                <tr>
+                                    <td>50ft Distance</td>
+                                    <td class="ldg-d-corrected">-</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <b class="bold">Safety Factor</b>
+                        <div class="result-weight-sector">
+                            <table class="table table-sm">
+                                <thead>
+                                    <th></th>
+                                    <th>Factor</th>
+                                    <th>Total Distance</th>
+                                </thead>
+                                <tr>
+                                    <td>Groundroll</td>
+                                    <td>1.25</td>
+                                    <td class="ldg-g-final">-</td>
+                                </tr>
+                                <tr>
+                                    <td>50ft Distance</td>
+                                    <td>1.25</td>
+                                    <td class="ldg-d-final">-</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div style="margin-top: 165px;">&nbsp;</div>
+                        <div class="ldg-correction-paved-equation"></div>
+                        <div class="ldg-correction-slope-equation"></div>
+                        <div class="ldg-correction-soft-equation"></div>
+                        <div class="ldg-correction-wind-equation"></div>
+                        <br><br>
+                        <div class="ldg-g-corrected-equation"></div>
+                        <div class="ldg-d-corrected-equation"></div>
+                        <br><br>
+                        <div class="ldg-g-factorized-equation"></div>
+                        <div class="ldg-d-factorized-equation"></div>
+                    </div>
+                </div>
         </div>
     </div>
     <div class="container">

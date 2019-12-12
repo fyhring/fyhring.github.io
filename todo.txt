@@ -1,0 +1,5 @@
+Log calculations for climb
+Output wind components to end user
+Replace 'N/A' with '-' in A/C picker
+Finetune heights of empty spaces in results tab
+Landing corrections needs fix - they are currently just a copy of Takeoff corrections
