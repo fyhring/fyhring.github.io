@@ -114,28 +114,28 @@ function calculateFromInputs()
         'ldg-distance': [Math.ceil(data.landing.distance), 'm'],
         'oei-serviceceil': [ceilingCheck(data.OEIserviceCeiling), 'ft'],
         'oei-absceil': [ceilingCheck(data.OEIabsoluteCeiling), 'ft'],
-        'vyse': [Math.round(data.VySe), 'kias'],
-        'roc-vyse': [Math.floor(data.rocVySe), 'fpm'],
-        'grad-vyse': [(Math.floor(data.gradVySe * 10000)/100),'%'],
+        'vyse': [Math.round(data.VySe.result), 'kias'],
+        'roc-vyse': [Math.floor(data.rocVySe.result), 'fpm'],
+        'grad-vyse': [(Math.floor(data.gradVySe.result * 10000)/100),'%'],
         'angle-vyse': [(Math.floor(data.angleVySe * 100)/100),'&#176'],
-        'vy': [Math.round(data.Vy),'kias'],
-        'roc-vy': [Math.floor(data.rocVy), 'fpm'],
-        'grad-vy': [(Math.floor(data.gradVy * 10000)/100),'%'],
+        'vy': [Math.round(data.Vy.result),'kias'],
+        'roc-vy': [Math.floor(data.rocVy.result), 'fpm'],
+        'grad-vy': [(Math.floor(data.gradVy.result * 10000)/100),'%'],
         'angle-vy': [(Math.floor(data.angleVy * 100)/100),'&#176'],
-        'to-vy': [Math.round(data.toVy),'kias'],
-        'to-roc-vy': [Math.round(data.toRocVy),'fpm'],
+        'to-vy': [Math.round(data.toVy.result),'kias'],
+        'to-roc-vy': [Math.round(data.toRocVy.result),'fpm'],
         'to-grad-vy': [(Math.floor(data.toGradVy * 10000)/100),'%'],
         //'to-angle-vy': [(Math.floor(data.angleToVy * 100)/100),'&#176'],   //Calculation not yet made
-        'vxse': [Math.round(data.VxSe), 'kias'],
-        'roc-vxse': [Math.floor(data.rocVxSe), 'fpm'],
-        'grad-vxse': [(Math.floor(data.gradVxSe * 10000)/100),'%'],
+        'vxse': [Math.round(data.VxSe.result), 'kias'],
+        'roc-vxse': [Math.floor(data.rocVxSe.result), 'fpm'],
+        'grad-vxse': [(Math.floor(data.gradVxSe.result * 10000)/100),'%'],
         'angle-vxse': [(Math.floor(data.angleVxSe * 100)/100),'&#176'],
-        'vx': [Math.round(data.Vx),'kias'],
-        'roc-vx': [Math.floor(data.rocVx), 'fpm'],
-        'grad-vx': [(Math.floor(data.gradVx * 10000)/100),'%'],
+        'vx': [Math.round(data.Vx.result),'kias'],
+        'roc-vx': [Math.floor(data.rocVx.result), 'fpm'],
+        'grad-vx': [(Math.floor(data.gradVx.result * 10000)/100),'%'],
         'angle-vx': [(Math.floor(data.angleVx * 100)/100),'&#176'],
-        'to-vx': [Math.round(data.toVx),'kias'],
-        'to-roc-vx': [Math.round(data.toRocVx),'fpm'],
+        'to-vx': [Math.round(data.toVx.result),'kias'],
+        'to-roc-vx': [Math.round(data.toRocVx.result),'fpm'],
         'to-grad-vx': [(Math.floor(data.toGradVx * 10000)/100),'%'],
         //'to-angle-vx': [(Math.floor(data.angleToVx * 100)/100),'&#176'],   //Calculation not yet made
         'useMSAOrNotTxt': [(useMSAROC ? 'MSA' : '2/3 cruise alt.'), ''],
@@ -240,7 +240,7 @@ function calculateFromInputs()
         'to-corrections-paved-rwy': [Math.ceil(data.takeoff.corrections.pavedRwyCorrection), 'm'],
         'to-corrections-sloped-rwy': [Math.ceil(data.takeoff.corrections.slopeCorrection), 'm'],
         'to-corrections-soft-rwy': [Math.ceil(data.takeoff.corrections.softSfcCorrection), 'm'],
-        'to-corrections-windlabel': [Math.abs(getWindComponents().head),'kts '+(getWindComponents.head > 0 ? 'headwind' : 'tailwind')],
+        'to-corrections-windlabel': [(Math.ceil((Math.abs(getWindComponents().head))*10))/10,'kts '+(getWindComponents.head > 0 ? 'headwind' : 'tailwind')],
         'to-corrections-wind': [Math.ceil(data.takeoff.corrections.windCorrection), 'm'],
         'to-corrections-combined': [floorOrCeil(data.takeoff.corrections.combined), 'm'],
         //Corrected distances
@@ -254,7 +254,7 @@ function calculateFromInputs()
         'ldg-corrections-paved-rwy': [Math.ceil(data.landing.corrections.pavedRwyCorrection), 'm'],
         'ldg-corrections-sloped-rwy': [Math.ceil(data.landing.corrections.slopeCorrection), 'm'],
         'ldg-corrections-soft-rwy': [Math.ceil(data.landing.corrections.softSfcCorrection), 'm'],
-        'ldg-corrections-windlabel': [Math.abs(getWindComponents().head),'kts '+(getWindComponents.head > 0 ? 'headwind' : 'tailwind')],
+        'ldg-corrections-windlabel': [(Math.ceil((Math.abs(getWindComponents().head))*10))/10,'kts '+(getWindComponents.head > 0 ? 'headwind' : 'tailwind')],
         'ldg-corrections-wind': [Math.ceil(data.landing.corrections.windCorrection), 'm'],
         'ldg-corrections-combined': [floorOrCeil(data.landing.corrections.combined), 'm'],
         //Corrected distances
@@ -263,6 +263,8 @@ function calculateFromInputs()
         //Factorized distances
         'ldg-g-final': [Math.ceil(data.landing.groundroll), 'm'],
         'ldg-d-final': [Math.ceil(data.landing.distance), 'm']
+
+        //CLIMB PERFORMANCE OUTPUTS
 
     };
 
@@ -300,7 +302,7 @@ function calculateFromInputs()
     $('.to-correction-paved-equation').html(MathJax.tex2svg(takeOffLandingUIPairs['to-g-w3-alt3-temp3'][0]+'m \\cdot -6\\% = '+ takeOffLandingUIPairs['to-corrections-paved-rwy'][0]+'m', {display: true}));
     $('.to-correction-slope-equation').html(MathJax.tex2svg(takeOffLandingUIPairs['to-g-w3-alt3-temp3'][0]+'m \\cdot ('+ (data.takeoff.corrections.slope * 100) +'\\%/1\\%) \\cdot 5\\% = '+ takeOffLandingUIPairs['to-corrections-sloped-rwy'][0]+'m', {display: true}));
     $('.to-correction-soft-equation').html(MathJax.tex2svg(takeOffLandingUIPairs['to-g-w3-alt3-temp3'][0]+'m \\cdot '+ ((useSoftSfc)?'\\25%' : '0\\%') +' = '+ takeOffLandingUIPairs['to-corrections-soft-rwy'][0]+'m', {display: true}));
-    $('.to-correction-wind-equation').html(MathJax.tex2svg((getWindComponents().head>0 ? '-2.5m \\cdot '+ Math.abs(getWindComponents().head) +'kts' : '10m \\cdot ' + (-1 * getWindComponents().head) + 'kts')+' = '+ takeOffLandingUIPairs['to-corrections-wind'][0]+'m', {display: true}));
+    $('.to-correction-wind-equation').html(MathJax.tex2svg((getWindComponents().head>0 ? '-2.5m \\cdot '+ (Math.ceil((Math.abs(getWindComponents().head))*10))/10 +'kts' : '10m \\cdot ' + (-1 * getWindComponents().head) + 'kts')+' = '+ takeOffLandingUIPairs['to-corrections-wind'][0]+'m', {display: true}));
 
     //Corrected
     $('.to-g-corrected-equation').html(MathJax.tex2svg(takeOffLandingUIPairs['to-g-w3-alt3-temp3'][0]+'m + '+ takeOffLandingUIPairs['to-corrections-combined'] +' = '+ takeOffLandingUIPairs['to-g-corrected'][0]+'m', {display: true}));
@@ -342,7 +344,9 @@ function calculateFromInputs()
     $('.ldg-correction-paved-equation').html(MathJax.tex2svg(takeOffLandingUIPairs['ldg-g-w3-alt3-temp3'][0]+'m \\cdot -6\\% = '+ takeOffLandingUIPairs['ldg-corrections-paved-rwy'][0]+'m', {display: true}));
     $('.ldg-correction-slope-equation').html(MathJax.tex2svg(takeOffLandingUIPairs['ldg-g-w3-alt3-temp3'][0]+'m \\cdot ('+ (data.takeoff.corrections.slope * 100) +'\\%/1\\%) \\cdot 5\\% = '+ takeOffLandingUIPairs['ldg-corrections-sloped-rwy'][0]+'m', {display: true}));
     $('.ldg-correction-soft-equation').html(MathJax.tex2svg(takeOffLandingUIPairs['ldg-g-w3-alt3-temp3'][0]+'m \\cdot '+ ((useSoftSfc)?'\\25%' : '0\\%') +' = '+ takeOffLandingUIPairs['ldg-corrections-soft-rwy'][0]+'m', {display: true}));
-    $('.ldg-correction-wind-equation').html(MathJax.tex2svg((getWindComponents().head>0 ? '-2.5m \\cdot '+ Math.abs(getWindComponents().head) +'kts' : '10m \\cdot ' + (-1 * getWindComponents().head) + 'kts')+' = '+ takeOffLandingUIPairs['ldg-corrections-wind'][0]+'m', {display: true}));
+    var roundedHeadWindComponent = Math.ceil(Math.abs(getWindComponents().head)*10)/10
+    console.log(roundedHeadWindComponent)
+    $('.ldg-correction-wind-equation').html(MathJax.tex2svg((getWindComponents().head>0 ? '-2.5m \\cdot '+ roundedHeadWindComponent +'kts' : '10m \\cdot ' + (-1 * getWindComponents().head) + 'kts')+' = '+ takeOffLandingUIPairs['ldg-corrections-wind'][0]+'m', {display: true}));
 
     //Corrected
     $('.ldg-g-corrected-equation').html(MathJax.tex2svg(takeOffLandingUIPairs['ldg-g-w3-alt3-temp3'][0]+'m + '+ takeOffLandingUIPairs['ldg-corrections-combined'] +' = '+ takeOffLandingUIPairs['ldg-g-corrected'][0]+'m', {display: true}));
@@ -670,7 +674,12 @@ function calculateGradientVy(pa, isaDeviation, tom) {
         ias = stdVy
     }
     var roc = calculateRocVy(pa, isaDeviation, tom).result
-    return calculateGradient(roc, ias)
+    return {
+        result: [calculateGradient(roc, ias)],
+        roc: [roc],
+        ias: [ias],
+        useStd: [!useCalculatedClimbSpeedsInGradients]
+    }
 }
 
 function calculateGradientVx(pa, isaDeviation, tom) {
@@ -679,7 +688,12 @@ function calculateGradientVx(pa, isaDeviation, tom) {
         ias = stdVx
     }
     var roc = calculateRocVx(pa, isaDeviation, tom).result
-    return calculateGradient(roc, ias)
+    return {
+        result: [calculateGradient(roc, ias)],
+        roc: [roc],
+        ias: [ias],
+        useStd: [!useCalculatedClimbSpeedsInGradients]
+    }
 }
 
 function calculateGradientVySe(pa, isaDeviation, tom) {
@@ -688,7 +702,12 @@ function calculateGradientVySe(pa, isaDeviation, tom) {
         ias = stdVySe
     }
     var roc = calculateRocVySe(pa, isaDeviation, tom, true).result
-    return calculateGradient(roc, ias)
+    return {
+        result: [calculateGradient(roc, ias)],
+        roc: [roc],
+        ias: [ias],
+        useStd: [!useCalculatedClimbSpeedsInGradients]
+    }
 }
 
 function calculateGradientVxSe(pa, isaDeviation, tom) {
@@ -697,7 +716,12 @@ function calculateGradientVxSe(pa, isaDeviation, tom) {
         ias = stdVxSe
     }
     var roc = calculateRocVxSe(pa, isaDeviation, tom).result
-    return calculateGradient(roc, ias)
+    return {
+        result: [calculateGradient(roc, ias)],
+        roc: [roc],
+        ias: [ias],
+        useStd: [!useCalculatedClimbSpeedsInGradients]
+    }
 }
 
 //Angles
@@ -909,35 +933,35 @@ function calculateAll(pe, pa, msa, isaDeviation, tom, useTwoThirds)
 
         //Climb performance numbers, all with max cont. power setting and gear up
         //Takeoff Vy (flaps takeoff)
-        'toVy': calculateToVy(rocAltitude, isaDeviation, tom).result,
-        'toRocVy': calculateToROCVy(rocAltitude, isaDeviation, tom).result,
+        'toVy': calculateToVy(rocAltitude, isaDeviation, tom),
+        'toRocVy': calculateToROCVy(rocAltitude, isaDeviation, tom),
         'toGradVy': calculateToGradientVy(rocAltitude, isaDeviation,tom),
-        'toAngleVy': calculateAngle(calculateToGradientVy(rocAltitude,isaDeviation,tom)),
+        'toAngleVy': calculateAngle(calculateToGradientVy(rocAltitude,isaDeviation,tom).result),
         //Takeoff Vx (flaps takeoff)
-        'toVx': calculateToVx(rocAltitude, isaDeviation, tom).result,
-        'toRocVx': calculateToROCVx(rocAltitude, isaDeviation, tom).result,
+        'toVx': calculateToVx(rocAltitude, isaDeviation, tom),
+        'toRocVx': calculateToROCVx(rocAltitude, isaDeviation, tom),
         'toGradVx': calculateToGradientVx(rocAltitude, isaDeviation, tom),
-        'toAngleVx': calculateAngle(calculateToGradientVx(rocAltitude,isaDeviation,tom)),
+        'toAngleVx': calculateAngle(calculateToGradientVx(rocAltitude,isaDeviation,tom).result),
         //Enroute Vy (flaps&gear up)
-        'Vy': calculateVy(rocAltitude, isaDeviation,tom).result,
-        'rocVy': calculateRocVy(rocAltitude, isaDeviation, tom).result,
+        'Vy': calculateVy(rocAltitude, isaDeviation,tom),
+        'rocVy': calculateRocVy(rocAltitude, isaDeviation, tom),
         'gradVy': calculateGradientVy(rocAltitude, isaDeviation,tom),
-        'angleVy': calculateAngle(calculateGradientVy(rocAltitude,isaDeviation,tom)),
+        'angleVy': calculateAngle(calculateGradientVy(rocAltitude,isaDeviation,tom).result),
         //Enroute Vx (flaps up)
-        'Vx': calculateVx(rocAltitude, isaDeviation, tom).result,
-        'rocVx': calculateRocVx(rocAltitude, isaDeviation, tom).result,
+        'Vx': calculateVx(rocAltitude, isaDeviation, tom),
+        'rocVx': calculateRocVx(rocAltitude, isaDeviation, tom),
         'gradVx': calculateGradientVx(rocAltitude, isaDeviation,tom),
-        'angleVx': calculateAngle(calculateGradientVx(rocAltitude,isaDeviation,tom)),
+        'angleVx': calculateAngle(calculateGradientVx(rocAltitude,isaDeviation,tom).result),
         //VySe (one engine inoperative, and feathered, flaps up)
-        'VySe': calculateVySe(rocAltitude, isaDeviation, tom).result,
-        'rocVySe': calculateRocVySe(rocAltitude, isaDeviation, tom, true).result,
+        'VySe': calculateVySe(rocAltitude, isaDeviation, tom),
+        'rocVySe': calculateRocVySe(rocAltitude, isaDeviation, tom, true),
         'gradVySe': calculateGradientVySe(rocAltitude,isaDeviation,tom),
-        'angleVySe': calculateAngle(calculateGradientVySe(rocAltitude,isaDeviation,tom)),
+        'angleVySe': calculateAngle(calculateGradientVySe(rocAltitude,isaDeviation,tom).result),
         //VxSe (one engine inoperative, and feathered, flaps up)
-        'VxSe': calculateVxSe(rocAltitude, isaDeviation, tom).result,
-        'rocVxSe': calculateRocVxSe(rocAltitude, isaDeviation, tom).result,
+        'VxSe': calculateVxSe(rocAltitude, isaDeviation, tom),
+        'rocVxSe': calculateRocVxSe(rocAltitude, isaDeviation, tom),
         'gradVxSe': calculateGradientVxSe(rocAltitude, isaDeviation, tom),
-        'angleVxSe': calculateAngle(calculateGradientVxSe(rocAltitude,isaDeviation,tom)),
+        'angleVxSe': calculateAngle(calculateGradientVxSe(rocAltitude,isaDeviation,tom).result),
 
         //Ceilings (one engine inoperative, and feathered, flaps up)
         'OEIserviceCeiling': calculateOEIceiling(isaDeviation,tom),

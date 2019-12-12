@@ -3,3 +3,5 @@ Output wind components to end user
 Replace 'N/A' with '-' in A/C picker
 Finetune heights of empty spaces in results tab
 Landing corrections needs fix - they are currently just a copy of Takeoff corrections
+Hide irrelevant corrections (if = 0) in takeoff and landing calculations on results tab
+Check outputs on results tab for reasonable rounding (headwind/tailwind is not rounded, but check others as well)
