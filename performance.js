@@ -334,9 +334,9 @@ function calculateFromInputs()
     $('.ldg-g-corrected-equation').html(MathJax.tex2svg(takeOffLandingUIPairs['ldg-g-w3-alt3-temp3'][0]+'m + '+ takeOffLandingUIPairs['ldg-corrections-combined'] +' = '+ takeOffLandingUIPairs['ldg-g-corrected'][0]+'m', {display: true}));
     $('.ldg-d-corrected-equation').html(MathJax.tex2svg(takeOffLandingUIPairs['ldg-d-w3-alt3-temp3'][0]+'m + '+ takeOffLandingUIPairs['ldg-corrections-combined'] +' = '+ takeOffLandingUIPairs['ldg-d-corrected'][0]+'m', {display: true}));
 
-    //Facldgrized
-    $('.ldg-g-facldgrized-equation').html(MathJax.tex2svg(takeOffLandingUIPairs['ldg-g-corrected'][0]+'m \\cdot 1.25 = '+ takeOffLandingUIPairs['ldg-g-final'][0]+'m', {display: true}));
-    $('.ldg-d-facldgrized-equation').html(MathJax.tex2svg(takeOffLandingUIPairs['ldg-d-corrected'][0]+'m \\cdot 1.25 = '+ takeOffLandingUIPairs['ldg-d-final'][0]+'m', {display: true}));
+    //Factorized
+    $('.ldg-g-factorized-equation').html(MathJax.tex2svg(takeOffLandingUIPairs['ldg-g-corrected'][0]+'m \\cdot 1.25 = '+ takeOffLandingUIPairs['ldg-g-final'][0]+'m', {display: true}));
+    $('.ldg-d-factorized-equation').html(MathJax.tex2svg(takeOffLandingUIPairs['ldg-d-corrected'][0]+'m \\cdot 1.25 = '+ takeOffLandingUIPairs['ldg-d-final'][0]+'m', {display: true}));
 }
 
 function floorOrCeil(value)
@@ -869,6 +869,8 @@ function landingCorrectedCalculations(pa, isaDeviation, tom, slope) {
             sumCorrections += corrections[i];
         }
     }
+
+    corrections['combined'] = sumCorrections
 
     return {
         'uncorrectedDist': distance,
