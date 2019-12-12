@@ -297,9 +297,9 @@ function calculateFromInputs()
     $('.to-d-w3-temp3-equation').html(MathJax.tex2svg('\\frac{ '+ takeOffLandingUIPairs['to-d-w1-alt3-temp3'][0] +'m - '+ takeOffLandingUIPairs['to-d-w2-alt3-temp3'][0] +'m }{ '+ takeOffLandingUIPairs['to-mass1'][0] +'kg - '+ takeOffLandingUIPairs['to-mass2'][0] +'kg } \\cdot ('+ takeOffLandingUIPairs['to-mass3'][0] +'kg - '+ takeOffLandingUIPairs['to-mass2'][0] +'kg) + '+ takeOffLandingUIPairs['to-d-w2-alt3-temp3'][0] +'m = '+ takeOffLandingUIPairs['to-d-w3-alt3-temp3'][0] +'m', {display: true}));
 
     //Corrections
-    $('.to-correction-paved-equation').html(MathJax.tex2svg(takeOffLandingUIPairs['to-d-w3-alt3-temp3'][0]+'m \\cdot -6\\% = '+ takeOffLandingUIPairs['to-corrections-paved-rwy'][0]+'m', {display: true}));
-    $('.to-correction-slope-equation').html(MathJax.tex2svg(takeOffLandingUIPairs['to-d-w3-alt3-temp3'][0]+'m \\cdot ('+ (data.takeoff.corrections.slope * 100) +'\\%/1\\%) \\cdot 5\\% = '+ takeOffLandingUIPairs['to-corrections-sloped-rwy'][0]+'m', {display: true}));
-    $('.to-correction-soft-equation').html(MathJax.tex2svg(takeOffLandingUIPairs['to-d-w3-alt3-temp3'][0]+'m \\cdot '+ ((useSoftSfc)?'\\25%' : '0\\%') +' = '+ takeOffLandingUIPairs['to-corrections-soft-rwy'][0]+'m', {display: true}));
+    $('.to-correction-paved-equation').html(MathJax.tex2svg(takeOffLandingUIPairs['to-g-w3-alt3-temp3'][0]+'m \\cdot -6\\% = '+ takeOffLandingUIPairs['to-corrections-paved-rwy'][0]+'m', {display: true}));
+    $('.to-correction-slope-equation').html(MathJax.tex2svg(takeOffLandingUIPairs['to-g-w3-alt3-temp3'][0]+'m \\cdot ('+ (data.takeoff.corrections.slope * 100) +'\\%/1\\%) \\cdot 5\\% = '+ takeOffLandingUIPairs['to-corrections-sloped-rwy'][0]+'m', {display: true}));
+    $('.to-correction-soft-equation').html(MathJax.tex2svg(takeOffLandingUIPairs['to-g-w3-alt3-temp3'][0]+'m \\cdot '+ ((useSoftSfc)?'\\25%' : '0\\%') +' = '+ takeOffLandingUIPairs['to-corrections-soft-rwy'][0]+'m', {display: true}));
     $('.to-correction-wind-equation').html(MathJax.tex2svg((getWindComponents().head>0 ? '-2.5m \\cdot '+ Math.abs(getWindComponents().head) +'kts' : '10m \\cdot ' + (-1 * getWindComponents().head) + 'kts')+' = '+ takeOffLandingUIPairs['to-corrections-wind'][0]+'m', {display: true}));
 
     //Corrected
@@ -339,9 +339,9 @@ function calculateFromInputs()
     $('.ldg-g-w3-temp3-equation').html(MathJax.tex2svg('\\frac{ '+ takeOffLandingUIPairs['ldg-g-w1-alt3-temp3'][0] +'m - '+ takeOffLandingUIPairs['ldg-g-w2-alt3-temp3'][0] +'m }{ '+ takeOffLandingUIPairs['ldg-mass1'][0] +'kg - '+ takeOffLandingUIPairs['ldg-mass2'][0] +'kg } \\cdot ('+ takeOffLandingUIPairs['ldg-mass3'][0] +'kg - '+ takeOffLandingUIPairs['ldg-mass2'][0] +'kg) + '+ takeOffLandingUIPairs['ldg-g-w2-alt3-temp3'][0] +'m = '+ takeOffLandingUIPairs['ldg-g-w3-alt3-temp3'][0] +'m', {display: true}));
 
     //Corrections
-    $('.ldg-correction-paved-equation').html(MathJax.tex2svg(takeOffLandingUIPairs['ldg-d-w3-alt3-temp3'][0]+'m \\cdot -6\\% = '+ takeOffLandingUIPairs['ldg-corrections-paved-rwy'][0]+'m', {display: true}));
-    $('.ldg-correction-slope-equation').html(MathJax.tex2svg(takeOffLandingUIPairs['ldg-d-w3-alt3-temp3'][0]+'m \\cdot ('+ (data.takeoff.corrections.slope * 100) +'\\%/1\\%) \\cdot 5\\% = '+ takeOffLandingUIPairs['ldg-corrections-sloped-rwy'][0]+'m', {display: true}));
-    $('.ldg-correction-soft-equation').html(MathJax.tex2svg(takeOffLandingUIPairs['ldg-d-w3-alt3-temp3'][0]+'m \\cdot '+ ((useSoftSfc)?'\\25%' : '0\\%') +' = '+ takeOffLandingUIPairs['ldg-corrections-soft-rwy'][0]+'m', {display: true}));
+    $('.ldg-correction-paved-equation').html(MathJax.tex2svg(takeOffLandingUIPairs['ldg-g-w3-alt3-temp3'][0]+'m \\cdot -6\\% = '+ takeOffLandingUIPairs['ldg-corrections-paved-rwy'][0]+'m', {display: true}));
+    $('.ldg-correction-slope-equation').html(MathJax.tex2svg(takeOffLandingUIPairs['ldg-g-w3-alt3-temp3'][0]+'m \\cdot ('+ (data.takeoff.corrections.slope * 100) +'\\%/1\\%) \\cdot 5\\% = '+ takeOffLandingUIPairs['ldg-corrections-sloped-rwy'][0]+'m', {display: true}));
+    $('.ldg-correction-soft-equation').html(MathJax.tex2svg(takeOffLandingUIPairs['ldg-g-w3-alt3-temp3'][0]+'m \\cdot '+ ((useSoftSfc)?'\\25%' : '0\\%') +' = '+ takeOffLandingUIPairs['ldg-corrections-soft-rwy'][0]+'m', {display: true}));
     $('.ldg-correction-wind-equation').html(MathJax.tex2svg((getWindComponents().head>0 ? '-2.5m \\cdot '+ Math.abs(getWindComponents().head) +'kts' : '10m \\cdot ' + (-1 * getWindComponents().head) + 'kts')+' = '+ takeOffLandingUIPairs['ldg-corrections-wind'][0]+'m', {display: true}));
 
     //Corrected
