@@ -1,0 +1,4 @@
+Log calculations for climb
+Output wind components to end user
+Replace N/A with - in A/C picker
+Finetune heights of empty spaces in results tab
