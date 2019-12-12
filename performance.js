@@ -738,7 +738,7 @@ function calculateOEIceiling(isaDeviation, tom) {
         fpm = calculateRocVySe(serviceCeiling, isaDeviation, tom).result;
         
         if (fpm < 50) {
-            serviceCeiling -= 1;
+            serviceCeiling -= 10;
         }
     }
 
@@ -760,7 +760,7 @@ function calculateOEIabsoluteCeiling(isaDeviation, tom) {
         fpm = calculateRocVySe(absoluteCeiling, isaDeviation, tom).result;
         
         if (fpm < 0) {
-            absoluteCeiling -= 1;
+            absoluteCeiling -= 10;
         }
     }
 
