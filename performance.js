@@ -170,6 +170,15 @@ function calculateFromInputs()
         'ldg-mass1': [data.landing.uncorrectedGround.keys.mass1, 'kg'],
         'ldg-mass2': [data.landing.uncorrectedGround.keys.mass2, 'kg'],
         'ldg-mass3': [data.landing.uncorrectedGround.keys.mass3, 'kg'],
+        'oei-roc-vyse-temp1': [data.rocVySe.keys.temp1, '&deg;C'],
+        'oei-roc-vyse-temp2': [data.rocVySe.keys.temp2, '&deg;C'],
+        'oei-roc-vyse-temp3': [data.rocVySe.keys.temp3, '&deg;C'],
+        'oei-roc-vyse-alt1': [data.rocVySe.keys.alt1, 'ft'],
+        'oei-roc-vyse-alt2': [data.rocVySe.keys.alt2, 'ft'],
+        'oei-roc-vyse-alt3': [Math.round(data.rocVySe.keys.alt3), 'ft'],
+        'oei-roc-vyse-mass1': [data.rocVySe.keys.mass1, 'kg'],
+        'oei-roc-vyse-mass2': [data.rocVySe.keys.mass2, 'kg'],
+        'oei-roc-vyse-mass3': [data.rocVySe.keys.mass3, 'kg'],
 
         // Environment
         'env-qnh': [data.env.qnh, 'hPa'],
@@ -285,11 +294,30 @@ function calculateFromInputs()
         'ldg-d-corrected': [Math.ceil(data.landing.uncorrectedDist.data['3D']['result'] + data.landing.corrections.combined), 'm'],
         //Factorized distances
         'ldg-g-final': [Math.ceil(data.landing.groundroll), 'm'],
-        'ldg-d-final': [Math.ceil(data.landing.distance), 'm']
+        'ldg-d-final': [Math.ceil(data.landing.distance), 'm'],
 
         //CLIMB PERFORMANCE OUTPUTS
+        // OEI ROC VySE
+        'oei-roc-vyse-w1-alt1-temp1': [Math.floor(data.rocVySe.data['1D1'][temperatures[0]+'-raw'][1]), 'm'],
+        'oei-roc-vyse-w1-alt1-temp2': [Math.floor(data.rocVySe.data['1D1'][temperatures[1]+'-raw'][1]), 'm'],
+        'oei-roc-vyse-w1-alt2-temp1': [Math.floor(data.rocVySe.data['1D1'][temperatures[0]+'-raw'][0]), 'm'],
+        'oei-roc-vyse-w1-alt2-temp2': [Math.floor(data.rocVySe.data['1D1'][temperatures[1]+'-raw'][0]), 'm'],
+        'oei-roc-vyse-w1-alt3-temp1': [Math.floor(data.rocVySe.data['1D1'][temperatures[0]]), 'm'],
+        'oei-roc-vyse-w1-alt3-temp2': [Math.floor(data.rocVySe.data['1D1'][temperatures[1]]), 'm'],
+        'oei-roc-vyse-w1-alt3-temp3': [Math.floor(data.rocVySe.data['2D'][weights[1]]), 'm'],
+
+        'oei-roc-vyse-w2-alt1-temp1': [Math.floor(data.rocVySe.data['1D2'][temperatures[0]+'-raw'][1]), 'm'],
+        'oei-roc-vyse-w2-alt1-temp2': [Math.floor(data.rocVySe.data['1D2'][temperatures[1]+'-raw'][1]), 'm'],
+        'oei-roc-vyse-w2-alt2-temp1': [Math.floor(data.rocVySe.data['1D2'][temperatures[0]+'-raw'][0]), 'm'],
+        'oei-roc-vyse-w2-alt2-temp2': [Math.floor(data.rocVySe.data['1D2'][temperatures[1]+'-raw'][0]), 'm'],
+        'oei-roc-vyse-w2-alt3-temp1': [Math.floor(data.rocVySe.data['1D2'][temperatures[0]]), 'm'],
+        'oei-roc-vyse-w2-alt3-temp2': [Math.floor(data.rocVySe.data['1D2'][temperatures[1]]), 'm'],
+        'oei-roc-vyse-w2-alt3-temp3': [Math.floor(data.rocVySe.data['2D'][weights[0]]), 'm'],
+
+        'oei-roc-vyse-w3-alt3-temp3': [Math.floor(data.rocVySe.data['3D']['result']), 'm'],
 
     };
+    console.log(data.rocVySe.data);
 
     updateUIValues(takeOffLandingUIPairs);
 
