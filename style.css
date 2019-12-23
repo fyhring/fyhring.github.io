@@ -1,0 +1,131 @@
+
+.container {
+    margin-top: 50px;
+    margin-bottom: 20px;
+}
+
+.scrollable {
+    width: 100%;
+    width: calc(100% + 30px);
+    height: 700px;
+    border: 1px solid #333;
+    margin: 0 -15px;
+    overflow: scroll;
+}
+
+.noPadding {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.scaleSlider {
+    width: 300px;
+}
+
+.colorCodes {
+    text-align: right;
+    padding-top: 25px;
+}
+
+.colorCodes span {
+    font-size: 10px;
+    margin-left: 15px;
+    position: relative;
+}
+
+.colorCodes span:before {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 2px;
+    top: 6px;
+    left: -10px;
+}
+
+.colorCodes span.blue:before {
+    background: #0000FF;
+}
+
+.colorCodes span.red:before {
+    background: #FF0000;
+}
+
+.colorCodes span.orange:before {
+    background: #FF9800;
+}
+
+.hidden {
+    display: none;
+}
+
+.center {
+    text-align: center;
+}
+
+.input-group-text {
+    min-width: 55px;
+}
+
+.result-weight-sector {
+    margin-bottom: 20px;
+    background: rgba(236, 236, 236, 0.3);
+    border: 1px solid #ccc;
+}
+
+.result-weight-sector table.table > thead > tr > th {
+    border-top: none;
+}
+
+.result-weight-sector,
+.result-weight-sector th,
+.result-weight-sector td {
+    color: #375461;
+    /* color: #4a6977; */
+}
+
+table.table {
+    margin-bottom: 0;
+}
+
+.result-weight-sector > table:nth-child(even) {
+    margin-top: 12px;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+mjx-container {
+    outline: none;
+}
+
+.settings-box {
+    border: 1px solid #ccc;
+    background: rgba(236, 236, 236, 0.3);
+    padding: 5px 10px;
+    border-radius: 4px;
+}
+
+.settings-box label {
+    cursor: pointer;
+}
+
+.settings-box label:hover {
+    cursor: pointer;
+    color: #607D8B;
+}
+
+.aircraft_image_wrapper {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.aircraft_image_wrapper > img {
+    height: 350px;
+}
+
+.jump-to-heading {
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+

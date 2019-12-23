@@ -93,8 +93,6 @@ function calculateFromInputs()
             pressureAltitude = cruiseInput * 100;
         }
 
-        console.log('PA', pressureAltitude);
-
         // Pressure Elevation must not be less than 0, no data in matrix below 0.
         if (pressureElevation < 0) {
             pressureElevation = 0;
@@ -103,6 +101,19 @@ function calculateFromInputs()
 
     var data = calculateAll(pressureElevation, pressureAltitude, msaInput, tempIsaDeviation, weightInput);
     console.log(data);
+
+    data.env = {
+        qnh: pressureInput,
+        temp: temperatureInput,
+        isaDev: tempIsaDeviation,
+        weight: weightInput,
+        elevation: elevationInput,
+        pressureElevation: pressureElevation,
+        cruiseAlt: cruiseInput,
+        cruisePressureAltitude: pressureAltitude,
+        rocAlt: null,
+        rocPressureAlt: data.rocVySe.keys.alt3
+    };
 
     var temperatures = Object.keys(data.takeoff.uncorrectedGround.data['1D1']);
     var weights = Object.keys(data.takeoff.uncorrectedGround.data['2D']);
@@ -159,6 +170,18 @@ function calculateFromInputs()
         'ldg-mass1': [data.landing.uncorrectedGround.keys.mass1, 'kg'],
         'ldg-mass2': [data.landing.uncorrectedGround.keys.mass2, 'kg'],
         'ldg-mass3': [data.landing.uncorrectedGround.keys.mass3, 'kg'],
+
+        // Environment
+        'env-qnh': [data.env.qnh, 'hPa'],
+        'env-temp': [data.env.temp, '&deg;'],
+        'env-isa-dev': [data.env.isaDev, ''],
+        'env-weight': [data.env.weight, 'kg'],
+        'env-elevation': [data.env.elevation, 'ft'],
+        'env-pressure-elevation': [data.env.pressureElevation, 'ft'],
+        'env-cruise-alt': [data.env.cruiseAlt, 'ft'],
+        'env-cruise-pressure-alt': [data.env.cruisePressureAltitude, 'ft'],
+        'env-roc-alt': [data.env.rocAlt, 'ft'],
+        'env-pressure-roc-alt': [Math.round(data.env.rocPressureAlt), 'ft'],
 
         // T/O Groundroll
         'to-g-w1-alt1-temp1': [Math.ceil(data.takeoff.uncorrectedGround.data['1D1'][temperatures[0]+'-raw'][1]), 'm'],
@@ -240,7 +263,7 @@ function calculateFromInputs()
         'to-corrections-paved-rwy': [Math.ceil(data.takeoff.corrections.pavedRwyCorrection), 'm'],
         'to-corrections-sloped-rwy': [Math.ceil(data.takeoff.corrections.slopeCorrection), 'm'],
         'to-corrections-soft-rwy': [Math.ceil(data.takeoff.corrections.softSfcCorrection), 'm'],
-        'to-corrections-windlabel': [(Math.ceil((Math.abs(getWindComponents().head))*10))/10,'kts '+(getWindComponents.head > 0 ? 'headwind' : 'tailwind')],
+        'to-corrections-windlabel': [(Math.ceil((Math.abs(getWindComponents().head))*10))/10,'kts '+(getWindComponents().head > 0 ? 'headwind' : 'tailwind')],
         'to-corrections-wind': [Math.ceil(data.takeoff.corrections.windCorrection), 'm'],
         'to-corrections-combined': [floorOrCeil(data.takeoff.corrections.combined), 'm'],
         //Corrected distances
@@ -254,7 +277,7 @@ function calculateFromInputs()
         'ldg-corrections-paved-rwy': [Math.ceil(data.landing.corrections.pavedRwyCorrection), 'm'],
         'ldg-corrections-sloped-rwy': [Math.ceil(data.landing.corrections.slopeCorrection), 'm'],
         'ldg-corrections-soft-rwy': [Math.ceil(data.landing.corrections.softSfcCorrection), 'm'],
-        'ldg-corrections-windlabel': [(Math.ceil((Math.abs(getWindComponents().head))*10))/10,'kts '+(getWindComponents.head > 0 ? 'headwind' : 'tailwind')],
+        'ldg-corrections-windlabel': [(Math.ceil((Math.abs(getWindComponents().head))*10))/10,'kts '+(getWindComponents().head > 0 ? 'headwind' : 'tailwind')],
         'ldg-corrections-wind': [Math.ceil(data.landing.corrections.windCorrection), 'm'],
         'ldg-corrections-combined': [floorOrCeil(data.landing.corrections.combined), 'm'],
         //Corrected distances
@@ -269,6 +292,10 @@ function calculateFromInputs()
     };
 
     updateUIValues(takeOffLandingUIPairs);
+
+    /**********************
+     * Math Jax Equations *
+     **********************/
 
     //Takeoff Groundroll
     //Interpolation between altitudes for mass1, temp1&2
@@ -302,11 +329,11 @@ function calculateFromInputs()
     $('.to-correction-paved-equation').html(MathJax.tex2svg(takeOffLandingUIPairs['to-g-w3-alt3-temp3'][0]+'m \\cdot -6\\% = '+ takeOffLandingUIPairs['to-corrections-paved-rwy'][0]+'m', {display: true}));
     $('.to-correction-slope-equation').html(MathJax.tex2svg(takeOffLandingUIPairs['to-g-w3-alt3-temp3'][0]+'m \\cdot ('+ (data.takeoff.corrections.slope * 100) +'\\%/1\\%) \\cdot 5\\% = '+ takeOffLandingUIPairs['to-corrections-sloped-rwy'][0]+'m', {display: true}));
     $('.to-correction-soft-equation').html(MathJax.tex2svg(takeOffLandingUIPairs['to-g-w3-alt3-temp3'][0]+'m \\cdot '+ ((useSoftSfc)?'\\25%' : '0\\%') +' = '+ takeOffLandingUIPairs['to-corrections-soft-rwy'][0]+'m', {display: true}));
-    $('.to-correction-wind-equation').html(MathJax.tex2svg((getWindComponents().head>0 ? '-2.5m \\cdot '+ (Math.ceil((Math.abs(getWindComponents().head))*10))/10 +'kts' : '10m \\cdot ' + (-1 * getWindComponents().head) + 'kts')+' = '+ takeOffLandingUIPairs['to-corrections-wind'][0]+'m', {display: true}));
+    $('.to-correction-wind-equation').html(MathJax.tex2svg((getWindComponents().head>0 ? '-2.5m \\cdot '+ (Math.ceil((Math.abs(getWindComponents().head))*10))/10 +'kts' : '10m \\cdot ' + Math.ceil(-1 * getWindComponents().head) + 'kts')+' = '+ takeOffLandingUIPairs['to-corrections-wind'][0]+'m', {display: true}));
 
     //Corrected
-    $('.to-g-corrected-equation').html(MathJax.tex2svg(takeOffLandingUIPairs['to-g-w3-alt3-temp3'][0]+'m + '+ takeOffLandingUIPairs['to-corrections-combined'] +' = '+ takeOffLandingUIPairs['to-g-corrected'][0]+'m', {display: true}));
-    $('.to-d-corrected-equation').html(MathJax.tex2svg(takeOffLandingUIPairs['to-d-w3-alt3-temp3'][0]+'m + '+ takeOffLandingUIPairs['to-corrections-combined'] +' = '+ takeOffLandingUIPairs['to-d-corrected'][0]+'m', {display: true}));
+    $('.to-g-corrected-equation').html(MathJax.tex2svg(takeOffLandingUIPairs['to-g-w3-alt3-temp3'][0]+'m + '+ takeOffLandingUIPairs['to-corrections-combined'][0] +'m = '+ takeOffLandingUIPairs['to-g-corrected'][0]+'m', {display: true}));
+    $('.to-d-corrected-equation').html(MathJax.tex2svg(takeOffLandingUIPairs['to-d-w3-alt3-temp3'][0]+'m + '+ takeOffLandingUIPairs['to-corrections-combined'][0] +'m = '+ takeOffLandingUIPairs['to-d-corrected'][0]+'m', {display: true}));
 
     //Factorized
     $('.to-g-factorized-equation').html(MathJax.tex2svg(takeOffLandingUIPairs['to-g-corrected'][0]+'m \\cdot 1.25 = '+ takeOffLandingUIPairs['to-g-final'][0]+'m', {display: true}));
@@ -349,12 +376,12 @@ function calculateFromInputs()
     $('.ldg-correction-wind-equation').html(MathJax.tex2svg((getWindComponents().head>0 ? '-2.5m \\cdot '+ roundedHeadWindComponent +'kts' : '10m \\cdot ' + (-1 * getWindComponents().head) + 'kts')+' = '+ takeOffLandingUIPairs['ldg-corrections-wind'][0]+'m', {display: true}));
 
     //Corrected
-    $('.ldg-g-corrected-equation').html(MathJax.tex2svg(takeOffLandingUIPairs['ldg-g-w3-alt3-temp3'][0]+'m + '+ takeOffLandingUIPairs['ldg-corrections-combined'] +' = '+ takeOffLandingUIPairs['ldg-g-corrected'][0]+'m', {display: true}));
-    $('.ldg-d-corrected-equation').html(MathJax.tex2svg(takeOffLandingUIPairs['ldg-d-w3-alt3-temp3'][0]+'m + '+ takeOffLandingUIPairs['ldg-corrections-combined'] +' = '+ takeOffLandingUIPairs['ldg-d-corrected'][0]+'m', {display: true}));
+    $('.ldg-g-corrected-equation').html(MathJax.tex2svg(takeOffLandingUIPairs['ldg-g-w3-alt3-temp3'][0]+'m + '+ takeOffLandingUIPairs['ldg-corrections-combined'][0] +'m = '+ takeOffLandingUIPairs['ldg-g-corrected'][0]+'m', {display: true}));
+    $('.ldg-d-corrected-equation').html(MathJax.tex2svg(takeOffLandingUIPairs['ldg-d-w3-alt3-temp3'][0]+'m + '+ takeOffLandingUIPairs['ldg-corrections-combined'][0] +'m = '+ takeOffLandingUIPairs['ldg-d-corrected'][0]+'m', {display: true}));
 
     //Factorized
-    $('.ldg-g-factorized-equation').html(MathJax.tex2svg(takeOffLandingUIPairs['ldg-g-corrected'][0]+'m \\cdot 1.25 = '+ takeOffLandingUIPairs['ldg-g-final'][0]+'m', {display: true}));
-    $('.ldg-d-factorized-equation').html(MathJax.tex2svg(takeOffLandingUIPairs['ldg-d-corrected'][0]+'m \\cdot 1.25 = '+ takeOffLandingUIPairs['ldg-d-final'][0]+'m', {display: true}));
+    $('.ldg-g-factorized-equation').html(MathJax.tex2svg(takeOffLandingUIPairs['ldg-g-corrected'][0]+'m \\cdot 1.43 = '+ takeOffLandingUIPairs['ldg-g-final'][0]+'m', {display: true}));
+    $('.ldg-d-factorized-equation').html(MathJax.tex2svg(takeOffLandingUIPairs['ldg-d-corrected'][0]+'m \\cdot 1.43 = '+ takeOffLandingUIPairs['ldg-d-final'][0]+'m', {display: true}));
 }
 
 function floorOrCeil(value)
