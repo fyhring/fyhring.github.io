@@ -298,23 +298,23 @@ function calculateFromInputs()
 
         //CLIMB PERFORMANCE OUTPUTS
         // OEI ROC VySE
-        'oei-roc-vyse-w1-alt1-temp1': [Math.floor(data.rocVySe.data['1D1'][temperatures[0]+'-raw'][1]), 'm'],
-        'oei-roc-vyse-w1-alt1-temp2': [Math.floor(data.rocVySe.data['1D1'][temperatures[1]+'-raw'][1]), 'm'],
-        'oei-roc-vyse-w1-alt2-temp1': [Math.floor(data.rocVySe.data['1D1'][temperatures[0]+'-raw'][0]), 'm'],
-        'oei-roc-vyse-w1-alt2-temp2': [Math.floor(data.rocVySe.data['1D1'][temperatures[1]+'-raw'][0]), 'm'],
-        'oei-roc-vyse-w1-alt3-temp1': [Math.floor(data.rocVySe.data['1D1'][temperatures[0]]), 'm'],
-        'oei-roc-vyse-w1-alt3-temp2': [Math.floor(data.rocVySe.data['1D1'][temperatures[1]]), 'm'],
-        'oei-roc-vyse-w1-alt3-temp3': [Math.floor(data.rocVySe.data['2D'][weights[1]]), 'm'],
+        'oei-roc-vyse-w1-alt1-temp1': [Math.floor(data.rocVySe.data['1D1'][temperatures[0]+'-raw'][1]), 'fpm'],
+        'oei-roc-vyse-w1-alt1-temp2': [Math.floor(data.rocVySe.data['1D1'][temperatures[1]+'-raw'][1]), 'fpm'],
+        'oei-roc-vyse-w1-alt2-temp1': [Math.floor(data.rocVySe.data['1D1'][temperatures[0]+'-raw'][0]), 'fpm'],
+        'oei-roc-vyse-w1-alt2-temp2': [Math.floor(data.rocVySe.data['1D1'][temperatures[1]+'-raw'][0]), 'fpm'],
+        'oei-roc-vyse-w1-alt3-temp1': [Math.floor(data.rocVySe.data['1D1'][temperatures[0]]), 'fpm'],
+        'oei-roc-vyse-w1-alt3-temp2': [Math.floor(data.rocVySe.data['1D1'][temperatures[1]]), 'fpm'],
+        'oei-roc-vyse-w1-alt3-temp3': [Math.floor(data.rocVySe.data['2D'][weights[1]]), 'fpm'],
 
-        'oei-roc-vyse-w2-alt1-temp1': [Math.floor(data.rocVySe.data['1D2'][temperatures[0]+'-raw'][1]), 'm'],
-        'oei-roc-vyse-w2-alt1-temp2': [Math.floor(data.rocVySe.data['1D2'][temperatures[1]+'-raw'][1]), 'm'],
-        'oei-roc-vyse-w2-alt2-temp1': [Math.floor(data.rocVySe.data['1D2'][temperatures[0]+'-raw'][0]), 'm'],
-        'oei-roc-vyse-w2-alt2-temp2': [Math.floor(data.rocVySe.data['1D2'][temperatures[1]+'-raw'][0]), 'm'],
-        'oei-roc-vyse-w2-alt3-temp1': [Math.floor(data.rocVySe.data['1D2'][temperatures[0]]), 'm'],
-        'oei-roc-vyse-w2-alt3-temp2': [Math.floor(data.rocVySe.data['1D2'][temperatures[1]]), 'm'],
-        'oei-roc-vyse-w2-alt3-temp3': [Math.floor(data.rocVySe.data['2D'][weights[0]]), 'm'],
+        'oei-roc-vyse-w2-alt1-temp1': [Math.floor(data.rocVySe.data['1D2'][temperatures[0]+'-raw'][1]), 'fpm'],
+        'oei-roc-vyse-w2-alt1-temp2': [Math.floor(data.rocVySe.data['1D2'][temperatures[1]+'-raw'][1]), 'fpm'],
+        'oei-roc-vyse-w2-alt2-temp1': [Math.floor(data.rocVySe.data['1D2'][temperatures[0]+'-raw'][0]), 'fpm'],
+        'oei-roc-vyse-w2-alt2-temp2': [Math.floor(data.rocVySe.data['1D2'][temperatures[1]+'-raw'][0]), 'fpm'],
+        'oei-roc-vyse-w2-alt3-temp1': [Math.floor(data.rocVySe.data['1D2'][temperatures[0]]), 'fpm'],
+        'oei-roc-vyse-w2-alt3-temp2': [Math.floor(data.rocVySe.data['1D2'][temperatures[1]]), 'fpm'],
+        'oei-roc-vyse-w2-alt3-temp3': [Math.floor(data.rocVySe.data['2D'][weights[0]]), 'fpm'],
 
-        'oei-roc-vyse-w3-alt3-temp3': [Math.floor(data.rocVySe.data['3D']['result']), 'm'],
+        'oei-roc-vyse-w3-alt3-temp3': [Math.floor(data.rocVySe.data['3D']['result']), 'fpm'],
 
     };
     console.log(data.rocVySe.data);
