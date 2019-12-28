@@ -396,6 +396,23 @@ $(document).ready(function()
         }, 200);
     }
 
+    function renderPrintableLoadSheet()
+    {
+        var printLoadsheetImage = document.querySelectorAll('.print-loadsheet-image')[0];
+
+        // Set scale to 1 to get full size download.
+        var oldScale = scale;
+        scaleInput.value = 1.0;
+
+        setTimeout(function() {
+            printLoadsheetImage.setAttribute('src', diagram.toDataURL('image/png'));
+
+            // Scale the UI back to the user preference.
+            scaleInput.value = oldScale;
+        }.bind(this), 200);
+    }
+    window.renderPrintableLoadSheet = renderPrintableLoadSheet;
+
     // Trigger draw
     triggerUpdate();
 

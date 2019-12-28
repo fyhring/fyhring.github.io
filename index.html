@@ -26,9 +26,46 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
+    <style>
+        footer {
+            font-size: 9px;
+            color: #f00;
+            text-align: center;
+        }
+
+        .print-only, .print-only-inline {
+            display: none;
+        }
+
+        .screen-only {
+            display: block;
+        }
+
+        .screen-only-inline {
+            display: inline;
+        }
+
+        @page {
+            size: A4;
+            margin: 11mm 17mm 17mm 17mm;
+        }   
+    </style>
     <style media="print" type="text/css">
         body {
             font-family: Arial, Helvetica, sans-serif !important;
+        }
+        footer {
+            position: fixed;
+            bottom: 0;
+        }
+
+        .content-block, p {
+            page-break-inside: avoid;
+        }
+
+        html, body {
+            width: 210mm;
+            height: 297mm;
         }
 
         .col-sm-6 {
@@ -36,12 +73,70 @@
             max-width: 100% !important;
             flex: 0 0 100% !important;
         }
+
+        #menuContainer {
+            display: none;
+        }
+
+        .page-break {
+            page-break-after: always;
+        }
+
+        .print-only {
+            display: block;
+        }
+
+        .print-only-inline {
+            display: inline;
+        }
+
+        .screen-only, .screen-only-inline {
+            display: none;
+        }
+
+        .print-hero-heading {
+            margin-top: 80px;
+        }
+
+        .print-hero > #hero-image {
+            margin-top: 250px;
+        }
+
+        .print-no-border {
+            border: 0px;
+        }
+
+        .page-number:before {
+            /* WIP */
+            /*counter-increment: page;
+            content: "Page " counter(page);*/
+        }
+
+        .print-loadsheet-image {
+            transform: rotate(90deg);
+            width: auto;
+            height: 230mm;
+            page-break-inside: avoid;
+            page-break-before: always;
+            page-break-after: always;
+            max-width: initial;
+            margin: 0 !important;
+            padding: 0 !important;
+            left: -260px;
+            top: 300px;
+            position: relative;
+        }
+
+        .result-weight-sector {
+            border-top: 0;
+        }
+
     </style>
 
 </head>
 <body>
     
-    <div class="container">
+    <div class="container" id="menuContainer">
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
                 <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab">Intro</a>
@@ -429,21 +524,42 @@
             </form>
         </div>
         <div class="tab-pane fade" id="resultsTab" role="tabpanel">
-            <h3>Results &amp; Interpolation Data</h3>
+            
+            <div id="resultIntro" class="screen-only">
+                <h3>Results &amp; Interpolation Data</h3>
 
-            <p class="jump-to-heading">Jump to section:</p>
-            <ul>
-                <li><a href="#take-off-ground">Take-off Groundroll</a></li>
-                <li><a href="#take-off-distance">Take-off Distance</a></li>
-                <li><a href="#take-off-corrections">Take-off Corrections</a></li>
+                <p class="jump-to-heading">Jump to section:</p>
+                <ul>
+                    <li><a href="#take-off-ground">Take-off Groundroll</a></li>
+                    <li><a href="#take-off-distance">Take-off Distance</a></li>
+                    <li><a href="#take-off-corrections">Take-off Corrections</a></li>
 
-                <li><a href="#ldg-ground">Landing Groundroll</a></li>
-                <li><a href="#ldg-distance">Landing Distance</a></li>
-                <li><a href="#ldg-corrections">Landing Corrections</a></li>
-            </ul>
+                    <li><a href="#ldg-ground">Landing Groundroll</a></li>
+                    <li><a href="#ldg-distance">Landing Distance</a></li>
+                    <li><a href="#ldg-corrections">Landing Corrections</a></li>
+                </ul>
 
-            <p>&nbsp;</p>
-            <hr />
+                <div class="pull-right">
+                    <button
+                        onclick="window.triggerPrint();"
+                        class="btn btn-primary"
+                    >Print</button>
+                </div>
+
+                <p>&nbsp;</p>
+                <hr />
+            </div>
+
+            <div class="print-hero print-only">
+                <img src="./aircraft-figure.png" id="hero-image" class="img-fluid" />
+                <h1 class="print-hero-heading display-3">
+                    P2006T<br />
+                    <span class="text-muted">Performance</span>
+                </h1>
+            </div>
+            <div class="page-break"></div>
+
+            <img class="img-fluid print-only print-loadsheet-image" src="data:image/png;base64,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" />
 
             <div class="row" id="environment">
                 <div class="col-sm-6">
@@ -453,43 +569,43 @@
                         <table class="table table-sm">
                             <tr>
                                 <td>QNH</td>
-                                <td class="env-qnh"></td>
+                                <td class="env-qnh">-</td>
                             </tr>
                             <tr>
                                 <td>SFC Temp.</td>
-                                <td class="env-temp"></td>
+                                <td class="env-temp">-</td>
                             </tr>
                             <tr>
                                 <td>ISA Deviation</td>
-                                <td class="env-isa-dev"></td>
+                                <td class="env-isa-dev">-</td>
                             </tr>
                             <tr>
                                 <td>Weight</td>
-                                <td class="env-weight"></td>
+                                <td class="env-weight">-</td>
                             </tr>
                             <tr>
                                 <td>A/D Elevation</td>
-                                <td class="env-elevation"></td>
+                                <td class="env-elevation">-</td>
                             </tr>
                             <tr>
                                 <td>A/D Pressure Elevation</td>
-                                <td class="env-pressure-elevation"></td>
+                                <td class="env-pressure-elevation">-</td>
                             </tr>
                             <tr>
                                 <td>Cruise Altitude</td>
-                                <td class="env-cruise-alt"></td>
+                                <td class="env-cruise-alt">-</td>
                             </tr>
                             <tr>
                                 <td>Cruise Pressure Alt.</td>
-                                <td class="env-cruise-pressure-alt"></td>
+                                <td class="env-cruise-pressure-alt">-</td>
                             </tr>
                             <tr>
                                 <td>ROC Alt.</td>
-                                <td class="env-roc-alt"></td>
+                                <td class="env-roc-alt">-</td>
                             </tr>
                             <tr>
                                 <td>ROC Pressure Alt.</td>
-                                <td class="env-pressure-roc-alt"></td>
+                                <td class="env-pressure-roc-alt">-</td>
                             </tr>
                         </table>
                     </div>
@@ -498,6 +614,7 @@
 
                 </div>
             </div>
+            <div class="page-break"></div>
 
             <div class="row" id="take-off-ground">
                 <div class="col-sm-6">
@@ -617,19 +734,20 @@
                     <div style="margin-top: 30px;">&nbsp;</div>
                     <div class="to-g-w1-temp1-equation"></div>
                     <div class="to-g-w1-temp2-equation"></div>
-                    <hr>
+                    <hr class="screen-only" />
                     <div class="to-g-w1-temp3-equation"></div>
                     <br><br>
                     <div class="to-g-w2-temp1-equation"></div>
                     <div class="to-g-w2-temp2-equation"></div>
-                    <hr>
+                    <hr class="screen-only" />
                     <div class="to-g-w2-temp3-equation"></div>
                     <br><br>
                     <div class="to-g-w3-temp3-equation"></div>
                 </div>
             </div>
+            <hr class="screen-only" />
+            <div class="page-break"></div>
 
-            <hr />
             <div class="row" id="take-off-distance">
                 <div class="col-sm-6">
                     <h4>Take-Off <small class="text-muted">50ft Distance</small></h4>
@@ -748,19 +866,20 @@
                     <div style="margin-top: 30px;">&nbsp;</div>
                     <div class="to-d-w1-temp1-equation"></div>
                     <div class="to-d-w1-temp2-equation"></div>
-                    <hr>
+                    <hr class="screen-only" />
                     <div class="to-d-w1-temp3-equation"></div>
                     <br><br>
                     <div class="to-d-w2-temp1-equation"></div>
                     <div class="to-d-w2-temp2-equation"></div>
-                    <hr>
+                    <hr class="screen-only" />
                     <div class="to-d-w2-temp3-equation"></div>
                     <br><br>
                     <div class="to-d-w3-temp3-equation"></div>
                 </div>
             </div>
+            <hr class="screen-only" />
+            <div class="page-break"></div>
             
-            <hr />
             <div class="row" id="take-off-corrections">
 
                 <div class="col-sm-6">
@@ -865,8 +984,9 @@
                 </div>
 
             </div>
-            <hr />
-
+            <hr class="screen-only" />
+            <div class="page-break"></div>
+            
             <div class="row" id="ldg-ground">
                 <div class="col-sm-6">
                     <h4>Landing <small class="text-muted">Groundroll</small></h4>
@@ -985,18 +1105,19 @@
                     <div style="margin-top: 30px;">&nbsp;</div>
                     <div class="ldg-g-w1-temp1-equation"></div>
                     <div class="ldg-g-w1-temp2-equation"></div>
-                    <hr>
+                    <hr class="screen-only" />
                     <div class="ldg-g-w1-temp3-equation"></div>
                     <br><br>
                     <div class="ldg-g-w2-temp1-equation"></div>
                     <div class="ldg-g-w2-temp2-equation"></div>
-                    <hr>
+                    <hr class="screen-only" />
                     <div class="ldg-g-w2-temp3-equation"></div>
                     <br><br>
                     <div class="ldg-g-w3-temp3-equation"></div>
                 </div>
             </div>
-            <hr />
+            <hr class="screen-only" />
+            <div class="page-break"></div>
             
             <div class="row" id="ldg-distance">
                 <div class="col-sm-6">
@@ -1116,18 +1237,19 @@
                     <div style="margin-top: 30px;">&nbsp;</div>
                     <div class="ldg-d-w1-temp1-equation"></div>
                     <div class="ldg-d-w1-temp2-equation"></div>
-                    <hr>
+                    <hr class="screen-only" />
                     <div class="ldg-d-w1-temp3-equation"></div>
                     <br><br>
                     <div class="ldg-d-w2-temp1-equation"></div>
                     <div class="ldg-d-w2-temp2-equation"></div>
-                    <hr>
+                    <hr class="screen-only" />
                     <div class="ldg-d-w2-temp3-equation"></div>
                     <br><br>
                     <div class="ldg-d-w3-temp3-equation"></div>
                 </div>
             </div>
-            <hr />
+            <hr class="screen-only" />
+            <div class="page-break"></div>
 
             <div class="row" id="ldg-corrections">
 
@@ -1232,7 +1354,8 @@
                     <div class="ldg-d-factorized-equation"></div>
                 </div>
             </div>
-            <hr />
+            <hr class="screen-only" />
+            <div class="page-break"></div>
 
             <div class="row" id="climb-oei-roc">
                 <div class="col-sm-6">
@@ -1349,7 +1472,7 @@
                     W.I.P. Climb performance data goes here...
                 </div>
             </div>
-            <hr />
+            <hr class="screen-only" />
             Space for more data...
         </div>
     </div>
@@ -1357,6 +1480,13 @@
         <hr />
         <small>Made by Frederik Munk Br&oslash;nserud &amp; Niels Fyhring - 2019 - Version <span class="version"></span></small>
     </div>
+    <footer>
+        <p>
+            <!-- <span class="date">25/12/2019</span>
+            &emsp;|&emsp;
+            <span class="page-number"></span> -->
+        </p>
+    </footer>
 
     
     <script>
@@ -1370,8 +1500,6 @@
         };
     </script>
     <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js" integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/" crossorigin="anonymous"></script>
-
     <script>
         var version = 2.3;
 

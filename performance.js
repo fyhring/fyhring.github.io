@@ -39,6 +39,14 @@ $(document).ready(function()
     });
 });
 
+function triggerPrint()
+{
+    window.renderPrintableLoadSheet();
+    setTimeout(() => {
+        window.print();
+    }, 300);
+}
+
 function calculateFromInputs()
 {
     elevationInput = parseInt($('#performanceForm input[name="elevationInput"]').val(), 10),
