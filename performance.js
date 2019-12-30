@@ -305,6 +305,26 @@ function calculateFromInputs()
         'ldg-d-final': [Math.ceil(data.landing.distance), 'm'],
 
         //CLIMB PERFORMANCE OUTPUTS
+
+        // ROC Vy
+        'roc-vy-w1-alt1-temp1': [Math.floor(data.rocVy.data['1D1'][temperatures[0]+'-raw'][1]), 'fpm'],
+        'roc-vy-w1-alt1-temp2': [Math.floor(data.rocVy.data['1D1'][temperatures[1]+'-raw'][1]), 'fpm'],
+        'roc-vy-w1-alt2-temp1': [Math.floor(data.rocVy.data['1D1'][temperatures[0]+'-raw'][0]), 'fpm'],
+        'roc-vy-w1-alt2-temp2': [Math.floor(data.rocVy.data['1D1'][temperatures[1]+'-raw'][0]), 'fpm'],
+        'roc-vy-w1-alt3-temp1': [Math.floor(data.rocVy.data['1D1'][temperatures[0]]), 'fpm'],
+        'roc-vy-w1-alt3-temp2': [Math.floor(data.rocVy.data['1D1'][temperatures[1]]), 'fpm'],
+        'roc-vy-w1-alt3-temp3': [Math.floor(data.rocVy.data['2D'][weights[1]]), 'fpm'],
+
+        'roc-vy-w2-alt1-temp1': [Math.floor(data.rocVy.data['1D2'][temperatures[0]+'-raw'][1]), 'fpm'],
+        'roc-vy-w2-alt1-temp2': [Math.floor(data.rocVy.data['1D2'][temperatures[1]+'-raw'][1]), 'fpm'],
+        'roc-vy-w2-alt2-temp1': [Math.floor(data.rocVy.data['1D2'][temperatures[0]+'-raw'][0]), 'fpm'],
+        'roc-vy-w2-alt2-temp2': [Math.floor(data.rocVy.data['1D2'][temperatures[1]+'-raw'][0]), 'fpm'],
+        'roc-vy-w2-alt3-temp1': [Math.floor(data.rocVy.data['1D2'][temperatures[0]]), 'fpm'],
+        'roc-vy-w2-alt3-temp2': [Math.floor(data.rocVy.data['1D2'][temperatures[1]]), 'fpm'],
+        'roc-vy-w2-alt3-temp3': [Math.floor(data.rocVy.data['2D'][weights[0]]), 'fpm'],
+
+        'roc-vy-w3-alt3-temp3': [Math.floor(data.rocVy.data['3D']['result']), 'fpm'],
+        
         // OEI ROC VySE
         'oei-roc-vyse-w1-alt1-temp1': [Math.floor(data.rocVySe.data['1D1'][temperatures[0]+'-raw'][1]), 'fpm'],
         'oei-roc-vyse-w1-alt1-temp2': [Math.floor(data.rocVySe.data['1D1'][temperatures[1]+'-raw'][1]), 'fpm'],
@@ -420,7 +440,23 @@ function calculateFromInputs()
     $('.ldg-d-factorized-equation').html(MathJax.tex2svg(takeOffLandingUIPairs['ldg-d-corrected'][0]+'m \\cdot 1.43 = '+ takeOffLandingUIPairs['ldg-d-final'][0]+'m', {display: true}));
 
 // WIP
-    //OEI RoC
+
+    //RoC Vy
+    //Interpolation between altitudes for mass1, temp1&2
+    $('.roc-vy-w1-temp1-equation').html(MathJax.tex2svg('\\frac{ '+ takeOffLandingUIPairs['roc-vy-w1-alt2-temp1'][0] +'\\tfrac{ft}{min} - '+ takeOffLandingUIPairs['roc-vy-w1-alt1-temp1'][0] +'\\tfrac{ft}{min} }{ '+ takeOffLandingUIPairs['roc-vy-alt2'][0] +'ft - '+ takeOffLandingUIPairs['roc-vy-alt1'][0] +'ft } \\cdot ('+ takeOffLandingUIPairs['roc-vy-alt3'][0] +'ft - '+ takeOffLandingUIPairs['roc-vy-alt1'][0] +'ft) + '+ takeOffLandingUIPairs['roc-vy-w1-alt1-temp1'][0] +'\\tfrac{ft}{min} = '+ takeOffLandingUIPairs['roc-vy-w1-alt3-temp1'][0] +'\\tfrac{ft}{min}', {display: true}));
+    $('.roc-vy-w1-temp2-equation').html(MathJax.tex2svg('\\frac{ '+ takeOffLandingUIPairs['roc-vy-w1-alt2-temp2'][0] +'\\tfrac{ft}{min} - '+ takeOffLandingUIPairs['roc-vy-w1-alt1-temp2'][0] +'\\tfrac{ft}{min} }{ '+ takeOffLandingUIPairs['roc-vy-alt2'][0] +'ft - '+ takeOffLandingUIPairs['roc-vy-alt1'][0] +'ft } \\cdot ('+ takeOffLandingUIPairs['roc-vy-alt3'][0] +'ft - '+ takeOffLandingUIPairs['roc-vy-alt1'][0] +'ft) + '+ takeOffLandingUIPairs['roc-vy-w1-alt1-temp2'][0] +'\\tfrac{ft}{min} = '+ takeOffLandingUIPairs['roc-vy-w1-alt3-temp2'][0] +'\\tfrac{ft}{min}', {display: true}));
+    //Interpolation between temperatures for mass1
+    $('.roc-vy-w1-temp3-equation').html(MathJax.tex2svg('\\frac{ '+ takeOffLandingUIPairs['roc-vy-w1-alt3-temp2'][0] +'\\tfrac{ft}{min} - '+ takeOffLandingUIPairs['roc-vy-w1-alt3-temp1'][0] +'\\tfrac{ft}{min} }{ '+ takeOffLandingUIPairs['ldg-temp2'][0] +'^\\circ C - '+ takeOffLandingUIPairs['ldg-temp1'][0] +'^\\circ C } \\cdot ('+ takeOffLandingUIPairs['ldg-temp3'][0] +'^\\circ C - '+ takeOffLandingUIPairs['ldg-temp1'][0] +'^\\circ C) + '+ takeOffLandingUIPairs['roc-vy-w1-alt3-temp1'][0] +'\\tfrac{ft}{min} = '+ takeOffLandingUIPairs['roc-vy-w1-alt3-temp3'][0] +'\\tfrac{ft}{min}', {display: true}));
+    //Interpolation between altitudes for mass2 temp1&2
+    $('.roc-vy-w2-temp1-equation').html(MathJax.tex2svg('\\frac{ '+ takeOffLandingUIPairs['roc-vy-w2-alt2-temp1'][0] +'\\tfrac{ft}{min} - '+ takeOffLandingUIPairs['roc-vy-w2-alt1-temp1'][0] +'\\tfrac{ft}{min} }{ '+ takeOffLandingUIPairs['roc-vy-alt2'][0] +'ft - '+ takeOffLandingUIPairs['roc-vy-alt1'][0] +'ft } \\cdot ('+ takeOffLandingUIPairs['roc-vy-alt3'][0] +'ft - '+ takeOffLandingUIPairs['roc-vy-alt1'][0] +'ft) + '+ takeOffLandingUIPairs['roc-vy-w2-alt1-temp1'][0] +'\\tfrac{ft}{min} = '+ takeOffLandingUIPairs['roc-vy-w2-alt3-temp1'][0] +'\\tfrac{ft}{min}', {display: true}));
+    $('.roc-vy-w2-temp2-equation').html(MathJax.tex2svg('\\frac{ '+ takeOffLandingUIPairs['roc-vy-w2-alt2-temp2'][0] +'\\tfrac{ft}{min} - '+ takeOffLandingUIPairs['roc-vy-w2-alt1-temp2'][0] +'\\tfrac{ft}{min} }{ '+ takeOffLandingUIPairs['roc-vy-alt2'][0] +'ft - '+ takeOffLandingUIPairs['roc-vy-alt1'][0] +'ft } \\cdot ('+ takeOffLandingUIPairs['roc-vy-alt3'][0] +'ft - '+ takeOffLandingUIPairs['roc-vy-alt1'][0] +'ft) + '+ takeOffLandingUIPairs['roc-vy-w2-alt1-temp2'][0] +'\\tfrac{ft}{min} = '+ takeOffLandingUIPairs['roc-vy-w2-alt3-temp2'][0] +'\\tfrac{ft}{min}', {display: true}));
+    //Interpolation between temperatures for mass2
+    $('.roc-vy-w2-temp3-equation').html(MathJax.tex2svg('\\frac{ '+ takeOffLandingUIPairs['roc-vy-w2-alt3-temp2'][0] +'\\tfrac{ft}{min} - '+ takeOffLandingUIPairs['roc-vy-w2-alt3-temp1'][0] +'\\tfrac{ft}{min} }{ '+ takeOffLandingUIPairs['ldg-temp2'][0] +'^\\circ C - '+ takeOffLandingUIPairs['ldg-temp1'][0] +'^\\circ C } \\cdot ('+ takeOffLandingUIPairs['ldg-temp3'][0] +'^\\circ C - '+ takeOffLandingUIPairs['ldg-temp1'][0] +'^\\circ C) + '+ takeOffLandingUIPairs['roc-vy-w2-alt3-temp1'][0] +'\\tfrac{ft}{min} = '+ takeOffLandingUIPairs['roc-vy-w2-alt3-temp3'][0] +'\\tfrac{ft}{min}', {display: true}));
+    //Interpolation between mass
+    $('.roc-vy-w3-temp3-equation').html(MathJax.tex2svg('\\frac{ '+ takeOffLandingUIPairs['roc-vy-w1-alt3-temp3'][0] +'\\tfrac{ft}{min} - '+ takeOffLandingUIPairs['roc-vy-w2-alt3-temp3'][0] +'\\tfrac{ft}{min} }{ '+ takeOffLandingUIPairs['ldg-mass1'][0] +'kg - '+ takeOffLandingUIPairs['ldg-mass2'][0] +'kg } \\cdot ('+ takeOffLandingUIPairs['ldg-mass3'][0] +'kg - '+ takeOffLandingUIPairs['ldg-mass2'][0] +'kg) + '+ takeOffLandingUIPairs['roc-vy-w2-alt3-temp3'][0] +'\\tfrac{ft}{min} = '+ takeOffLandingUIPairs['roc-vy-w3-alt3-temp3'][0] +'\\tfrac{ft}{min}', {display: true}));
+
+
+    //OEI RoC VySe
     //Interpolation between altitudes for mass1, temp1&2
     $('.oei-roc-vyse-w1-temp1-equation').html(MathJax.tex2svg('\\frac{ '+ takeOffLandingUIPairs['oei-roc-vyse-w1-alt2-temp1'][0] +'\\tfrac{ft}{min} - '+ takeOffLandingUIPairs['oei-roc-vyse-w1-alt1-temp1'][0] +'\\tfrac{ft}{min} }{ '+ takeOffLandingUIPairs['oei-roc-vyse-alt2'][0] +'ft - '+ takeOffLandingUIPairs['oei-roc-vyse-alt1'][0] +'ft } \\cdot ('+ takeOffLandingUIPairs['oei-roc-vyse-alt3'][0] +'ft - '+ takeOffLandingUIPairs['oei-roc-vyse-alt1'][0] +'ft) + '+ takeOffLandingUIPairs['oei-roc-vyse-w1-alt1-temp1'][0] +'\\tfrac{ft}{min} = '+ takeOffLandingUIPairs['oei-roc-vyse-w1-alt3-temp1'][0] +'\\tfrac{ft}{min}', {display: true}));
     $('.oei-roc-vyse-w1-temp2-equation').html(MathJax.tex2svg('\\frac{ '+ takeOffLandingUIPairs['oei-roc-vyse-w1-alt2-temp2'][0] +'\\tfrac{ft}{min} - '+ takeOffLandingUIPairs['oei-roc-vyse-w1-alt1-temp2'][0] +'\\tfrac{ft}{min} }{ '+ takeOffLandingUIPairs['oei-roc-vyse-alt2'][0] +'ft - '+ takeOffLandingUIPairs['oei-roc-vyse-alt1'][0] +'ft } \\cdot ('+ takeOffLandingUIPairs['oei-roc-vyse-alt3'][0] +'ft - '+ takeOffLandingUIPairs['oei-roc-vyse-alt1'][0] +'ft) + '+ takeOffLandingUIPairs['oei-roc-vyse-w1-alt1-temp2'][0] +'\\tfrac{ft}{min} = '+ takeOffLandingUIPairs['oei-roc-vyse-w1-alt3-temp2'][0] +'\\tfrac{ft}{min}', {display: true}));
