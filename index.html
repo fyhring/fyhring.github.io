@@ -189,7 +189,18 @@
                 <li>Finally, the result of those formulas are interpolated between weights:<br>
                     $$value_{actual} = {value_{heavy} - value_{light} \over mass_{heavy} - mass_{light}} \cdot (mass_{actual} - mass_{light})+value_{light}$$</li>
             </ul>
-            <h6>Other calculations</h6>
+            <h6>Rate of Climb Calculations</h6>
+            <ul>
+                <li>First, the climbrates are interpolated between altitudes, for each temperature and weight:<br>
+                    $$value_{actual} = {value_{low} - value_{high} \over altitude_{high} - altitude_{low}} \cdot (altitude_{high} - altitude_{actual})+value_{high}$$</li>
+                <li>Then, the results of these formulas are interpolated between temperatures, for each weight:<br>
+                    $$value_{actual} = {value_{cold} - value_{hot} \over temp_{hot} - temp_{cold}} \cdot (temp_{hot} - temp_{actual})+value_{hot}$$</li>
+                <li>Finally, the result of those formulas are interpolated between weights:<br>
+                    $$value_{actual} = {value_{light} - value_{heavy} \over mass_{heavy} - mass_{light}} \cdot (mass_{heavy} - mass_{actual})+value_{heavy}$$</li>
+            </ul>
+            <h6>Gradients</h6>
+            Gradients are calculated with the formula:
+            $$Gradient = {Rate Of Climb \over ClimbSpeed \cdot 6076{ft \over nm} / 60{min \over hour}}$$
             .....
 
         </div>
