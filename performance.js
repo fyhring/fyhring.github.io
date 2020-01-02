@@ -465,7 +465,7 @@ function calculateFromInputs()
     $('.roc-vy-w3-temp3-equation').html(MathJax.tex2svg('\\frac{ '+ takeOffLandingUIPairs['roc-vy-w1-alt3-temp3'][0] +'\\tfrac{ft}{min} - '+ takeOffLandingUIPairs['roc-vy-w2-alt3-temp3'][0] +'\\tfrac{ft}{min} }{ '+ takeOffLandingUIPairs['roc-vy-mass1'][0] +'kg - '+ takeOffLandingUIPairs['roc-vy-mass2'][0] +'kg } \\cdot ('+ takeOffLandingUIPairs['roc-vy-mass3'][0] +'kg - '+ takeOffLandingUIPairs['roc-vy-mass2'][0] +'kg) + '+ takeOffLandingUIPairs['roc-vy-w2-alt3-temp3'][0] +'\\tfrac{ft}{min} = '+ takeOffLandingUIPairs['roc-vy-w3-alt3-temp3'][0] +'\\tfrac{ft}{min}', {display: true}));
 
     //Gradient Vy
-    $('.gradient-vy-equation').html(MathJax.tex2svg('Gradient = \\frac{'+takeOffLandingUIPairs['roc-vy-w3-alt3-temp3'][0] +'\\tfrac{ft}{min}}{'+ takeOffLandingUIPairs['vy'][0] +'kts \\cdot 1058 \\tfrac{ft}{nm} / 60 \\tfrac{min}{hour}} = '+takeOffLandingUIPairs['grad-vy'][0]+'\\%'));
+    $('.gradient-vy-equation').html(MathJax.tex2svg('Gradient = \\frac{'+takeOffLandingUIPairs['roc-vy-w3-alt3-temp3'][0] +'\\tfrac{ft}{min}}{'+ takeOffLandingUIPairs['vy'][0] +'kts \\cdot 6076 \\tfrac{ft}{nm} / 60 \\tfrac{min}{hour}} = '+takeOffLandingUIPairs['grad-vy'][0]+'\\%'));
 
     //OEI RoC VySe
     //Interpolation between altitudes for mass1, temp1&2
@@ -482,7 +482,7 @@ function calculateFromInputs()
     $('.oei-roc-vyse-w3-temp3-equation').html(MathJax.tex2svg('\\frac{ '+ takeOffLandingUIPairs['oei-roc-vyse-w1-alt3-temp3'][0] +'\\tfrac{ft}{min} - '+ takeOffLandingUIPairs['oei-roc-vyse-w2-alt3-temp3'][0] +'\\tfrac{ft}{min} }{ '+ takeOffLandingUIPairs['oei-roc-vyse-mass1'][0] +'kg - '+ takeOffLandingUIPairs['oei-roc-vyse-mass2'][0] +'kg } \\cdot ('+ takeOffLandingUIPairs['oei-roc-vyse-mass3'][0] +'kg - '+ takeOffLandingUIPairs['oei-roc-vyse-mass2'][0] +'kg) + '+ takeOffLandingUIPairs['oei-roc-vyse-w2-alt3-temp3'][0] +'\\tfrac{ft}{min} = '+ takeOffLandingUIPairs['oei-roc-vyse-w3-alt3-temp3'][0] +'\\tfrac{ft}{min}', {display: true}));
 
     //Gradient VySe
-    $('.oei-gradient-vyse-equation').html(MathJax.tex2svg('Gradient = \\frac{'+takeOffLandingUIPairs['oei-roc-vyse-w3-alt3-temp3'][0] +'\\tfrac{ft}{min}}{'+ takeOffLandingUIPairs['vyse'][0] +'kts \\cdot 1058 \\tfrac{ft}{nm} / 60 \\tfrac{min}{hour}} = '+takeOffLandingUIPairs['grad-vyse'][0]+'\\%'));
+    $('.oei-gradient-vyse-equation').html(MathJax.tex2svg('Gradient = \\frac{'+takeOffLandingUIPairs['oei-roc-vyse-w3-alt3-temp3'][0] +'\\tfrac{ft}{min}}{'+ takeOffLandingUIPairs['vyse'][0] +'kts \\cdot 6076 \\tfrac{ft}{nm} / 60 \\tfrac{min}{hour}} = '+takeOffLandingUIPairs['grad-vyse'][0]+'\\%'));
 
 }
 
