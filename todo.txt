@@ -6,3 +6,4 @@ Landing corrections needs fix - they are currently just a copy of Takeoff correc
 Hide irrelevant corrections (if = 0) in takeoff and landing calculations on results tab
 Check outputs on results tab for reasonable rounding (headwind/tailwind is not rounded, but check others as well)
 The interpolation weights and temperatures for climb calculations should draw from their own variables, and not the ones from landing
+Percentage signs doesn't show on gradient equations, I cant figure out how to typeset them correctly
