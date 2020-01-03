@@ -230,24 +230,6 @@ function calculateFromInputs()
 
         'to-g-w3-alt3-temp3': [Math.ceil(data.takeoff.uncorrectedGround.data['3D']['result']), 'm'],
 
-        // Ldg Groundroll
-        'ldg-g-w1-alt1-temp1': [Math.ceil(data.landing.uncorrectedGround.data['1D1'][temperatures[0]+'-raw'][1]), 'm'],
-        'ldg-g-w1-alt1-temp2': [Math.ceil(data.landing.uncorrectedGround.data['1D1'][temperatures[1]+'-raw'][1]), 'm'],
-        'ldg-g-w1-alt2-temp1': [Math.ceil(data.landing.uncorrectedGround.data['1D1'][temperatures[0]+'-raw'][0]), 'm'],
-        'ldg-g-w1-alt2-temp2': [Math.ceil(data.landing.uncorrectedGround.data['1D1'][temperatures[1]+'-raw'][0]), 'm'],
-        'ldg-g-w1-alt3-temp1': [Math.ceil(data.landing.uncorrectedGround.data['1D1'][temperatures[0]]), 'm'],
-        'ldg-g-w1-alt3-temp2': [Math.ceil(data.landing.uncorrectedGround.data['1D1'][temperatures[1]]), 'm'],
-        'ldg-g-w1-alt3-temp3': [Math.ceil(data.landing.uncorrectedGround.data['2D'][weights[1]]), 'm'],
-
-        'ldg-g-w2-alt1-temp1': [Math.ceil(data.landing.uncorrectedGround.data['1D2'][temperatures[0]+'-raw'][1]), 'm'],
-        'ldg-g-w2-alt1-temp2': [Math.ceil(data.landing.uncorrectedGround.data['1D2'][temperatures[1]+'-raw'][1]), 'm'],
-        'ldg-g-w2-alt2-temp1': [Math.ceil(data.landing.uncorrectedGround.data['1D2'][temperatures[0]+'-raw'][0]), 'm'],
-        'ldg-g-w2-alt2-temp2': [Math.ceil(data.landing.uncorrectedGround.data['1D2'][temperatures[1]+'-raw'][0]), 'm'],
-        'ldg-g-w2-alt3-temp1': [Math.ceil(data.landing.uncorrectedGround.data['1D2'][temperatures[0]]), 'm'],
-        'ldg-g-w2-alt3-temp2': [Math.ceil(data.landing.uncorrectedGround.data['1D2'][temperatures[1]]), 'm'],
-        'ldg-g-w2-alt3-temp3': [Math.ceil(data.landing.uncorrectedGround.data['2D'][weights[0]]), 'm'],
-
-        'ldg-g-w3-alt3-temp3': [Math.ceil(data.landing.uncorrectedGround.data['3D']['result']), 'm'],
 
         // T/O Distance
         'to-d-w1-alt1-temp1': [Math.ceil(data.takeoff.uncorrectedDist.data['1D1'][temperatures[0]+'-raw'][1]), 'm'],
@@ -268,6 +250,41 @@ function calculateFromInputs()
 
         'to-d-w3-alt3-temp3': [Math.ceil(data.takeoff.uncorrectedDist.data['3D']['result']), 'm'],
 
+
+        // T/O Corrections
+        'to-corrections-paved-rwy': [Math.ceil(data.takeoff.corrections.pavedRwyCorrection), 'm'],
+        'to-corrections-sloped-rwy': [Math.ceil(data.takeoff.corrections.slopeCorrection), 'm'],
+        'to-corrections-soft-rwy': [Math.ceil(data.takeoff.corrections.softSfcCorrection), 'm'],
+        'to-corrections-windlabel': [(Math.ceil((Math.abs(getWindComponents().head))*100))/100,'kts '+(getWindComponents().head > 0 ? 'headwind' : 'tailwind')],
+        'to-corrections-wind': [Math.ceil(data.takeoff.corrections.windCorrection), 'm'],
+        'to-corrections-combined': [Math.ceil(data.takeoff.corrections.combined), 'm'],
+        //Corrected distances
+        'to-g-corrected': [Math.ceil(data.takeoff.uncorrectedGround.data['3D']['result'] + data.takeoff.corrections.combined), 'm'],
+        'to-d-corrected': [Math.ceil(data.takeoff.uncorrectedDist.data['3D']['result'] + data.takeoff.corrections.combined), 'm'],
+        //Factorized distances
+        'to-g-final': [Math.ceil(data.takeoff.groundroll), 'm'],
+        'to-d-final': [Math.ceil(data.takeoff.distance), 'm'],
+
+
+        // Ldg Groundroll
+        'ldg-g-w1-alt1-temp1': [Math.ceil(data.landing.uncorrectedGround.data['1D1'][temperatures[0]+'-raw'][1]), 'm'],
+        'ldg-g-w1-alt1-temp2': [Math.ceil(data.landing.uncorrectedGround.data['1D1'][temperatures[1]+'-raw'][1]), 'm'],
+        'ldg-g-w1-alt2-temp1': [Math.ceil(data.landing.uncorrectedGround.data['1D1'][temperatures[0]+'-raw'][0]), 'm'],
+        'ldg-g-w1-alt2-temp2': [Math.ceil(data.landing.uncorrectedGround.data['1D1'][temperatures[1]+'-raw'][0]), 'm'],
+        'ldg-g-w1-alt3-temp1': [Math.ceil(data.landing.uncorrectedGround.data['1D1'][temperatures[0]]), 'm'],
+        'ldg-g-w1-alt3-temp2': [Math.ceil(data.landing.uncorrectedGround.data['1D1'][temperatures[1]]), 'm'],
+        'ldg-g-w1-alt3-temp3': [Math.ceil(data.landing.uncorrectedGround.data['2D'][weights[1]]), 'm'],
+
+        'ldg-g-w2-alt1-temp1': [Math.ceil(data.landing.uncorrectedGround.data['1D2'][temperatures[0]+'-raw'][1]), 'm'],
+        'ldg-g-w2-alt1-temp2': [Math.ceil(data.landing.uncorrectedGround.data['1D2'][temperatures[1]+'-raw'][1]), 'm'],
+        'ldg-g-w2-alt2-temp1': [Math.ceil(data.landing.uncorrectedGround.data['1D2'][temperatures[0]+'-raw'][0]), 'm'],
+        'ldg-g-w2-alt2-temp2': [Math.ceil(data.landing.uncorrectedGround.data['1D2'][temperatures[1]+'-raw'][0]), 'm'],
+        'ldg-g-w2-alt3-temp1': [Math.ceil(data.landing.uncorrectedGround.data['1D2'][temperatures[0]]), 'm'],
+        'ldg-g-w2-alt3-temp2': [Math.ceil(data.landing.uncorrectedGround.data['1D2'][temperatures[1]]), 'm'],
+        'ldg-g-w2-alt3-temp3': [Math.ceil(data.landing.uncorrectedGround.data['2D'][weights[0]]), 'm'],
+
+        'ldg-g-w3-alt3-temp3': [Math.ceil(data.landing.uncorrectedGround.data['3D']['result']), 'm'],
+
         // Ldg Distance
         'ldg-d-w1-alt1-temp1': [Math.ceil(data.landing.uncorrectedDist.data['1D1'][temperatures[0]+'-raw'][1]), 'm'],
         'ldg-d-w1-alt1-temp2': [Math.ceil(data.landing.uncorrectedDist.data['1D1'][temperatures[1]+'-raw'][1]), 'm'],
@@ -286,20 +303,6 @@ function calculateFromInputs()
         'ldg-d-w2-alt3-temp3': [Math.ceil(data.landing.uncorrectedDist.data['2D'][weights[0]]), 'm'],
 
         'ldg-d-w3-alt3-temp3': [Math.ceil(data.landing.uncorrectedDist.data['3D']['result']), 'm'],
-
-        // T/O Corrections
-        'to-corrections-paved-rwy': [Math.ceil(data.takeoff.corrections.pavedRwyCorrection), 'm'],
-        'to-corrections-sloped-rwy': [Math.ceil(data.takeoff.corrections.slopeCorrection), 'm'],
-        'to-corrections-soft-rwy': [Math.ceil(data.takeoff.corrections.softSfcCorrection), 'm'],
-        'to-corrections-windlabel': [(Math.ceil((Math.abs(getWindComponents().head))*100))/100,'kts '+(getWindComponents().head > 0 ? 'headwind' : 'tailwind')],
-        'to-corrections-wind': [Math.ceil(data.takeoff.corrections.windCorrection), 'm'],
-        'to-corrections-combined': [Math.ceil(data.takeoff.corrections.combined), 'm'],
-        //Corrected distances
-        'to-g-corrected': [Math.ceil(data.takeoff.uncorrectedGround.data['3D']['result'] + data.takeoff.corrections.combined), 'm'],
-        'to-d-corrected': [Math.ceil(data.takeoff.uncorrectedDist.data['3D']['result'] + data.takeoff.corrections.combined), 'm'],
-        //Factorized distances
-        'to-g-final': [Math.ceil(data.takeoff.groundroll), 'm'],
-        'to-d-final': [Math.ceil(data.takeoff.distance), 'm'],
 
         // Ldg Corrections
         'ldg-corrections-paved-rwy': [Math.ceil(data.landing.corrections.pavedRwyCorrection), 'm'],
@@ -357,9 +360,40 @@ function calculateFromInputs()
         'oei-roc-vyse-w3-alt3-temp3': [Math.floor(data.rocVySe.data['3D']['result']), 'fpm'],
 
     };
+    
+    updateUIValues(takeOffLandingUIPairs);
     console.log(data.rocVySe.data);
 
-    updateUIValues(takeOffLandingUIPairs);
+
+    /**********************
+     * Show applicable corrections only
+     **********************/
+
+    $('.correction-wind-row,.to-correction-wind-equation,.ldg-correction-wind-equation').hide();
+    $('.correction-soft-rwy-row,.to-correction-soft-equation,.ldg-correction-soft-equation').hide();
+    $('.correction-sloped-rwy-row,.to-correction-slope-equation,.ldg-correction-slope-equation').hide();
+    $('.correction-paved-rwy-row,.to-correction-paved-equation,.ldg-correction-paved-equation').hide();
+    $('.correction-inc-spd-row').hide();
+
+    if (useWindComponent) {
+        $('.correction-wind-row,.to-correction-wind-equation,.ldg-correction-wind-equation').show();
+    }
+
+    if (useSoftSfc) {
+        $('.correction-soft-rwy-row,.to-correction-soft-equation,.ldg-correction-soft-equation').show();
+    }
+
+    if (useSlope) {
+        $('.correction-sloped-rwy-row,.to-correction-slope-equation,.ldg-correction-slope-equation').show();
+    }
+
+    if (usePavedRWY) {
+        $('.correction-paved-rwy-row,.to-correction-paved-equation,.ldg-correction-paved-equation').show();
+    }
+
+    if (useIncreasedAppSpeed) {
+        $('.correction-inc-spd-row').show();
+    }
 
     /**********************
      * Math Jax Equations *

@@ -404,17 +404,35 @@
                 <div class="settings">
                     <details class="settings-box" open>
                         <summary>Settings</summary>
-                        <div class="custom-control custom-switch">
-                            <input type="checkbox" class="custom-control-input" id="useMSA" />
-                            <label class="custom-control-label" for="useMSA">Use MSA for ROC</label>
-                        </div>
-                        <div class="custom-control custom-switch">
-                            <input type="checkbox" class="custom-control-input" id="increasedSpeedsSwitch" checked />
-                            <label class="custom-control-label" for="increasedSpeedsSwitch">Use Increased Approach Speed</label>
-                        </div>
-                        <div class="custom-control custom-switch">
-                            <input type="checkbox" class="custom-control-input" id="useActualWeight" checked disabled />
-                            <label class="custom-control-label" for="useActualWeight">Use Actual Weight</label>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="useMSA" />
+                                    <label class="custom-control-label" for="useMSA">Use MSA for ROC</label>
+                                </div>
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="increasedSpeedsSwitch" checked />
+                                    <label class="custom-control-label" for="increasedSpeedsSwitch">Use Increased Approach Speed <small class="text-muted">(80 kts)</small></label>
+                                </div>
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="useActualWeight" checked disabled />
+                                    <label class="custom-control-label" for="useActualWeight">Use Actual Weight</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="useWindCorrection" checked />
+                                    <label class="custom-control-label" for="useWindCorrection">Use Wind Correction on T/O &amp; LDG.</label>
+                                </div>
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="usePavedRWY" checked />
+                                    <label class="custom-control-label" for="usePavedRWY">Use Paved RWY Correction on T/O &amp; LDG.</label>
+                                </div>
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="useSoftSfc" />
+                                    <label class="custom-control-label" for="useSoftSfc">Use Soft RWY Surface Correction on T/O &amp; LDG.</label>
+                                </div>
+                            </div>
                         </div>
                     </details>
                 </div>
@@ -921,22 +939,22 @@
                                 <th>Distance</th>
                             </thead>
                             <tbody>
-                                <tr>
+                                <tr class="correction-paved-rwy-row">
                                     <td>Paved RWY</td>
                                     <td><em>According to AFM</em></td>
                                     <td class="to-corrections-paved-rwy">-</td>
                                 </tr>
-                                <tr>
+                                <tr class="correction-sloped-rwy-row">
                                     <td>RWY Slope</td>
                                     <td><em>According to AFM</em></td>
                                     <td class="to-corrections-sloped-rwy">-</td>
                                 </tr>
-                                <tr>
+                                <tr class="correction-soft-rwy-row">
                                     <td>Soft Surface</td>
-                                    <td>-</td>
+                                    <td>Adds 25% of groundroll</td>
                                     <td class="to-corrections-soft-rwy">-</td>
                                 </tr>
-                                <tr>
+                                <tr class="correction-wind-row">
                                     <td class="to-corrections-windlabel">Wind</td>
                                     <td><em>According to AFM</em></td>
                                     <td class="to-corrections-wind">-</td>
@@ -1292,27 +1310,27 @@
                                 <th>Distance</th>
                             </thead>
                             <tbody>
-                                <tr>
+                                <tr class="correction-paved-rwy-row">
                                     <td>Paved RWY</td>
                                     <td><em>According to AFM</em></td>
                                     <td class="ldg-corrections-paved-rwy">-</td>
                                 </tr>
-                                <tr>
+                                <tr class="correction-sloped-rwy-row">
                                     <td>RWY Slope</td>
                                     <td><em>According to AFM</em></td>
                                     <td class="ldg-corrections-sloped-rwy">-</td>
                                 </tr>
-                                <tr>
+                                <tr class="correction-soft-rwy-row">
                                     <td>Soft Surface</td>
-                                    <td>-</td>
+                                    <td>Adds 25% of groundroll</td>
                                     <td class="ldg-corrections-soft-rwy">-</td>
                                 </tr>
-                                <tr>
+                                <tr class="correction-wind-row">
                                     <td class="ldg-corrections-windlabel">Wind</td>
                                     <td><em>According to AFM</em></td>
                                     <td class="ldg-corrections-wind">-</td>
                                 </tr>
-                                <tr>
+                                <tr class="correction-inc-spd-row">
                                     <td>Increased Approach Spd</td>
                                     <td>-</td>
                                     <td class="ldg-corrections-app-spd">-</td>
@@ -1510,7 +1528,7 @@
 
             <div class="row" id="climb-oei-roc">
                 <div class="col-sm-6">
-                    <h4>One Engine Inoperative; Rate Of Climb <small class="text-muted">V<sub>y<sub>SE</sub></sub></small></h4>
+                    <h4>OEI Rate Of Climb <small class="text-muted">V<sub>y<sub>SE</sub></sub></small></h4>
                     <b class="oei-roc-vyse-mass1">-</b>
                     <div class="result-weight-sector">
                         <table class="table table-sm">

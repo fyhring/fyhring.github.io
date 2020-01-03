@@ -3,27 +3,40 @@ $(document).ready(function()
 
     // Definitions...
 
-    var perfForm = $('#performanceForm'),
-        flSwitch = $('#flSwitch'),
-        cruiseAlt = $('#cruiseAltInput'),
-        msa = $('#msaInput'),
-        tempInput = perfForm.find('input[name="temperatureInput"]'),
-        isaDevField = $('#isaTempDev'),
+    var perfForm     = $('#performanceForm'),
+        flSwitch     = $('#flSwitch'),
+        cruiseAlt    = $('#cruiseAltInput'),
+        msa          = $('#msaInput'),
+        tempInput    = perfForm.find('input[name="temperatureInput"]'),
+        isaDevField  = $('#isaTempDev'),
         incSpdSwitch = $('#increasedSpeedsSwitch'),
-        MSAROCSwitch = $('#useMSA');
+        MSAROCSwitch = $('#useMSA'),
+        windSwitch   = $('#useWindCorrection'),
+        pavedSwitch  = $('#usePavedRWY'),
+        softSwitch   = $('#useSoftSfc');
+        
 
     // Add event listeners
     perfForm.on('submit', onSubmit);
-    flSwitch.on('change', onChangeFLSwitch);
     tempInput.on('change', onChangeTemp);
-    incSpdSwitch.on('change', onChangeIncSpdSwitch);
-    MSAROCSwitch.on('change', onChangeUseMSASwitch);
+    flSwitch.on('change', onChangeFLSwitch);
+    incSpdSwitch.on('change', onChangeFlag.bind(null, 'useIncreaedAppSpeed', incSpdSwitch));
+    MSAROCSwitch.on('change', onChangeFlag.bind(null, 'useMSAROC', MSAROCSwitch));
+    windSwitch.on('change', onChangeFlag.bind(null, 'useWindComponent', windSwitch));
+    pavedSwitch.on('change', onChangeFlag.bind(null, 'usePavedRWY', pavedSwitch));
+    softSwitch.on('change', onChangeFlag.bind(null, 'useSoftSfc', softSwitch));
 
 
     // Events
     function onSubmit(e)
     {
         e.preventDefault();
+    }
+
+    function onChangeFlag(flagName, UIElement, event)
+    {
+        window[flagName] = UIElement.is(':checked');
+        calculateFromInputs();   
     }
 
     function onChangeFLSwitch(e)
@@ -61,17 +74,4 @@ $(document).ready(function()
         isaDevField.val(isaDevText);
     }
 
-    function onChangeIncSpdSwitch(e)
-    {
-        window.useIncreaedAppSpeed = incSpdSwitch.is(':checked');
-        calculateFromInputs();
-    }
-
-    function onChangeUseMSASwitch(e)
-    {
-        window.useMSAROC = MSAROCSwitch.is(':checked');
-        calculateFromInputs();
-    }
-
 });
-
