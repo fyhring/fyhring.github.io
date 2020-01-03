@@ -293,7 +293,7 @@ function calculateFromInputs()
         'to-corrections-soft-rwy': [Math.ceil(data.takeoff.corrections.softSfcCorrection), 'm'],
         'to-corrections-windlabel': [(Math.ceil((Math.abs(getWindComponents().head))*100))/100,'kts '+(getWindComponents().head > 0 ? 'headwind' : 'tailwind')],
         'to-corrections-wind': [Math.ceil(data.takeoff.corrections.windCorrection), 'm'],
-        'to-corrections-combined': [floorOrCeil(data.takeoff.corrections.combined), 'm'],
+        'to-corrections-combined': [Math.ceil(data.takeoff.corrections.combined), 'm'],
         //Corrected distances
         'to-g-corrected': [Math.ceil(data.takeoff.uncorrectedGround.data['3D']['result'] + data.takeoff.corrections.combined), 'm'],
         'to-d-corrected': [Math.ceil(data.takeoff.uncorrectedDist.data['3D']['result'] + data.takeoff.corrections.combined), 'm'],
@@ -307,6 +307,7 @@ function calculateFromInputs()
         'ldg-corrections-soft-rwy': [Math.ceil(data.landing.corrections.softSfcCorrection), 'm'],
         'ldg-corrections-windlabel': [(Math.ceil((Math.abs(getWindComponents().head))*100))/100,'kts '+(getWindComponents().head > 0 ? 'headwind' : 'tailwind')],
         'ldg-corrections-wind': [Math.ceil(data.landing.corrections.windCorrection), 'm'],
+        'ldg-corrections-app-spd': [Math.ceil(data.landing.corrections.appSpeedCorrection), 'm'],
         'ldg-corrections-combined': [floorOrCeil(data.landing.corrections.combined), 'm'],
         //Corrected distances
         'ldg-g-corrected': [Math.ceil(data.landing.uncorrectedGround.data['3D']['result'] + data.landing.corrections.combined), 'm'],
@@ -438,7 +439,9 @@ function calculateFromInputs()
     $('.ldg-correction-paved-equation').html(MathJax.tex2svg(takeOffLandingUIPairs['ldg-g-w3-alt3-temp3'][0]+'m \\cdot -6\\% = '+ takeOffLandingUIPairs['ldg-corrections-paved-rwy'][0]+'m', {display: true}));
     $('.ldg-correction-slope-equation').html(MathJax.tex2svg(takeOffLandingUIPairs['ldg-g-w3-alt3-temp3'][0]+'m \\cdot ('+ (data.takeoff.corrections.slope * 100) +'\\%/1\\%) \\cdot 5\\% = '+ takeOffLandingUIPairs['ldg-corrections-sloped-rwy'][0]+'m', {display: true}));
     $('.ldg-correction-soft-equation').html(MathJax.tex2svg(takeOffLandingUIPairs['ldg-g-w3-alt3-temp3'][0]+'m \\cdot '+ ((useSoftSfc)?'\\25%' : '0\\%') +' = '+ takeOffLandingUIPairs['ldg-corrections-soft-rwy'][0]+'m', {display: true}));
-    $('.ldg-correction-wind-equation').html(MathJax.tex2svg((getWindComponents().head>0 ? '-2.5m \\cdot '+ takeOffLandingUIPairs['env-headwind-component'][0] +'kts' : '10m \\cdot ' + takeOffLandingUIPairs['env-headwind-component'][0] + 'kts')+' = '+ takeOffLandingUIPairs['ldg-corrections-wind'][0]+'m', {display: true}));
+
+    var roundedHeadWindComponent = Math.ceil(Math.abs(getWindComponents().head)*10)/10;
+    $('.ldg-correction-wind-equation').html(MathJax.tex2svg((getWindComponents().head>0 ? '-5m \\cdot '+ roundedHeadWindComponent +'kts' : '11m \\cdot ' + roundedHeadWindComponent + 'kts')+' = '+ takeOffLandingUIPairs['ldg-corrections-wind'][0]+'m', {display: true}));
 
     //Corrected
     $('.ldg-g-corrected-equation').html(MathJax.tex2svg(takeOffLandingUIPairs['ldg-g-w3-alt3-temp3'][0]+'m + '+ takeOffLandingUIPairs['ldg-corrections-combined'][0] +'m = '+ takeOffLandingUIPairs['ldg-g-corrected'][0]+'m', {display: true}));
