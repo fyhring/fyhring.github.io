@@ -26,11 +26,23 @@ $(document).ready(function()
     pavedSwitch.on('change', onChangeFlag.bind(null, 'usePavedRWY', pavedSwitch));
     softSwitch.on('change', onChangeFlag.bind(null, 'useSoftSfc', softSwitch));
 
+    $(document).on('keydown', onKeyDown);
 
     // Events
     function onSubmit(e)
     {
         e.preventDefault();
+    }
+
+    function onKeyDown(e)
+    {
+        // console.log(e.keyCode, e.metaKey, e);
+
+        // CMD + P
+        if (e.metaKey === true && e.keyCode === 80) {
+            e.preventDefault();
+            window.triggerPrint();
+        }
     }
 
     function onChangeFlag(flagName, UIElement, event)
