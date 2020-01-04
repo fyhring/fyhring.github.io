@@ -745,6 +745,7 @@ function interpolate3D(pressureAltitudeInput, degreeInput, massInput, matrixData
 };
 
 //WIP
+// Don't know how to deal with different MAP's for different Altitudes yet
 function interpolate4D(pressureAltitudeInput,RPMinput,degreeInput,mapInput,matrixData)
 {
     var pressureAltitudeKeys = Object.keys(matrixData),
@@ -762,10 +763,12 @@ function interpolate4D(pressureAltitudeInput,RPMinput,degreeInput,mapInput,matri
     temp1 = tempKeys2[0],
     temp2 = tempKeys2[1]
 
-    var MAPkeys = Object.keys(matrixData[pressureAltitude1][RPM1][temp1]),
+    var MAPkeys = Object.keys(matrixData[pressureAltitude1][RPM1]['MAP']),
     MAPkeys2 = findKeysForInterpolation(mapInput,MAPkeys),
     MAP1 = MAPkeys2[0],
-    MAP2 = MAPkeys2[1]
+    MAP2 = MAPkeys2[1],
+    MAPkey1 = MAPkeys.indexOf(MAP1),
+    MAPkey2 = MAPkeys.indexOf(MAP2)
 }
 
 function calculateGradient(roc,gs){
