@@ -359,6 +359,16 @@ function calculateFromInputs()
 
         'oei-roc-vyse-w3-alt3-temp3': [Math.floor(data.rocVySe.data['3D']['result']), 'fpm'],
 
+
+        // OEI Service Ceiling
+        'oei-service-ceiling-alt1-alt': [Math.round(data.OEIserviceCeiling.data[0][0]), 'ft'],
+        'oei-service-ceiling-alt1-roc': [Math.round(data.OEIserviceCeiling.data[0][1]), 'fpm'],
+        'oei-service-ceiling-alt2-alt': [Math.round(data.OEIserviceCeiling.data[1][0]), 'ft'],
+        'oei-service-ceiling-alt2-roc': [Math.round(data.OEIserviceCeiling.data[1][1]), 'fpm'],
+        'oei-service-ceiling-alt3-alt': [Math.round(data.OEIserviceCeiling.data[2][0]), 'ft'],
+        'oei-service-ceiling-alt3-roc': [Math.round(data.OEIserviceCeiling.data[2][1]), 'fpm'],
+
+
     };
     
     updateUIValues(takeOffLandingUIPairs);
@@ -907,24 +917,50 @@ function calculateAngle(grad){
 
 //Ceilings
 function calculateOEIceiling(isaDeviation, tom) {
-    var serviceCeiling = 7000;
-    var fpm = 1;
-    while (fpm < 50) {
-        fpm = calculateRocVySe(serviceCeiling, isaDeviation, tom).result;
-        
-        if (fpm < 50) {
-            serviceCeiling -= 10;
+    var serviceCeiling = 7000,
+        fpm = 1;
+        lastInterpolation = null,
+        interpolations = [],
+        breakLoopNextModulusIteration = false;
+    
+    while (true) {
+        lastInterpolation = calculateRocVySe(serviceCeiling, isaDeviation, tom);
+        fpm = lastInterpolation.result;
+
+        if (serviceCeiling % 100 === 0) {
+            interpolations.push([serviceCeiling, lastInterpolation.result]);
+
+            if (breakLoopNextModulusIteration) {
+                break;
+            }
         }
+
+        if (fpm >= 50) {
+            if (!breakLoopNextModulusIteration) {
+                breakLoopNextModulusIteration = true;
+                interpolations.push([serviceCeiling, lastInterpolation.result, lastInterpolation]);
+            }
+        }
+
+        serviceCeiling -= 10;
     }
 
-    var isTopOfData = (serviceCeiling == 7000)
+    interpolations = interpolations.reverse();
 
+    // Set the service ceiling to be the correct one.
+    serviceCeiling = interpolations[1][0];
+    
     //convert pressure altitude to true altitude
-    serviceCeiling = toTrueAltitude(serviceCeiling)
+    var trueServiceCeiling = toTrueAltitude(serviceCeiling);
+
+    // Flag if result is outside dataset.
+    var isTopOfData = (serviceCeiling == 7000);
     
     return {
-        'ceiling': serviceCeiling,
-        'isTopOfData': isTopOfData
+        'ceiling': trueServiceCeiling,
+        'pressureCeiling': serviceCeiling,
+        'isTopOfData': isTopOfData,
+        'data': interpolations
     };
 }
 
@@ -939,7 +975,7 @@ function calculateOEIabsoluteCeiling(isaDeviation, tom) {
         }
     }
 
-    var isTopOfData = (absoluteCeiling == 7000)
+    var isTopOfData = (absoluteCeiling == 7000);
 
     //convert pressure altitude to true altitude
     absoluteCeiling = toTrueAltitude(absoluteCeiling)
