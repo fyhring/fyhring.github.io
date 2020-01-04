@@ -734,6 +734,30 @@ function interpolate3D(pressureAltitudeInput, degreeInput, massInput, matrixData
     };
 };
 
+//WIP
+function interpolate4D(pressureAltitudeInput,RPMinput,degreeInput,mapInput,matrixData)
+{
+    var pressureAltitudeKeys = Object.keys(matrixData),
+    pressureAltitudeKeys2 = findKeysForInterpolation(pressureAltitudeInput,pressureAltitudeKeys),
+    pressureAltitude1 = pressureAltitudeKeys2[0],
+    pressureAltitude2 = pressureAltitudeKeys2[1]
+
+    var RPMkeys = Object.keys(matrixData[pressureAltitude1]),
+    RPMkeys2 = findKeysForInterpolation(RPMinput,matrixData[pressureAltitude1]),
+    RPM1 = RPMkeys2[0],
+    RPM2 = RPMkeys2[1]
+
+    var tempKeys = Object.keys(matrixData[pressureAltitude1][RPM1]),
+    tempKeys2 = findKeysForInterpolation(degreeInput,tempKeys),
+    temp1 = tempKeys2[0],
+    temp2 = tempKeys2[1]
+
+    var MAPkeys = Object.keys(matrixData[pressureAltitude1][RPM1][temp1]),
+    MAPkeys2 = findKeysForInterpolation(mapInput,MAPkeys),
+    MAP1 = MAPkeys2[0],
+    MAP2 = MAPkeys2[1]
+}
+
 function calculateGradient(roc,gs){
     return roc / (gs / 60 * 6076)
 }
