@@ -894,6 +894,12 @@ function calculateGradient(roc,gs){
 
 // Functions for specifics
 
+//Cruise data
+function calculateFuelConsumption(pa, isaDeviation, MAP, RPM) {
+    var sfcTemp = isaDeviation + 15
+    return interpolate4D(pa,RPM,sfcTemp,MAP,FCmatrix)
+}
+
 //Takeoff distances
 function calculateTakeOffGroundRoll(pa, isaDeviation, tom) {
     var sfcTemp = isaDeviation + 15
