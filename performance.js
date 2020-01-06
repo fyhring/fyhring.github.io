@@ -646,7 +646,7 @@ function findKeysForInterpolation(needle, haystack)
     //Check if there are values larger than the input
     if (largerThan.length == 0) {
         //Delete the used value from the array, using the splice function to avoid leaving a null value in the array
-        lessThan.splice(indexOf(lessValue),1)
+        lessThan.splice(lessThan.indexOf(lessValue),1)
         //Assign the current lessValue as larger, as it will be larger than any other value
         largerValue = lessValue
         //Assign the new max (after deleting the used one) of the lessThan array as lessValue
