@@ -796,6 +796,7 @@ function interpolate4D(pressureAltitudeInput,RPMinput,degreeInput,mapInput,matri
     MAPkey1BB = MAPkeysBB.indexOf(MAP1BB),
     MAPkey2BB = MAPkeysBB.indexOf(MAP2BB);
 
+    //Interpolation between MAPs for temp1 & temp2 using RPM1 and pressureAltitude1
     var interpolationData1D1 = {
         [temp1]: interpolate1D(mapInput,matrixData[pressureAltitude1][RPM1][temp1],MAPkeysAA),
         [temp2]: interpolate1D(mapInput,matrixData[pressureAltitude1][RPM1][temp2],MAPkeysAA),
@@ -804,6 +805,7 @@ function interpolate4D(pressureAltitudeInput,RPMinput,degreeInput,mapInput,matri
         [temp2+'-raw']: findDataValuesInDataset(mapInput,matrixData[pressureAltitude1][RPM1][temp2],MAPkeysAA)
     }
 
+    //Interpolation between MAPs for temp1 & temp2 using RPM2 and pressureAltitude1
     var interpolationData1D2 = {
         [temp1]: interpolate1D(mapInput,matrixData[pressureAltitude1][RPM2][temp1],MAPkeysAB),
         [temp2]: interpolate1D(mapInput,matrixData[pressureAltitude1][RPM2][temp2],MAPkeysAB),
@@ -812,6 +814,7 @@ function interpolate4D(pressureAltitudeInput,RPMinput,degreeInput,mapInput,matri
         [temp2+'-raw']: findDataValuesInDataset(mapInput,matrixData[pressureAltitude1][RPM2][temp2],MAPkeysAB)
     }
 
+    //Interpolation between MAPs for temp1 & temp2 using RPM1 and pressureAltitude2
     var interpolationData1D3 = {
         [temp1]: interpolate1D(mapInput,matrixData[pressureAltitude2][RPM1][temp1],MAPkeysBA),
         [temp2]: interpolate1D(mapInput,matrixData[pressureAltitude2][RPM1][temp2],MAPkeysBA),
@@ -820,6 +823,7 @@ function interpolate4D(pressureAltitudeInput,RPMinput,degreeInput,mapInput,matri
         [temp2+'-raw']: findDataValuesInDataset(mapInput,matrixData[pressureAltitude2][RPM1][temp2],MAPkeysBA)
     }
 
+    //Interpolation between MAPs for temp1 & temp2 using RPM2 and pressureAltitude2
     var interpolationData1D4 = {
         [temp1]: interpolate1D(mapInput,matrixData[pressureAltitude2][RPM2][temp1],MAPkeysBB),
         [temp2]: interpolate1D(mapInput,matrixData[pressureAltitude2][RPM2][temp2],MAPkeysBB),
@@ -828,6 +832,7 @@ function interpolate4D(pressureAltitudeInput,RPMinput,degreeInput,mapInput,matri
         [temp2+'-raw']: findDataValuesInDataset(mapInput,matrixData[pressureAltitude2][RPM2][temp2],MAPkeysBB)
     }
 
+    //Interpolation between temps for RPM1 & RPM2 using pressureAltitude1 (data from 1D1 & 1D2)
     var interpolationData2D1 = {
         [RPM1]: interpolate1D(degreeInput,interpolationData1D1,tempKeys2),
         [RPM2]: interpolate1D(degreeInput, interpolationData1D2,tempKeys2),
@@ -836,6 +841,7 @@ function interpolate4D(pressureAltitudeInput,RPMinput,degreeInput,mapInput,matri
         [RPM2+'-raw']: findDataValuesInDataset(degreeInput, interpolationData1D2,tempKeys2)
     }
 
+    //Interpolation between temps for RPM1 & RPM2 using pressureAltitude2 (data from 1D3 & 1D4)
     var interpolationData2D2 = {
         [RPM1]: interpolate1D(degreeInput,interpolationData1D3,tempKeys2),
         [RPM2]: interpolate1D(degreeInput, interpolationData1D4,tempKeys2),
@@ -844,17 +850,19 @@ function interpolate4D(pressureAltitudeInput,RPMinput,degreeInput,mapInput,matri
         [RPM2+'-raw']: findDataValuesInDataset(degreeInput, interpolationData1D4,tempKeys2)
     }
 
+    //Interpolation between RPMs for pressureAltitude1 & 2 (data from 2D1 & 2D2)
     var interpolationData3D = {
-        [pressureAltitude1]: interpolate1D(pressureAltitudeInput,interpolationData2D1,pressureAltitudeKeys2),
-        [pressureAltitude2]: interpolate1D(pressureAltitudeInput,interpolationData2D2,pressureAltitudeKeys2),
+        [pressureAltitude1]: interpolate1D(RPMInput,interpolationData2D1,RPMKeys2),
+        [pressureAltitude2]: interpolate1D(RPMInput,interpolationData2D2,RPMKeys2),
 
-        [pressureAltitude1+'-raw']: findDataValuesInDataset(pressureAltitudeInput,interpolationData2D1,pressureAltitudeKeys2),
-        [pressureAltitude2+'-raw']: findDataValuesInDataset(pressureAltitudeInput,interpolationData2D2,pressureAltitudeKeys2)
+        [pressureAltitude1+'-raw']: findDataValuesInDataset(RPMInput,interpolationData2D1,RPMKeys2),
+        [pressureAltitude2+'-raw']: findDataValuesInDataset(RPMInput,interpolationData2D2,RPMKeys2)
     }
 
+    //Interpolation between pressureAltitudes
     var interpolationData4D = {
-        'result': interpolate1D(RPMinput,interpolationData3D,RPMkeys2),
-        'raw': findDataValuesInDataset(RPMinput,interpolationData3D,RPMkeys2) 
+        'result': interpolate1D(pressureAltitudeInput,interpolationData3D,pressureAltitudeKeys2),
+        'raw': findDataValuesInDataset(pressureAltitudeInput,interpolationData3D,pressureAltitudeKeys2) 
     }
 
     return {
