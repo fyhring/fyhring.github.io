@@ -754,7 +754,7 @@ function interpolate4D(pressureAltitudeInput,RPMinput,degreeInput,mapInput,matri
     pressureAltitude2 = pressureAltitudeKeys2[1]
 
     var RPMkeys = Object.keys(matrixData[pressureAltitude1]),
-    RPMkeys2 = findKeysForInterpolation(RPMinput,matrixData[pressureAltitude1]),
+    RPMkeys2 = findKeysForInterpolation(RPMinput,RPMkeys),
     RPM1 = RPMkeys2[0],
     RPM2 = RPMkeys2[1]
 
@@ -771,9 +771,9 @@ function interpolate4D(pressureAltitudeInput,RPMinput,degreeInput,mapInput,matri
     MAPkey2AA = MAPkeysAA.indexOf(MAP2AA)
 
     var MAPkeysBA = Object.keys(matrixData[pressureAltitude2][RPM1]['MAP']),
-    MAPkeysBA2 = findKeysForInterpolBtion(mapInput,MAPkeysBA),
+    MAPkeysBA2 = findKeysForInterpolation(mapInput,MAPkeysBA),
     MAP1BA = MAPkeysBA2[0],
-    MAP1BA = MAPkeysBA2[1],
+    MAP2BA = MAPkeysBA2[1],
     MAPkey1BA = MAPkeysBA.indexOf(MAP1BA),
     MAPkey2BA = MAPkeysBA.indexOf(MAP2BA)
 
@@ -785,9 +785,9 @@ function interpolate4D(pressureAltitudeInput,RPMinput,degreeInput,mapInput,matri
     MAPkey2AB = MAPkeysAB.indexOf(MAP2AB)
 
     var MAPkeysBB = Object.keys(matrixData[pressureAltitude2][RPM2]['MAP']),
-    MAPkeysBB2 = findKeysForInterpolBtion(mapInput,MAPkeysBB),
+    MAPkeysBB2 = findKeysForInterpolation(mapInput,MAPkeysBB),
     MAP1BB = MAPkeysBB2[0],
-    MAP1BB = MAPkeysBB2[1],
+    MAP2BB = MAPkeysBB2[1],
     MAPkey1BB = MAPkeysBB.indexOf(MAP1BB),
     MAPkey2BB = MAPkeysBB.indexOf(MAP2BB)
 
