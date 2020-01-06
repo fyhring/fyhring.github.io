@@ -744,14 +744,12 @@ function interpolate3D(pressureAltitudeInput, degreeInput, massInput, matrixData
     };
 };
 
-//WIP
-// Don't know how to deal with different MAP's for different Altitudes yet
 function interpolate4D(pressureAltitudeInput,RPMinput,degreeInput,mapInput,matrixData)
 {
     var pressureAltitudeKeys = Object.keys(matrixData),
     pressureAltitudeKeys2 = findKeysForInterpolation(pressureAltitudeInput,pressureAltitudeKeys),
     pressureAltitude1 = pressureAltitudeKeys2[0],
-    pressureAltitude2 = pressureAltitudeKeys2[1]
+    pressureAltitude2 = pressureAltitudeKeys2[1];
 
     var RPMkeys = Object.keys(matrixData[pressureAltitude1]),
     RPMkeys2 = findKeysForInterpolation(RPMinput,RPMkeys),
@@ -764,37 +762,30 @@ function interpolate4D(pressureAltitudeInput,RPMinput,degreeInput,mapInput,matri
         delete tempKeys[tempMAPIndex];
     }
 
-    tempKeys2 = findKeysForInterpolation(degreeInput,tempKeys),
-    temp1 = tempKeys2[0],
-    temp2 = tempKeys2[1]
+    var tempKeys2 = findKeysForInterpolation(degreeInput,tempKeys),
+        temp1 = tempKeys2[0],
+        temp2 = tempKeys2[1];
 
-    var MAPkeysAA = matrixData[pressureAltitude1][RPM1]['MAP'],
-    MAPkeysAA2 = findKeysForInterpolation(mapInput,MAPkeysAA),
-    MAP1AA = MAPkeysAA2[0],
-    MAP2AA = MAPkeysAA2[1],
-    MAPkey1AA = MAPkeysAA.indexOf(MAP1AA),
-    MAPkey2AA = MAPkeysAA.indexOf(MAP2AA)
+    var MAPkeysAA = Object.keys(matrixData[pressureAltitude1][RPM1][temp1]),
+        MAPkeysAA2 = findKeysForInterpolation(mapInput,MAPkeysAA),
+        MAP1AA = MAPkeysAA2[0],
+        MAP2AA = MAPkeysAA2[1];
 
-    var MAPkeysBA = matrixData[pressureAltitude2][RPM1]['MAP'],
-    MAPkeysBA2 = findKeysForInterpolation(mapInput,MAPkeysBA),
-    MAP1BA = MAPkeysBA2[0],
-    MAP2BA = MAPkeysBA2[1],
-    MAPkey1BA = MAPkeysBA.indexOf(MAP1BA),
-    MAPkey2BA = MAPkeysBA.indexOf(MAP2BA)
+    var MAPkeysBA = Object.keys(matrixData[pressureAltitude2][RPM1][temp1]),
+        MAPkeysBA2 = findKeysForInterpolation(mapInput,MAPkeysBA),
+        MAP1BA = MAPkeysBA2[0],
+        MAP2BA = MAPkeysBA2[1];
 
-    var MAPkeysAB = matrixData[pressureAltitude1][RPM2]['MAP'],
-    MAPkeysAB2 = findKeysForInterpolation(mapInput,MAPkeysAB),
-    MAP1AB = MAPkeysAB2[0],
-    MAP2AB = MAPkeysAB2[1],
-    MAPkey1AB = MAPkeysAB.indexOf(MAP1AB),
-    MAPkey2AB = MAPkeysAB.indexOf(MAP2AB)
+    var MAPkeysAB = Object.keys(matrixData[pressureAltitude1][RPM2][temp1]),
+        MAPkeysAB2 = findKeysForInterpolation(mapInput,MAPkeysAB),
+        MAP1AB = MAPkeysAB2[0],
+        MAP2AB = MAPkeysAB2[1];
 
-    var MAPkeysBB = matrixData[pressureAltitude2][RPM2]['MAP'],
-    MAPkeysBB2 = findKeysForInterpolation(mapInput,MAPkeysBB),
-    MAP1BB = MAPkeysBB2[0],
-    MAP2BB = MAPkeysBB2[1],
-    MAPkey1BB = MAPkeysBB.indexOf(MAP1BB),
-    MAPkey2BB = MAPkeysBB.indexOf(MAP2BB);
+    var MAPkeysBB = Object.keys(matrixData[pressureAltitude2][RPM2][temp1]),
+        MAPkeysBB2 = findKeysForInterpolation(mapInput,MAPkeysBB),
+        MAP1BB = MAPkeysBB2[0],
+        MAP2BB = MAPkeysBB2[1];
+
 
     //Interpolation between MAPs for temp1 & temp2 using RPM1 and pressureAltitude1
     var interpolationData1D1 = {
@@ -850,13 +841,22 @@ function interpolate4D(pressureAltitudeInput,RPMinput,degreeInput,mapInput,matri
         [RPM2+'-raw']: findDataValuesInDataset(degreeInput, interpolationData1D4,tempKeys2)
     }
 
-    //Interpolation between RPMs for pressureAltitude1 & 2 (data from 2D1 & 2D2)
-    var interpolationData3D = {
-        [pressureAltitude1]: interpolate1D(RPMInput,interpolationData2D1,RPMKeys2),
-        [pressureAltitude2]: interpolate1D(RPMInput,interpolationData2D2,RPMKeys2),
+    var interpolationData3D = {};
+    if (RPMkeys2.indexOf(RPMinput) !== -1) {
+        // Skip interpolation (to save performance) and just grab the values.
+        interpolationData3D = {
+            [pressureAltitude1]: interpolationData2D1[RPMinput],
+            [pressureAltitude2]: interpolationData2D2[RPMinput]
+        };
+    } else {
+        //Interpolation between RPMs for pressureAltitude1 & 2 (data from 2D1 & 2D2)
+        interpolationData3D = {
+            [pressureAltitude1]: interpolate1D(RPMinput,interpolationData2D1,RPMkeys2),
+            [pressureAltitude2]: interpolate1D(RPMinput,interpolationData2D2,RPMkeys2),
 
-        [pressureAltitude1+'-raw']: findDataValuesInDataset(RPMInput,interpolationData2D1,RPMKeys2),
-        [pressureAltitude2+'-raw']: findDataValuesInDataset(RPMInput,interpolationData2D2,RPMKeys2)
+            [pressureAltitude1+'-raw']: findDataValuesInDataset(RPMinput,interpolationData2D1,RPMkeys2),
+            [pressureAltitude2+'-raw']: findDataValuesInDataset(RPMinput,interpolationData2D2,RPMkeys2)
+        };
     }
 
     //Interpolation between pressureAltitudes
