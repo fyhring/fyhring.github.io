@@ -936,6 +936,16 @@ function calculateFuelConsumption(pa, isaDeviation, MAP, RPM) {
     return interpolate4D(pa,RPM,sfcTemp,MAP,FCmatrix)
 }
 
+function calculateTrueAirspeed(pa, isaDeviation, MAP, RPM) {
+    var sfcTemp = isaDeviation + 15
+    return interpolate4D(pa,RPM,sfcTemp,MAP,KTASmatrix)
+}
+
+function calculatePowerSetting(pa,isaDeviation,MAP,RPM) {
+    var sfcTemp = isaDeviation + 15
+    return interpolate4D(pa, RPM,sfcTemp,MAP,PWRmatrix)
+}
+
 //Takeoff distances
 function calculateTakeOffGroundRoll(pa, isaDeviation, tom) {
     var sfcTemp = isaDeviation + 15
