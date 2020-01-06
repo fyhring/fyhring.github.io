@@ -4,3 +4,4 @@
 - Check outputs on results tab for reasonable rounding (headwind/tailwind is not rounded, but check others as well)
 - The interpolation weights and temperatures for climb calculations should draw from their own variables, and not the ones from landing
 - Don't round wind components, should always use whole knots.
+-Add warning to end users when input data is out of AFM parameters

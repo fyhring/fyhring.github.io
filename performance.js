@@ -640,7 +640,30 @@ function findKeysForInterpolation(needle, haystack)
         }
     }
 
-    return [Math.min(...largerThan), Math.max(...lessThan)];
+    var largerValue = Math.min(...largerThan)
+    var lessValue = Math.max(...lessThan)
+
+    //Check if there are values larger than the input
+    if (largerThan.length == 0) {
+        //Delete the used value from the array, using the splice function to avoid leaving a null value in the array
+        lessThan.splice(indexOf(lessValue),1)
+        //Assign the current lessValue as larger, as it will be larger than any other value
+        largerValue = lessValue
+        //Assign the new max (after deleting the used one) of the lessThan array as lessValue
+        lessValue = Math.max(...lessThan)
+    }
+    //Check if there are values smaller than the input
+    else if (lessThan.length == 0) {
+        //Delete the used value from the array, using the splice function to avoid leaving a null value in the array
+        largerThan.splice(largerThan.indexOf(largerValue),1)
+        //Assign the current largerValues as less, as it will be smaller than any other value
+        lessValue = largerValue
+        //Assign the new min (after deleting the used one) of the largerThan array as largerValue
+        largerValue = Math.min(...largerThan)
+    }
+    //TODO add warning to end user that data is out of parameters
+
+    return [largerValue, lessValue];
 }
 
 function findDataValuesInDataset(needle, dataset, keys)
