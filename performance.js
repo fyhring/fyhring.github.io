@@ -1333,7 +1333,15 @@ function calculateAll(pe, pa, msa, isaDeviation, tom, useTwoThirds)
         rocAltitude = (pa - pe) / 3 * 2 + pe;
     }
 
+    var MAP = 24
+    var RPM = 2100
+
     return {
+        //CruiseData
+        'Powersetting': calculatePowerSetting(pa,isaDeviation,MAP,RPM),
+        'KTAS': calculateTrueAirspeed(pa,isaDeviation,MAP,RPM),
+        'FuelConsumption': calculateFuelConsumption(pa,isaDeviation,MAP,RPM),
+
         //Takeoff and landing distances
         'takeoff': takeoffCorrectedCalculations(pe, isaDeviation, tom, null),
         'landing': landingCorrectedCalculations(pe, isaDeviation, tom, null),
