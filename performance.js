@@ -855,12 +855,34 @@ function interpolate4D(pressureAltitudeInput,RPMinput,degreeInput,mapInput,matri
     return {
         'result': interpolationData4D['result'],
         'data': {
-            'Data':'Data goes here'
-            //TODO add data
+            '1D1':interpolationData1D1,
+            'iD2':interpolationData1D2,
+            '1D3':interpolationData1D3,
+            '1D4':interpolationData1D4,
+            '2D1':interpolationData2D1,
+            '2D2':interpolationData2D2,
+            '3D':interpolationData3D,
+            '4D':interpolationData4D
         },
         'keys': {
-            'Keys':'keys goes here'
-            //TODO add keys
+            'MAP1AA':MAP1AA,
+            'MAP1AB':MAP1AB,
+            'MAP1BA':MAP1BA,
+            'MAP1BB':MAP1BB,
+            'MAP2AA':MAP2AA,
+            'MAP2AB':MAP2AB,
+            'MAP2BA':MAP2BA,
+            'MAP2BB':MAP2BB,
+            'MAP3':mapInput,
+            'temp1': temp1,
+            'temp2': temp2,
+            'temp3': temperatureInput,
+            'RPM1': RPM1,
+            'RPM2': RPM2,
+            'RPM3': RPMinput,
+            'alt1': pressureAltitude1,
+            'alt2': pressureAltitude2,
+            'alt3': pressureAltitudeInput
         }
     }
 
