@@ -687,12 +687,17 @@ function interpolate1D(needle, dataset, keys)
 {
     var interpolateKeys = findKeysForInterpolation(needle, keys);
 
-    var keyOne = interpolateKeys[0],
+    if (interpolateKeys.includes(needle)) {
+        return dataset[needle]
+    }
+    else {
+        var keyOne = interpolateKeys[0],
         keyTwo = interpolateKeys[1],
         valueOne = dataset[keyOne],
         valueTwo = dataset[keyTwo];
 
-    return (valueTwo - valueOne) / (keyTwo - keyOne) * (needle - keyOne) + valueOne;    
+    return (valueTwo - valueOne) / (keyTwo - keyOne) * (needle - keyOne) + valueOne; 
+    }
 }
 
 function interpolate2D()
@@ -871,12 +876,6 @@ function interpolate4D(pressureAltitudeInput,RPMinput,degreeInput,mapInput,matri
 
     var interpolationData3D = {};
     if (RPMkeys2.indexOf(RPMinput) !== -1) {
-        // Skip interpolation (to save performance) and just grab the values.
-        interpolationData3D = {
-            [pressureAltitude1]: interpolationData2D1[RPMinput],
-            [pressureAltitude2]: interpolationData2D2[RPMinput]
-        };
-    } else {
         //Interpolation between RPMs for pressureAltitude1 & 2 (data from 2D1 & 2D2)
         interpolationData3D = {
             [pressureAltitude1]: interpolate1D(RPMinput,interpolationData2D1,RPMkeys2),
