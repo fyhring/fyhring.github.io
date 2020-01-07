@@ -892,7 +892,7 @@ function interpolate4D(pressureAltitudeInput,RPMinput,degreeInput,mapInput,matri
         'result': interpolationData4D['result'],
         'data': {
             '1D1':interpolationData1D1,
-            'iD2':interpolationData1D2,
+            '1D2':interpolationData1D2,
             '1D3':interpolationData1D3,
             '1D4':interpolationData1D4,
             '2D1':interpolationData2D1,
