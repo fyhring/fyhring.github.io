@@ -640,7 +640,30 @@ function findKeysForInterpolation(needle, haystack)
         }
     }
 
-    return [Math.min(...largerThan), Math.max(...lessThan)];
+    var largerValue = Math.min(...largerThan)
+    var lessValue = Math.max(...lessThan)
+
+    //Check if there are values larger than the input
+    if (largerThan.length == 0) {
+        //Delete the used value from the array, using the splice function to avoid leaving a null value in the array
+        lessThan.splice(lessThan.indexOf(lessValue),1)
+        //Assign the current lessValue as larger, as it will be larger than any other value
+        largerValue = lessValue
+        //Assign the new max (after deleting the used one) of the lessThan array as lessValue
+        lessValue = Math.max(...lessThan)
+    }
+    //Check if there are values smaller than the input
+    else if (lessThan.length == 0) {
+        //Delete the used value from the array, using the splice function to avoid leaving a null value in the array
+        largerThan.splice(largerThan.indexOf(largerValue),1)
+        //Assign the current largerValues as less, as it will be smaller than any other value
+        lessValue = largerValue
+        //Assign the new min (after deleting the used one) of the largerThan array as largerValue
+        largerValue = Math.min(...largerThan)
+    }
+    //TODO add warning to end user that data is out of parameters
+
+    return [largerValue, lessValue];
 }
 
 function findDataValuesInDataset(needle, dataset, keys)
@@ -869,7 +892,7 @@ function interpolate4D(pressureAltitudeInput,RPMinput,degreeInput,mapInput,matri
         'result': interpolationData4D['result'],
         'data': {
             '1D1':interpolationData1D1,
-            'iD2':interpolationData1D2,
+            '1D2':interpolationData1D2,
             '1D3':interpolationData1D3,
             '1D4':interpolationData1D4,
             '2D1':interpolationData2D1,
@@ -911,6 +934,16 @@ function calculateGradient(roc,gs){
 function calculateFuelConsumption(pa, isaDeviation, MAP, RPM) {
     var sfcTemp = isaDeviation + 15
     return interpolate4D(pa,RPM,sfcTemp,MAP,FCmatrix)
+}
+
+function calculateTrueAirspeed(pa, isaDeviation, MAP, RPM) {
+    var sfcTemp = isaDeviation + 15
+    return interpolate4D(pa,RPM,sfcTemp,MAP,KTASmatrix)
+}
+
+function calculatePowerSetting(pa,isaDeviation,MAP,RPM) {
+    var sfcTemp = isaDeviation + 15
+    return interpolate4D(pa, RPM,sfcTemp,MAP,PWRmatrix)
 }
 
 //Takeoff distances
@@ -1300,7 +1333,15 @@ function calculateAll(pe, pa, msa, isaDeviation, tom, useTwoThirds)
         rocAltitude = (pa - pe) / 3 * 2 + pe;
     }
 
+    var MAP = 24
+    var RPM = 2100
+
     return {
+        //CruiseData
+        'Powersetting': calculatePowerSetting(pa,isaDeviation,MAP,RPM),
+        'KTAS': calculateTrueAirspeed(pa,isaDeviation,MAP,RPM),
+        'FuelConsumption': calculateFuelConsumption(pa,isaDeviation,MAP,RPM),
+
         //Takeoff and landing distances
         'takeoff': takeoffCorrectedCalculations(pe, isaDeviation, tom, null),
         'landing': landingCorrectedCalculations(pe, isaDeviation, tom, null),
