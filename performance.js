@@ -621,6 +621,12 @@ function toRadians (angle) {
 }
 
 
+function parseIntOrFloat(n)
+{
+    // Hack to convert '12' -> 12 and '12.5' -> 12.5 and 'hello world' -> NaN
+    return n * 1;
+}
+
 // Functions for interpolation
 
 function findKeysForInterpolation(needle, haystack)
@@ -628,15 +634,14 @@ function findKeysForInterpolation(needle, haystack)
     var largerThan = [],
         lessThan   = [];
         
-    
     for (var i in haystack) {
         if (typeof haystack[i] == 'string' && haystack[i].toLowerCase() == 'spacing') {
             continue;
         }
         if (haystack[i] >= needle) {
-            largerThan.push(parseInt(haystack[i], 10));
+            largerThan.push(parseIntOrFloat(haystack[i], 10));
         } else {
-            lessThan.push(parseInt(haystack[i], 10));
+            lessThan.push(parseIntOrFloat(haystack[i], 10));
         }
     }
 
