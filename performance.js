@@ -736,13 +736,24 @@ function interpolate3D(pressureAltitudeInput, degreeInput, massInput, matrixData
         [degree2 +'-raw']: findDataValuesInDataset(pressureAltitudeInput / matrixData.spacing, matrixData[mass2][degree2], pressureAltitudeKeys)
     };
 
-    var interpolationData2D = {
-        [mass1]: interpolate1D(degreeInput, interpolationData1D1, degreeKeys2),
-        [mass2]: interpolate1D(degreeInput, interpolationData1D2, degreeKeys2),
+    var interpolationData2D = {};
+    if (degreeKeys2.indexOf(degreeInput) !== -1) {
+        interpolationData2D = {
+            [mass1]: interpolationData1D1[degreeInput],
+            [mass2]: interpolationData1D2[degreeInput],
 
-        [mass1 +'-raw']: findDataValuesInDataset(degreeInput, interpolationData1D1, degreeKeys2),
-        [mass2 +'-raw']: findDataValuesInDataset(degreeInput, interpolationData1D2, degreeKeys2),
-    };
+            [mass1 +'-raw']: findDataValuesInDataset(degreeInput, interpolationData1D1, degreeKeys2),
+            [mass2 +'-raw']: findDataValuesInDataset(degreeInput, interpolationData1D2, degreeKeys2),
+        };
+    } else {
+        interpolationData2D = {
+            [mass1]: interpolate1D(degreeInput, interpolationData1D1, degreeKeys2),
+            [mass2]: interpolate1D(degreeInput, interpolationData1D2, degreeKeys2),
+
+            [mass1 +'-raw']: findDataValuesInDataset(degreeInput, interpolationData1D1, degreeKeys2),
+            [mass2 +'-raw']: findDataValuesInDataset(degreeInput, interpolationData1D2, degreeKeys2),
+        };
+    }
 
     var interpolationData3D = {
         'result': interpolate1D(massInput, interpolationData2D, massKeys2),
@@ -852,21 +863,45 @@ function interpolate4D(pressureAltitudeInput,RPMinput,degreeInput,mapInput,matri
     }
 
     //Interpolation between temps for RPM1 & RPM2 using pressureAltitude1 (data from 1D1 & 1D2)
-    var interpolationData2D1 = {
-        [RPM1]: interpolate1D(degreeInput,interpolationData1D1,tempKeys2),
-        [RPM2]: interpolate1D(degreeInput, interpolationData1D2,tempKeys2),
+    var interpolationData2D1 = {};
+    if (tempKeys2.indexOf(degreeInput) !== -1) {
+        // Skip interpolation (to save performance) and just grab the values.
+        interpolationData2D1 = {
+            [RPM1]: interpolationData1D1[degreeInput],
+            [RPM2]: interpolationData1D2[degreeInput],
 
-        [RPM1+'-raw']: findDataValuesInDataset(degreeInput,interpolationData1D1,tempKeys2),
-        [RPM2+'-raw']: findDataValuesInDataset(degreeInput, interpolationData1D2,tempKeys2)
+            [RPM1+'-raw']: findDataValuesInDataset(degreeInput,interpolationData1D1,tempKeys2),
+            [RPM2+'-raw']: findDataValuesInDataset(degreeInput, interpolationData1D2,tempKeys2)
+        };
+    } else {
+        interpolationData2D1 = {
+            [RPM1]: interpolate1D(degreeInput,interpolationData1D1,tempKeys2),
+            [RPM2]: interpolate1D(degreeInput, interpolationData1D2,tempKeys2),
+
+            [RPM1+'-raw']: findDataValuesInDataset(degreeInput,interpolationData1D1,tempKeys2),
+            [RPM2+'-raw']: findDataValuesInDataset(degreeInput, interpolationData1D2,tempKeys2)
+        }
     }
 
     //Interpolation between temps for RPM1 & RPM2 using pressureAltitude2 (data from 1D3 & 1D4)
-    var interpolationData2D2 = {
-        [RPM1]: interpolate1D(degreeInput,interpolationData1D3,tempKeys2),
-        [RPM2]: interpolate1D(degreeInput, interpolationData1D4,tempKeys2),
+    var interpolationData2D2 = {};
+    if (tempKeys2.indexOf(degreeInput) !== -1) {
+        // Skip interpolation (to save performance) and just grab the values.
+        interpolationData2D2 = {
+            [RPM1]: interpolationData1D3[degreeInput],
+            [RPM2]: interpolationData1D4[degreeInput],
 
-        [RPM1+'-raw']: findDataValuesInDataset(degreeInput,interpolationData1D3,tempKeys2),
-        [RPM2+'-raw']: findDataValuesInDataset(degreeInput, interpolationData1D4,tempKeys2)
+            [RPM1+'-raw']: findDataValuesInDataset(degreeInput,interpolationData1D3,tempKeys2),
+            [RPM2+'-raw']: findDataValuesInDataset(degreeInput, interpolationData1D4,tempKeys2)
+        };
+    } else {
+        interpolationData2D2 = {
+            [RPM1]: interpolate1D(degreeInput,interpolationData1D3,tempKeys2),
+            [RPM2]: interpolate1D(degreeInput, interpolationData1D4,tempKeys2),
+
+            [RPM1+'-raw']: findDataValuesInDataset(degreeInput,interpolationData1D3,tempKeys2),
+            [RPM2+'-raw']: findDataValuesInDataset(degreeInput, interpolationData1D4,tempKeys2)
+        }
     }
 
     var interpolationData3D = {};
