@@ -889,7 +889,7 @@ function interpolate4D(pressureAltitudeInput,RPMinput,degreeInput,mapInput,matri
             'MAP3':mapInput,
             'temp1': temp1,
             'temp2': temp2,
-            'temp3': temperatureInput,
+            'temp3': degreeInput,
             'RPM1': RPM1,
             'RPM2': RPM2,
             'RPM3': RPMinput,
