@@ -158,6 +158,10 @@ function calculateFromInputs()
         'to-grad-vx': [(Math.floor(data.toGradVx * 10000)/100),'%'],
         //'to-angle-vx': [(Math.floor(data.angleToVx * 100)/100),'&#176'],   //Calculation not yet made
         'useMSAOrNotTxt': [(useMSAROC ? 'MSA' : '2/3 cruise alt.'), ''],
+        'fuelConsumption1E': [Math.ceil(data.FuelConsumption.result*100)/100,'lt/h'],
+        'fuelConsumption2E': [Math.ceil(data.FuelConsumption.result * 200)/100,'lt/h'],
+        'powerSetting': [Math.ceil(data.Powersetting.result*100)/100,'%'],
+        'KTAS': [Math.round(data.KTAS.result),'kts'],
 
         // General interpolation data
         'to-temp1': [data.takeoff.uncorrectedGround.keys.temp1, '&deg;C'],
@@ -196,6 +200,24 @@ function calculateFromInputs()
         'roc-vy-mass1': [data.rocVy.keys.mass1, 'kg'],
         'roc-vy-mass2': [data.rocVy.keys.mass2, 'kg'],
         'roc-vy-mass3': [data.rocVy.keys.mass3, 'kg'],
+        'FC-MAP1AA': [data.FuelConsumption.keys.MAP1AA,'inHg'],
+        'FC-MAP1AB': [data.FuelConsumption.keys.MAP1AB,'inHg'],
+        'FC-MAP1BA': [data.FuelConsumption.keys.MAP1BA,'inHg'],
+        'FC-MAP1BB': [data.FuelConsumption.keys.MAP1BB,'inHg'],
+        'FC-MAP2AA': [data.FuelConsumption.keys.MAP2AA,'inHg'],
+        'FC-MAP2AB': [data.FuelConsumption.keys.MAP2AB,'inHg'],
+        'FC-MAP2BA': [data.FuelConsumption.keys.MAP2BA,'inHg'],
+        'FC-MAP2BB': [data.FuelConsumption.keys.MAP2BB,'inHg'],
+        'FC-MAP3': [data.FuelConsumption.keys.MAP3,'inHg'],
+        'FC-temp1': [data.FuelConsumption.keys.temp1,'&deg;C'],
+        'FC-temp2': [data.FuelConsumption.keys.temp2,'&deg;C'],
+        'FC-temp3': [data.FuelConsumption.keys.temp3,'&deg;C'],
+        'FC-RPM1': [data.FuelConsumption.keys.RPM1,'RPM'],
+        'FC-RPM2': [data.FuelConsumption.keys.RPM2,'RPM'],
+        'FC-RPM3': [data.FuelConsumption.keys.RPM3,'RPM'],
+        'FC-alt1': [data.FuelConsumption.keys.alt1,'ft'],
+        'FC-alt2': [data.FuelConsumption.keys.alt2,'ft'],
+        'FC-alt3': [data.FuelConsumption.keys.alt3,'ft'],
 
         // Environment
         'env-qnh': [data.env.qnh, 'hPa'],
@@ -368,6 +390,33 @@ function calculateFromInputs()
         'oei-service-ceiling-alt3-alt': [Math.round(data.OEIserviceCeiling.data[2][0]), 'ft'],
         'oei-service-ceiling-alt3-roc': [Math.round(data.OEIserviceCeiling.data[2][1]), 'fpm'],
 
+        //Fuel Consumption
+        'FC-pa1-rpm1-temp1-map1': data.FuelConsumption.data["1D1"][data.FuelConsumption.keys.temp1+'-raw'][0],
+        'FC-pa1-rpm1-temp1-map2': data.FuelConsumption.data["1D1"][data.FuelConsumption.keys.temp1+'-raw'][1],
+        'FC-pa1-rpm1-temp1-map3': data.FuelConsumption.data["1D1"][data.FuelConsumption.keys.temp1],
+        'FC-pa1-rpm1-temp2-map1': data.FuelConsumption.data["1D1"][data.FuelConsumption.keys.temp2+'-raw'][0],
+        'FC-pa1-rpm1-temp2-map2': data.FuelConsumption.data["1D1"][data.FuelConsumption.keys.temp2+'-raw'][1],
+        'FC-pa1-rpm1-temp2-map3': data.FuelConsumption.data["1D1"][data.FuelConsumption.keys.temp2],
+        'FC-pa1-rpm2-temp1-map1': data.FuelConsumption.data["1D2"][data.FuelConsumption.keys.temp1+'-raw'][0],
+        'FC-pa1-rpm2-temp1-map2': data.FuelConsumption.data["1D2"][data.FuelConsumption.keys.temp1+'-raw'][1],
+        'FC-pa1-rpm2-temp1-map3': data.FuelConsumption.data["1D2"][data.FuelConsumption.keys.temp1],
+        'FC-pa1-rpm2-temp2-map1': data.FuelConsumption.data["1D2"][data.FuelConsumption.keys.temp2+'-raw'][0],
+        'FC-pa1-rpm2-temp2-map2': data.FuelConsumption.data["1D2"][data.FuelConsumption.keys.temp2+'-raw'][1],
+        'FC-pa1-rpm2-temp2-map3': data.FuelConsumption.data["1D2"][data.FuelConsumption.keys.temp2],
+        'FC-pa2-rpm1-temp1-map1': data.FuelConsumption.data["1D3"][data.FuelConsumption.keys.temp1+'-raw'][0],
+        'FC-pa2-rpm1-temp1-map2': data.FuelConsumption.data["1D3"][data.FuelConsumption.keys.temp1+'-raw'][1],
+        'FC-pa2-rpm1-temp1-map3': data.FuelConsumption.data["1D3"][data.FuelConsumption.keys.temp1],
+        'FC-pa2-rpm1-temp2-map1': data.FuelConsumption.data["1D3"][data.FuelConsumption.keys.temp2+'-raw'][0],
+        'FC-pa2-rpm1-temp2-map2': data.FuelConsumption.data["1D3"][data.FuelConsumption.keys.temp2+'-raw'][1],
+        'FC-pa2-rpm1-temp2-map3': data.FuelConsumption.data["1D3"][data.FuelConsumption.keys.temp2],
+        'FC-pa2-rpm2-temp1-map1': data.FuelConsumption.data["1D4"][data.FuelConsumption.keys.temp1+'-raw'][0],
+        'FC-pa2-rpm2-temp1-map2': data.FuelConsumption.data["1D4"][data.FuelConsumption.keys.temp1+'-raw'][1],
+        'FC-pa2-rpm2-temp1-map3': data.FuelConsumption.data["1D4"][data.FuelConsumption.keys.temp1],
+        'FC-pa2-rpm2-temp2-map1': data.FuelConsumption.data["1D4"][data.FuelConsumption.keys.temp2+'-raw'][0],
+        'FC-pa2-rpm2-temp2-map2': data.FuelConsumption.data["1D4"][data.FuelConsumption.keys.temp2+'-raw'][1],
+        'FC-pa2-rpm2-temp2-map3': data.FuelConsumption.data["1D4"][data.FuelConsumption.keys.temp2],
+
+        'FC-pa3-rpm3-temp3-map3': data.FuelConsumption.result,
 
     };
     
