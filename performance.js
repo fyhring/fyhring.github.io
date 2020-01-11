@@ -88,11 +88,13 @@ function calculateFromInputs()
 
     // Calculate pressure altitude of AD elevation.
     var pressureElevation = elevationInput,
-        pressureAltitude  = cruiseInput;
+        pressureAltitude  = cruiseInput,
+        pressureMSA       = msaInput;
 
     if (pressureInput != STD_PRESSURE) {
 
         pressureElevation = toPressureAltitude(elevationInput);
+        pressureMSA = toPressureAltitude(pressureMSA);
 
         // If we use FL we don't correct for pressure.
         if (!useFL) {
@@ -107,7 +109,7 @@ function calculateFromInputs()
         }
     }
 
-    var data = calculateAll(pressureElevation, pressureAltitude, msaInput, tempIsaDeviation, weightInput);
+    var data = calculateAll(pressureElevation, pressureAltitude, pressureMSA, tempIsaDeviation, weightInput);
     console.log(data);
 
     data.env = {
@@ -124,6 +126,7 @@ function calculateFromInputs()
     };
 
     var temperatures = Object.keys(data.takeoff.uncorrectedGround.data['1D1']);
+    var rocTemperatures = Object.keys(data.rocVySe.data['1D1']);
     var weights = Object.keys(data.takeoff.uncorrectedGround.data['2D']);
 
     var takeOffLandingUIPairs = {
@@ -353,39 +356,39 @@ function calculateFromInputs()
         //CLIMB PERFORMANCE OUTPUTS
 
         // ROC Vy
-        'roc-vy-w1-alt1-temp1': [Math.floor(data.rocVy.data['1D1'][temperatures[0]+'-raw'][1]), 'fpm'],
-        'roc-vy-w1-alt1-temp2': [Math.floor(data.rocVy.data['1D1'][temperatures[1]+'-raw'][1]), 'fpm'],
-        'roc-vy-w1-alt2-temp1': [Math.floor(data.rocVy.data['1D1'][temperatures[0]+'-raw'][0]), 'fpm'],
-        'roc-vy-w1-alt2-temp2': [Math.floor(data.rocVy.data['1D1'][temperatures[1]+'-raw'][0]), 'fpm'],
-        'roc-vy-w1-alt3-temp1': [Math.floor(data.rocVy.data['1D1'][temperatures[0]]), 'fpm'],
-        'roc-vy-w1-alt3-temp2': [Math.floor(data.rocVy.data['1D1'][temperatures[1]]), 'fpm'],
+        'roc-vy-w1-alt1-temp1': [Math.floor(data.rocVy.data['1D1'][rocTemperatures[0]+'-raw'][1]), 'fpm'],
+        'roc-vy-w1-alt1-temp2': [Math.floor(data.rocVy.data['1D1'][rocTemperatures[1]+'-raw'][1]), 'fpm'],
+        'roc-vy-w1-alt2-temp1': [Math.floor(data.rocVy.data['1D1'][rocTemperatures[0]+'-raw'][0]), 'fpm'],
+        'roc-vy-w1-alt2-temp2': [Math.floor(data.rocVy.data['1D1'][rocTemperatures[1]+'-raw'][0]), 'fpm'],
+        'roc-vy-w1-alt3-temp1': [Math.floor(data.rocVy.data['1D1'][rocTemperatures[0]]), 'fpm'],
+        'roc-vy-w1-alt3-temp2': [Math.floor(data.rocVy.data['1D1'][rocTemperatures[1]]), 'fpm'],
         'roc-vy-w1-alt3-temp3': [Math.floor(data.rocVy.data['2D'][weights[1]]), 'fpm'],
 
-        'roc-vy-w2-alt1-temp1': [Math.floor(data.rocVy.data['1D2'][temperatures[0]+'-raw'][1]), 'fpm'],
-        'roc-vy-w2-alt1-temp2': [Math.floor(data.rocVy.data['1D2'][temperatures[1]+'-raw'][1]), 'fpm'],
-        'roc-vy-w2-alt2-temp1': [Math.floor(data.rocVy.data['1D2'][temperatures[0]+'-raw'][0]), 'fpm'],
-        'roc-vy-w2-alt2-temp2': [Math.floor(data.rocVy.data['1D2'][temperatures[1]+'-raw'][0]), 'fpm'],
-        'roc-vy-w2-alt3-temp1': [Math.floor(data.rocVy.data['1D2'][temperatures[0]]), 'fpm'],
-        'roc-vy-w2-alt3-temp2': [Math.floor(data.rocVy.data['1D2'][temperatures[1]]), 'fpm'],
+        'roc-vy-w2-alt1-temp1': [Math.floor(data.rocVy.data['1D2'][rocTemperatures[0]+'-raw'][1]), 'fpm'],
+        'roc-vy-w2-alt1-temp2': [Math.floor(data.rocVy.data['1D2'][rocTemperatures[1]+'-raw'][1]), 'fpm'],
+        'roc-vy-w2-alt2-temp1': [Math.floor(data.rocVy.data['1D2'][rocTemperatures[0]+'-raw'][0]), 'fpm'],
+        'roc-vy-w2-alt2-temp2': [Math.floor(data.rocVy.data['1D2'][rocTemperatures[1]+'-raw'][0]), 'fpm'],
+        'roc-vy-w2-alt3-temp1': [Math.floor(data.rocVy.data['1D2'][rocTemperatures[0]]), 'fpm'],
+        'roc-vy-w2-alt3-temp2': [Math.floor(data.rocVy.data['1D2'][rocTemperatures[1]]), 'fpm'],
         'roc-vy-w2-alt3-temp3': [Math.floor(data.rocVy.data['2D'][weights[0]]), 'fpm'],
 
         'roc-vy-w3-alt3-temp3': [Math.floor(data.rocVy.data['3D']['result']), 'fpm'],
         
         // OEI ROC VySE
-        'oei-roc-vyse-w1-alt1-temp1': [Math.floor(data.rocVySe.data['1D1'][temperatures[0]+'-raw'][1]), 'fpm'],
-        'oei-roc-vyse-w1-alt1-temp2': [Math.floor(data.rocVySe.data['1D1'][temperatures[1]+'-raw'][1]), 'fpm'],
-        'oei-roc-vyse-w1-alt2-temp1': [Math.floor(data.rocVySe.data['1D1'][temperatures[0]+'-raw'][0]), 'fpm'],
-        'oei-roc-vyse-w1-alt2-temp2': [Math.floor(data.rocVySe.data['1D1'][temperatures[1]+'-raw'][0]), 'fpm'],
-        'oei-roc-vyse-w1-alt3-temp1': [Math.floor(data.rocVySe.data['1D1'][temperatures[0]]), 'fpm'],
-        'oei-roc-vyse-w1-alt3-temp2': [Math.floor(data.rocVySe.data['1D1'][temperatures[1]]), 'fpm'],
+        'oei-roc-vyse-w1-alt1-temp1': [Math.floor(data.rocVySe.data['1D1'][rocTemperatures[0]+'-raw'][1]), 'fpm'],
+        'oei-roc-vyse-w1-alt1-temp2': [Math.floor(data.rocVySe.data['1D1'][rocTemperatures[1]+'-raw'][1]), 'fpm'],
+        'oei-roc-vyse-w1-alt2-temp1': [Math.floor(data.rocVySe.data['1D1'][rocTemperatures[0]+'-raw'][0]), 'fpm'],
+        'oei-roc-vyse-w1-alt2-temp2': [Math.floor(data.rocVySe.data['1D1'][rocTemperatures[1]+'-raw'][0]), 'fpm'],
+        'oei-roc-vyse-w1-alt3-temp1': [Math.floor(data.rocVySe.data['1D1'][rocTemperatures[0]]), 'fpm'],
+        'oei-roc-vyse-w1-alt3-temp2': [Math.floor(data.rocVySe.data['1D1'][rocTemperatures[1]]), 'fpm'],
         'oei-roc-vyse-w1-alt3-temp3': [Math.floor(data.rocVySe.data['2D'][weights[1]]), 'fpm'],
 
-        'oei-roc-vyse-w2-alt1-temp1': [Math.floor(data.rocVySe.data['1D2'][temperatures[0]+'-raw'][1]), 'fpm'],
-        'oei-roc-vyse-w2-alt1-temp2': [Math.floor(data.rocVySe.data['1D2'][temperatures[1]+'-raw'][1]), 'fpm'],
-        'oei-roc-vyse-w2-alt2-temp1': [Math.floor(data.rocVySe.data['1D2'][temperatures[0]+'-raw'][0]), 'fpm'],
-        'oei-roc-vyse-w2-alt2-temp2': [Math.floor(data.rocVySe.data['1D2'][temperatures[1]+'-raw'][0]), 'fpm'],
-        'oei-roc-vyse-w2-alt3-temp1': [Math.floor(data.rocVySe.data['1D2'][temperatures[0]]), 'fpm'],
-        'oei-roc-vyse-w2-alt3-temp2': [Math.floor(data.rocVySe.data['1D2'][temperatures[1]]), 'fpm'],
+        'oei-roc-vyse-w2-alt1-temp1': [Math.floor(data.rocVySe.data['1D2'][rocTemperatures[0]+'-raw'][1]), 'fpm'],
+        'oei-roc-vyse-w2-alt1-temp2': [Math.floor(data.rocVySe.data['1D2'][rocTemperatures[1]+'-raw'][1]), 'fpm'],
+        'oei-roc-vyse-w2-alt2-temp1': [Math.floor(data.rocVySe.data['1D2'][rocTemperatures[0]+'-raw'][0]), 'fpm'],
+        'oei-roc-vyse-w2-alt2-temp2': [Math.floor(data.rocVySe.data['1D2'][rocTemperatures[1]+'-raw'][0]), 'fpm'],
+        'oei-roc-vyse-w2-alt3-temp1': [Math.floor(data.rocVySe.data['1D2'][rocTemperatures[0]]), 'fpm'],
+        'oei-roc-vyse-w2-alt3-temp2': [Math.floor(data.rocVySe.data['1D2'][rocTemperatures[1]]), 'fpm'],
         'oei-roc-vyse-w2-alt3-temp3': [Math.floor(data.rocVySe.data['2D'][weights[0]]), 'fpm'],
 
         'oei-roc-vyse-w3-alt3-temp3': [Math.floor(data.rocVySe.data['3D']['result']), 'fpm'],
@@ -408,20 +411,20 @@ function calculateFromInputs()
         'service-ceiling-true-alt': [data.OEIserviceCeiling.ceiling, 'ft'],
 
         // OEI Service Ceiling - ROC
-        'service-ceiling-roc-w1-alt1-temp1': [Math.floor(data.OEIserviceCeiling.data[2][2].data['1D1'][temperatures[0]+'-raw'][1]), 'fpm'],
-        'service-ceiling-roc-w1-alt1-temp2': [Math.floor(data.OEIserviceCeiling.data[2][2].data['1D1'][temperatures[1]+'-raw'][1]), 'fpm'],
-        'service-ceiling-roc-w1-alt2-temp1': [Math.floor(data.OEIserviceCeiling.data[2][2].data['1D1'][temperatures[0]+'-raw'][0]), 'fpm'],
-        'service-ceiling-roc-w1-alt2-temp2': [Math.floor(data.OEIserviceCeiling.data[2][2].data['1D1'][temperatures[1]+'-raw'][0]), 'fpm'],
-        'service-ceiling-roc-w1-alt3-temp1': [Math.floor(data.OEIserviceCeiling.data[2][2].data['1D1'][temperatures[0]]), 'fpm'],
-        'service-ceiling-roc-w1-alt3-temp2': [Math.floor(data.OEIserviceCeiling.data[2][2].data['1D1'][temperatures[1]]), 'fpm'],
+        'service-ceiling-roc-w1-alt1-temp1': [Math.floor(data.OEIserviceCeiling.data[2][2].data['1D1'][rocTemperatures[0]+'-raw'][1]), 'fpm'],
+        'service-ceiling-roc-w1-alt1-temp2': [Math.floor(data.OEIserviceCeiling.data[2][2].data['1D1'][rocTemperatures[1]+'-raw'][1]), 'fpm'],
+        'service-ceiling-roc-w1-alt2-temp1': [Math.floor(data.OEIserviceCeiling.data[2][2].data['1D1'][rocTemperatures[0]+'-raw'][0]), 'fpm'],
+        'service-ceiling-roc-w1-alt2-temp2': [Math.floor(data.OEIserviceCeiling.data[2][2].data['1D1'][rocTemperatures[1]+'-raw'][0]), 'fpm'],
+        'service-ceiling-roc-w1-alt3-temp1': [Math.floor(data.OEIserviceCeiling.data[2][2].data['1D1'][rocTemperatures[0]]), 'fpm'],
+        'service-ceiling-roc-w1-alt3-temp2': [Math.floor(data.OEIserviceCeiling.data[2][2].data['1D1'][rocTemperatures[1]]), 'fpm'],
         'service-ceiling-roc-w1-alt3-temp3': [Math.floor(data.OEIserviceCeiling.data[2][2].data['2D'][weights[1]]), 'fpm'],
 
-        'service-ceiling-roc-w2-alt1-temp1': [Math.floor(data.OEIserviceCeiling.data[2][2].data['1D2'][temperatures[0]+'-raw'][1]), 'fpm'],
-        'service-ceiling-roc-w2-alt1-temp2': [Math.floor(data.OEIserviceCeiling.data[2][2].data['1D2'][temperatures[1]+'-raw'][1]), 'fpm'],
-        'service-ceiling-roc-w2-alt2-temp1': [Math.floor(data.OEIserviceCeiling.data[2][2].data['1D2'][temperatures[0]+'-raw'][0]), 'fpm'],
-        'service-ceiling-roc-w2-alt2-temp2': [Math.floor(data.OEIserviceCeiling.data[2][2].data['1D2'][temperatures[1]+'-raw'][0]), 'fpm'],
-        'service-ceiling-roc-w2-alt3-temp1': [Math.floor(data.OEIserviceCeiling.data[2][2].data['1D2'][temperatures[0]]), 'fpm'],
-        'service-ceiling-roc-w2-alt3-temp2': [Math.floor(data.OEIserviceCeiling.data[2][2].data['1D2'][temperatures[1]]), 'fpm'],
+        'service-ceiling-roc-w2-alt1-temp1': [Math.floor(data.OEIserviceCeiling.data[2][2].data['1D2'][rocTemperatures[0]+'-raw'][1]), 'fpm'],
+        'service-ceiling-roc-w2-alt1-temp2': [Math.floor(data.OEIserviceCeiling.data[2][2].data['1D2'][rocTemperatures[1]+'-raw'][1]), 'fpm'],
+        'service-ceiling-roc-w2-alt2-temp1': [Math.floor(data.OEIserviceCeiling.data[2][2].data['1D2'][rocTemperatures[0]+'-raw'][0]), 'fpm'],
+        'service-ceiling-roc-w2-alt2-temp2': [Math.floor(data.OEIserviceCeiling.data[2][2].data['1D2'][rocTemperatures[1]+'-raw'][0]), 'fpm'],
+        'service-ceiling-roc-w2-alt3-temp1': [Math.floor(data.OEIserviceCeiling.data[2][2].data['1D2'][rocTemperatures[0]]), 'fpm'],
+        'service-ceiling-roc-w2-alt3-temp2': [Math.floor(data.OEIserviceCeiling.data[2][2].data['1D2'][rocTemperatures[1]]), 'fpm'],
         'service-ceiling-roc-w2-alt3-temp3': [Math.floor(data.OEIserviceCeiling.data[2][2].data['2D'][weights[0]]), 'fpm'],
 
         'service-ceiling-roc-w3-alt3-temp3': [Math.floor(data.OEIserviceCeiling.data[2][2].data['3D']['result']), 'fpm'],
@@ -1522,8 +1525,8 @@ function calculateAll(pe, pa, msa, isaDeviation, tom, useTwoThirds)
         rocAltitude = (pa - pe) / 3 * 2 + pe;
     }
 
-    var MAP = 24
-    var RPM = 2100
+    var MAP = 24,
+        RPM = 2100;
 
     return {
         //CruiseData
