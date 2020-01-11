@@ -427,40 +427,40 @@ function calculateFromInputs()
         'service-ceiling-roc-w3-alt3-temp3': [Math.floor(data.OEIserviceCeiling.data[2][2].data['3D']['result']), 'fpm'],
 
         //Fuel Consumption
-        'FC-pa1-rpm1-temp1-map1': data.FuelConsumption.data["1D1"][data.FuelConsumption.keys.temp1+'-raw'][0],
-        'FC-pa1-rpm1-temp1-map2': data.FuelConsumption.data["1D1"][data.FuelConsumption.keys.temp1+'-raw'][1],
-        'FC-pa1-rpm1-temp1-map3': data.FuelConsumption.data["1D1"][data.FuelConsumption.keys.temp1],
-        'FC-pa1-rpm1-temp2-map1': data.FuelConsumption.data["1D1"][data.FuelConsumption.keys.temp2+'-raw'][0],
-        'FC-pa1-rpm1-temp2-map2': data.FuelConsumption.data["1D1"][data.FuelConsumption.keys.temp2+'-raw'][1],
-        'FC-pa1-rpm1-temp2-map3': data.FuelConsumption.data["1D1"][data.FuelConsumption.keys.temp2],
-        'FC-pa1-rpm2-temp1-map1': data.FuelConsumption.data["1D2"][data.FuelConsumption.keys.temp1+'-raw'][0],
-        'FC-pa1-rpm2-temp1-map2': data.FuelConsumption.data["1D2"][data.FuelConsumption.keys.temp1+'-raw'][1],
-        'FC-pa1-rpm2-temp1-map3': data.FuelConsumption.data["1D2"][data.FuelConsumption.keys.temp1],
-        'FC-pa1-rpm2-temp2-map1': data.FuelConsumption.data["1D2"][data.FuelConsumption.keys.temp2+'-raw'][0],
-        'FC-pa1-rpm2-temp2-map2': data.FuelConsumption.data["1D2"][data.FuelConsumption.keys.temp2+'-raw'][1],
-        'FC-pa1-rpm2-temp2-map3': data.FuelConsumption.data["1D2"][data.FuelConsumption.keys.temp2],
-        'FC-pa2-rpm1-temp1-map1': data.FuelConsumption.data["1D3"][data.FuelConsumption.keys.temp1+'-raw'][0],
-        'FC-pa2-rpm1-temp1-map2': data.FuelConsumption.data["1D3"][data.FuelConsumption.keys.temp1+'-raw'][1],
-        'FC-pa2-rpm1-temp1-map3': data.FuelConsumption.data["1D3"][data.FuelConsumption.keys.temp1],
-        'FC-pa2-rpm1-temp2-map1': data.FuelConsumption.data["1D3"][data.FuelConsumption.keys.temp2+'-raw'][0],
-        'FC-pa2-rpm1-temp2-map2': data.FuelConsumption.data["1D3"][data.FuelConsumption.keys.temp2+'-raw'][1],
-        'FC-pa2-rpm1-temp2-map3': data.FuelConsumption.data["1D3"][data.FuelConsumption.keys.temp2],
-        'FC-pa2-rpm2-temp1-map1': data.FuelConsumption.data["1D4"][data.FuelConsumption.keys.temp1+'-raw'][0],
-        'FC-pa2-rpm2-temp1-map2': data.FuelConsumption.data["1D4"][data.FuelConsumption.keys.temp1+'-raw'][1],
-        'FC-pa2-rpm2-temp1-map3': data.FuelConsumption.data["1D4"][data.FuelConsumption.keys.temp1],
-        'FC-pa2-rpm2-temp2-map1': data.FuelConsumption.data["1D4"][data.FuelConsumption.keys.temp2+'-raw'][0],
-        'FC-pa2-rpm2-temp2-map2': data.FuelConsumption.data["1D4"][data.FuelConsumption.keys.temp2+'-raw'][1],
-        'FC-pa2-rpm2-temp2-map3': data.FuelConsumption.data["1D4"][data.FuelConsumption.keys.temp2],
+        'FC-pa1-rpm1-temp1-map1': [Math.ceil(data.FuelConsumption.data["1D1"][data.FuelConsumption.keys.temp1+'-raw'][0]*10)/10,'lt/h'],
+        'FC-pa1-rpm1-temp1-map2': [Math.ceil(data.FuelConsumption.data["1D1"][data.FuelConsumption.keys.temp1+'-raw'][1]*10)/10,'lt/h'],
+        'FC-pa1-rpm1-temp1-map3': [Math.ceil(data.FuelConsumption.data["1D1"][data.FuelConsumption.keys.temp1]*10)/10,'lt/h'],
+        'FC-pa1-rpm1-temp2-map1': [Math.ceil(data.FuelConsumption.data["1D1"][data.FuelConsumption.keys.temp2+'-raw'][0]*10)/10,'lt/h'],
+        'FC-pa1-rpm1-temp2-map2': [Math.ceil(data.FuelConsumption.data["1D1"][data.FuelConsumption.keys.temp2+'-raw'][1]*10)/10,'lt/h'],
+        'FC-pa1-rpm1-temp2-map3': [Math.ceil(data.FuelConsumption.data["1D1"][data.FuelConsumption.keys.temp2]*10)/10,'lt/h'],
+        'FC-pa1-rpm2-temp1-map1': [Math.ceil(data.FuelConsumption.data["1D2"][data.FuelConsumption.keys.temp1+'-raw'][0]*10)/10,'lt/h'],
+        'FC-pa1-rpm2-temp1-map2': [Math.ceil(data.FuelConsumption.data["1D2"][data.FuelConsumption.keys.temp1+'-raw'][1]*10)/10,'lt/h'],
+        'FC-pa1-rpm2-temp1-map3': [Math.ceil(data.FuelConsumption.data["1D2"][data.FuelConsumption.keys.temp1]*10)/10,'lt/h'],
+        'FC-pa1-rpm2-temp2-map1': [Math.ceil(data.FuelConsumption.data["1D2"][data.FuelConsumption.keys.temp2+'-raw'][0]*10)/10,'lt/h'],
+        'FC-pa1-rpm2-temp2-map2': [Math.ceil(data.FuelConsumption.data["1D2"][data.FuelConsumption.keys.temp2+'-raw'][1]*10)/10,'lt/h'],
+        'FC-pa1-rpm2-temp2-map3': [Math.ceil(data.FuelConsumption.data["1D2"][data.FuelConsumption.keys.temp2]*10)/10,'lt/h'],
+        'FC-pa2-rpm1-temp1-map1': [Math.ceil(data.FuelConsumption.data["1D3"][data.FuelConsumption.keys.temp1+'-raw'][0]*10)/10,'lt/h'],
+        'FC-pa2-rpm1-temp1-map2': [Math.ceil(data.FuelConsumption.data["1D3"][data.FuelConsumption.keys.temp1+'-raw'][1]*10)/10,'lt/h'],
+        'FC-pa2-rpm1-temp1-map3': [Math.ceil(data.FuelConsumption.data["1D3"][data.FuelConsumption.keys.temp1]*10)/10,'lt/h'],
+        'FC-pa2-rpm1-temp2-map1': [Math.ceil(data.FuelConsumption.data["1D3"][data.FuelConsumption.keys.temp2+'-raw'][0]*10)/10,'lt/h'],
+        'FC-pa2-rpm1-temp2-map2': [Math.ceil(data.FuelConsumption.data["1D3"][data.FuelConsumption.keys.temp2+'-raw'][1]*10)/10,'lt/h'],
+        'FC-pa2-rpm1-temp2-map3': [Math.ceil(data.FuelConsumption.data["1D3"][data.FuelConsumption.keys.temp2]*10)/10,'lt/h'],
+        'FC-pa2-rpm2-temp1-map1': [Math.ceil(data.FuelConsumption.data["1D4"][data.FuelConsumption.keys.temp1+'-raw'][0]*10)/10,'lt/h'],
+        'FC-pa2-rpm2-temp1-map2': [Math.ceil(data.FuelConsumption.data["1D4"][data.FuelConsumption.keys.temp1+'-raw'][1]*10)/10,'lt/h'],
+        'FC-pa2-rpm2-temp1-map3': [Math.ceil(data.FuelConsumption.data["1D4"][data.FuelConsumption.keys.temp1]*10)/10,'lt/h'],
+        'FC-pa2-rpm2-temp2-map1': [Math.ceil(data.FuelConsumption.data["1D4"][data.FuelConsumption.keys.temp2+'-raw'][0]*10)/10,'lt/h'],
+        'FC-pa2-rpm2-temp2-map2': [Math.ceil(data.FuelConsumption.data["1D4"][data.FuelConsumption.keys.temp2+'-raw'][1]*10)/10,'lt/h'],
+        'FC-pa2-rpm2-temp2-map3': [Math.ceil(data.FuelConsumption.data["1D4"][data.FuelConsumption.keys.temp2]*10)/10,'lt/h'],
 
-        'FC-pa1-rpm1-temp3-map3': data.FuelConsumption.data["2D1"][data.FuelConsumption.keys.RPM1],
-        'FC-pa1-rpm2-temp3-map3': data.FuelConsumption.data["2D1"][data.FuelConsumption.keys.RPM2],
-        'FC-pa2-rpm1-temp3-map3': data.FuelConsumption.data["2D2"][data.FuelConsumption.keys.RPM1],
-        'FC-pa2-rpm2-temp3-map3': data.FuelConsumption.data["2D2"][data.FuelConsumption.keys.RPM2],
+        'FC-pa1-rpm1-temp3-map3': [Math.ceil(data.FuelConsumption.data["2D1"][data.FuelConsumption.keys.RPM1]*10)/10,'lt/h'],
+        'FC-pa1-rpm2-temp3-map3': [Math.ceil(data.FuelConsumption.data["2D1"][data.FuelConsumption.keys.RPM2]*10)/10,'lt/h'],
+        'FC-pa2-rpm1-temp3-map3': [Math.ceil(data.FuelConsumption.data["2D2"][data.FuelConsumption.keys.RPM1]*10)/10,'lt/h'],
+        'FC-pa2-rpm2-temp3-map3': [Math.ceil(data.FuelConsumption.data["2D2"][data.FuelConsumption.keys.RPM2]*10)/10,'lt/h'],
 
-        'FC-pa1-rpm3-temp3-map3': data.FuelConsumption.data["3D"][data.FuelConsumption.keys.alt1],
-        'FC-pa2-rpm3-temp3-map3': data.FuelConsumption.data["3D"][data.FuelConsumption.keys.alt2],
+        'FC-pa1-rpm3-temp3-map3': [Math.ceil(data.FuelConsumption.data["3D"][data.FuelConsumption.keys.alt1]*10)/10,'lt/h'],
+        'FC-pa2-rpm3-temp3-map3': [Math.ceil(data.FuelConsumption.data["3D"][data.FuelConsumption.keys.alt2]*10)/10,'lt/h'],
         
-        'FC-pa3-rpm3-temp3-map3': data.FuelConsumption.result,
+        'FC-pa3-rpm3-temp3-map3': [Math.ceil(data.FuelConsumption.result*10)/10,'lt/h'],
 
     };
     
@@ -650,31 +650,32 @@ function calculateFromInputs()
     //Fuel Consumption
     //OBS OBS OBS - These are not double checked to be correct
     //Interpolation between MAP for alt1-rpm1-temp1&2
-    $('.FC-alt1-rpm1-temp1-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['FC-pa1-rpm1-temp1-map1'][0]+'\\tfrac{lt}{h} -'+takeOffLandingUIPairs['FC-pa1-rpm1-temp1-map2'][0]+'\\tfrac{lt}{h} }{'+takeOffLandingUIPairs['FC-MAP2AA'][0]+'inHg - '+takeOffLandingUIPairs['FC-MAP1AA'][0]+' inHg} \\cdot ( '+takeOffLandingUIPairs['FC-MAP3'][0]+'inHg'+takeOffLandingUIPairs['FC-MAP1AA'][0]+' inHg) + '+takeOffLandingUIPairs['FC-pa1-rpm1-temp1-map1'][0]+'\\tfrac{lt}{h}'));
-    $('.FC-alt1-rpm1-temp2-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['FC-pa1-rpm1-temp2-map1'][0]+'\\tfrac{lt}{h} -'+takeOffLandingUIPairs['FC-pa1-rpm1-temp2-map2'][0]+'\\tfrac{lt}{h} }{'+takeOffLandingUIPairs['FC-MAP2AA'][0]+'inHg - '+takeOffLandingUIPairs['FC-MAP1AA'][0]+' inHg} \\cdot ( '+takeOffLandingUIPairs['FC-MAP3'][0]+'inHg'+takeOffLandingUIPairs['FC-MAP1AA'][0]+' inHg) + '+takeOffLandingUIPairs['FC-pa1-rpm1-temp2-map1'][0]+'\\tfrac{lt}{h}'));
+    $('.FC-alt1-rpm1-temp1-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['FC-pa1-rpm1-temp1-map1'][0]+'\\tfrac{lt}{h} - '+takeOffLandingUIPairs['FC-pa1-rpm1-temp1-map2'][0]+'\\tfrac{lt}{h} }{'+takeOffLandingUIPairs['FC-MAP2AA'][0]+'inHg - '+takeOffLandingUIPairs['FC-MAP1AA'][0]+' inHg} \\cdot ( '+takeOffLandingUIPairs['FC-MAP3'][0]+'inHg - '+takeOffLandingUIPairs['FC-MAP1AA'][0]+' inHg) + '+takeOffLandingUIPairs['FC-pa1-rpm1-temp1-map1'][0]+'\\tfrac{lt}{h} = '+takeOffLandingUIPairs['FC-pa1-rpm1-temp1-map3'][0]+'\\tfrac{lt}{h}'));
+    $('.FC-alt1-rpm1-temp2-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['FC-pa1-rpm1-temp2-map1'][0]+'\\tfrac{lt}{h} - '+takeOffLandingUIPairs['FC-pa1-rpm1-temp2-map2'][0]+'\\tfrac{lt}{h} }{'+takeOffLandingUIPairs['FC-MAP2AA'][0]+'inHg - '+takeOffLandingUIPairs['FC-MAP1AA'][0]+' inHg} \\cdot ( '+takeOffLandingUIPairs['FC-MAP3'][0]+'inHg - '+takeOffLandingUIPairs['FC-MAP1AA'][0]+' inHg) + '+takeOffLandingUIPairs['FC-pa1-rpm1-temp2-map1'][0]+'\\tfrac{lt}{h} = '+takeOffLandingUIPairs['FC-pa1-rpm1-temp2-map3'][0]+'\\tfrac{lt}{h}'));
     //Interpolation between MAP for alt1-rpm2-temp1&2
-    $('.FC-alt1-rpm2-temp1-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['FC-pa1-rpm2-temp1-map1'][0]+'\\tfrac{lt}{h} -'+takeOffLandingUIPairs['FC-pa1-rpm2-temp1-map2'][0]+'\\tfrac{lt}{h} }{'+takeOffLandingUIPairs['FC-MAP2BA'][0]+'inHg - '+takeOffLandingUIPairs['FC-MAP1BA'][0]+' inHg} \\cdot ( '+takeOffLandingUIPairs['FC-MAP3'][0]+'inHg'+takeOffLandingUIPairs['FC-MAP1BA'][0]+' inHg) + '+takeOffLandingUIPairs['FC-pa1-rpm2-temp1-map1'][0]+'\\tfrac{lt}{h}'));
-    $('.FC-alt1-rpm2-temp2-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['FC-pa1-rpm2-temp2-map1'][0]+'\\tfrac{lt}{h} -'+takeOffLandingUIPairs['FC-pa1-rpm2-temp2-map2'][0]+'\\tfrac{lt}{h} }{'+takeOffLandingUIPairs['FC-MAP2BA'][0]+'inHg - '+takeOffLandingUIPairs['FC-MAP1BA'][0]+' inHg} \\cdot ( '+takeOffLandingUIPairs['FC-MAP3'][0]+'inHg'+takeOffLandingUIPairs['FC-MAP1BA'][0]+' inHg) + '+takeOffLandingUIPairs['FC-pa1-rpm2-temp2-map1'][0]+'\\tfrac{lt}{h}'));
+    $('.FC-alt1-rpm2-temp1-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['FC-pa1-rpm2-temp1-map1'][0]+'\\tfrac{lt}{h} - '+takeOffLandingUIPairs['FC-pa1-rpm2-temp1-map2'][0]+'\\tfrac{lt}{h} }{'+takeOffLandingUIPairs['FC-MAP2BA'][0]+'inHg - '+takeOffLandingUIPairs['FC-MAP1BA'][0]+' inHg} \\cdot ( '+takeOffLandingUIPairs['FC-MAP3'][0]+'inHg - '+takeOffLandingUIPairs['FC-MAP1BA'][0]+' inHg) + '+takeOffLandingUIPairs['FC-pa1-rpm2-temp1-map1'][0]+'\\tfrac{lt}{h} = '+takeOffLandingUIPairs['FC-pa1-rpm2-temp1-map3'][0]+'\\tfrac{lt}{h}'));
+    $('.FC-alt1-rpm2-temp2-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['FC-pa1-rpm2-temp2-map1'][0]+'\\tfrac{lt}{h} - '+takeOffLandingUIPairs['FC-pa1-rpm2-temp2-map2'][0]+'\\tfrac{lt}{h} }{'+takeOffLandingUIPairs['FC-MAP2BA'][0]+'inHg - '+takeOffLandingUIPairs['FC-MAP1BA'][0]+' inHg} \\cdot ( '+takeOffLandingUIPairs['FC-MAP3'][0]+'inHg - '+takeOffLandingUIPairs['FC-MAP1BA'][0]+' inHg) + '+takeOffLandingUIPairs['FC-pa1-rpm2-temp2-map1'][0]+'\\tfrac{lt}{h} = '+takeOffLandingUIPairs['FC-pa1-rpm2-temp2-map3'][0]+'\\tfrac{lt}{h}'));
     //Interpolation between MAP for alt2-rpm1-temp1&2
-    $('.FC-alt2-rpm1-temp1-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['FC-pa2-rpm1-temp1-map1'][0]+'\\tfrac{lt}{h} -'+takeOffLandingUIPairs['FC-pa2-rpm1-temp1-map2'][0]+'\\tfrac{lt}{h} }{'+takeOffLandingUIPairs['FC-MAP2AA'][0]+'inHg - '+takeOffLandingUIPairs['FC-MAP1AB'][0]+' inHg} \\cdot ( '+takeOffLandingUIPairs['FC-MAP3'][0]+'inHg'+takeOffLandingUIPairs['FC-MAP1AB'][0]+' inHg) + '+takeOffLandingUIPairs['FC-pa2-rpm1-temp1-map1'][0]+'\\tfrac{lt}{h}'));
-    $('.FC-alt2-rpm1-temp2-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['FC-pa2-rpm1-temp2-map1'][0]+'\\tfrac{lt}{h} -'+takeOffLandingUIPairs['FC-pa2-rpm1-temp2-map2'][0]+'\\tfrac{lt}{h} }{'+takeOffLandingUIPairs['FC-MAP2AB'][0]+'inHg - '+takeOffLandingUIPairs['FC-MAP1AB'][0]+' inHg} \\cdot ( '+takeOffLandingUIPairs['FC-MAP3'][0]+'inHg'+takeOffLandingUIPairs['FC-MAP1AB'][0]+' inHg) + '+takeOffLandingUIPairs['FC-pa2-rpm1-temp2-map1'][0]+'\\tfrac{lt}{h}'));
+    $('.FC-alt2-rpm1-temp1-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['FC-pa2-rpm1-temp1-map1'][0]+'\\tfrac{lt}{h} - '+takeOffLandingUIPairs['FC-pa2-rpm1-temp1-map2'][0]+'\\tfrac{lt}{h} }{'+takeOffLandingUIPairs['FC-MAP2AA'][0]+'inHg - '+takeOffLandingUIPairs['FC-MAP1AB'][0]+' inHg} \\cdot ( '+takeOffLandingUIPairs['FC-MAP3'][0]+'inHg - '+takeOffLandingUIPairs['FC-MAP1AB'][0]+' inHg) + '+takeOffLandingUIPairs['FC-pa2-rpm1-temp1-map1'][0]+'\\tfrac{lt}{h} = '+takeOffLandingUIPairs['FC-pa2-rpm1-temp1-map3'][0]+'\\tfrac{lt}{h}'));
+    $('.FC-alt2-rpm1-temp2-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['FC-pa2-rpm1-temp2-map1'][0]+'\\tfrac{lt}{h} - '+takeOffLandingUIPairs['FC-pa2-rpm1-temp2-map2'][0]+'\\tfrac{lt}{h} }{'+takeOffLandingUIPairs['FC-MAP2AB'][0]+'inHg - '+takeOffLandingUIPairs['FC-MAP1AB'][0]+' inHg} \\cdot ( '+takeOffLandingUIPairs['FC-MAP3'][0]+'inHg - '+takeOffLandingUIPairs['FC-MAP1AB'][0]+' inHg) + '+takeOffLandingUIPairs['FC-pa2-rpm1-temp2-map1'][0]+'\\tfrac{lt}{h} = '+takeOffLandingUIPairs['FC-pa2-rpm1-temp2-map3'][0]+'\\tfrac{lt}{h}'));
     //Interpolation between MAP for alt2-rpm2-temp1&2
-    $('.FC-alt2-rpm2-temp1-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['FC-pa2-rpm2-temp1-map1'][0]+'\\tfrac{lt}{h} -'+takeOffLandingUIPairs['FC-pa2-rpm2-temp1-map2'][0]+'\\tfrac{lt}{h} }{'+takeOffLandingUIPairs['FC-MAP2BA'][0]+'inHg - '+takeOffLandingUIPairs['FC-MAP1BB'][0]+' inHg} \\cdot ( '+takeOffLandingUIPairs['FC-MAP3'][0]+'inHg'+takeOffLandingUIPairs['FC-MAP1BB'][0]+' inHg) + '+takeOffLandingUIPairs['FC-pa2-rpm2-temp1-map1'][0]+'\\tfrac{lt}{h}'));
-    $('.FC-alt2-rpm2-temp2-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['FC-pa2-rpm2-temp2-map1'][0]+'\\tfrac{lt}{h} -'+takeOffLandingUIPairs['FC-pa2-rpm2-temp2-map2'][0]+'\\tfrac{lt}{h} }{'+takeOffLandingUIPairs['FC-MAP2BB'][0]+'inHg - '+takeOffLandingUIPairs['FC-MAP1BB'][0]+' inHg} \\cdot ( '+takeOffLandingUIPairs['FC-MAP3'][0]+'inHg'+takeOffLandingUIPairs['FC-MAP1BB'][0]+' inHg) + '+takeOffLandingUIPairs['FC-pa2-rpm2-temp2-map1'][0]+'\\tfrac{lt}{h}'));
+    $('.FC-alt2-rpm2-temp1-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['FC-pa2-rpm2-temp1-map1'][0]+'\\tfrac{lt}{h} - '+takeOffLandingUIPairs['FC-pa2-rpm2-temp1-map2'][0]+'\\tfrac{lt}{h} }{'+takeOffLandingUIPairs['FC-MAP2BA'][0]+'inHg - '+takeOffLandingUIPairs['FC-MAP1BB'][0]+' inHg} \\cdot ( '+takeOffLandingUIPairs['FC-MAP3'][0]+'inHg - '+takeOffLandingUIPairs['FC-MAP1BB'][0]+' inHg) + '+takeOffLandingUIPairs['FC-pa2-rpm2-temp1-map1'][0]+'\\tfrac{lt}{h} = '+takeOffLandingUIPairs['FC-pa2-rpm2-temp1-map3'][0]+'\\tfrac{lt}{h}'));
+    $('.FC-alt2-rpm2-temp2-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['FC-pa2-rpm2-temp2-map1'][0]+'\\tfrac{lt}{h} - '+takeOffLandingUIPairs['FC-pa2-rpm2-temp2-map2'][0]+'\\tfrac{lt}{h} }{'+takeOffLandingUIPairs['FC-MAP2BB'][0]+'inHg - '+takeOffLandingUIPairs['FC-MAP1BB'][0]+' inHg} \\cdot ( '+takeOffLandingUIPairs['FC-MAP3'][0]+'inHg - '+takeOffLandingUIPairs['FC-MAP1BB'][0]+' inHg) + '+takeOffLandingUIPairs['FC-pa2-rpm2-temp2-map1'][0]+'\\tfrac{lt}{h} = '+takeOffLandingUIPairs['FC-pa2-rpm2-temp2-map3'][0]+'\\tfrac{lt}{h}'));
 
     //Interpolation between temp for alt1-rpm1&2
-    $('.FC-alt1-rpm1-temp3-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['FC-pa1-rpm1-temp1-map3'][0]+'\\tfrac{lt}{h} -'+takeOffLandingUIPairs['FC-pa1-rpm1-temp2-map3'][0]+'\\tfrac{lt}{h} }{'+takeOffLandingUIPairs['FC-temp2'][0]+'^\\circ C - '+takeOffLandingUIPairs['FC-temp1'][0]+' ^\\circ C} \\cdot ( '+takeOffLandingUIPairs['FC-temp2'][0]+'^\\circ C'+takeOffLandingUIPairs['FC-temp3'][0]+' ^\\circ C) + '+takeOffLandingUIPairs['FC-pa1-rpm1-temp2-map3'][0]+'\\tfrac{lt}{h}'));
-    $('.FC-alt1-rpm2-temp3-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['FC-pa1-rpm2-temp1-map3'][0]+'\\tfrac{lt}{h} -'+takeOffLandingUIPairs['FC-pa1-rpm2-temp2-map3'][0]+'\\tfrac{lt}{h} }{'+takeOffLandingUIPairs['FC-temp2'][0]+'^\\circ C - '+takeOffLandingUIPairs['FC-temp1'][0]+' ^\\circ C} \\cdot ( '+takeOffLandingUIPairs['FC-temp2'][0]+'^\\circ C'+takeOffLandingUIPairs['FC-temp3'][0]+' ^\\circ C) + '+takeOffLandingUIPairs['FC-pa1-rpm2-temp2-map3'][0]+'\\tfrac{lt}{h}'));
-    //Interpolation between temp for alt2-rpm1&2
-    $('.FC-alt2-rpm1-temp3-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['FC-pa2-rpm1-temp1-map3'][0]+'\\tfrac{lt}{h} -'+takeOffLandingUIPairs['FC-pa2-rpm1-temp2-map3'][0]+'\\tfrac{lt}{h} }{'+takeOffLandingUIPairs['FC-temp2'][0]+'^\\circ C - '+takeOffLandingUIPairs['FC-temp1'][0]+' ^\\circ C} \\cdot ( '+takeOffLandingUIPairs['FC-temp2'][0]+'^\\circ C'+takeOffLandingUIPairs['FC-temp3'][0]+' ^\\circ C) + '+takeOffLandingUIPairs['FC-pa2-rpm1-temp2-map3'][0]+'\\tfrac{lt}{h}'));
-    $('.FC-alt2-rpm2-temp3-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['FC-pa2-rpm2-temp1-map3'][0]+'\\tfrac{lt}{h} -'+takeOffLandingUIPairs['FC-pa2-rpm2-temp2-map3'][0]+'\\tfrac{lt}{h} }{'+takeOffLandingUIPairs['FC-temp2'][0]+'^\\circ C - '+takeOffLandingUIPairs['FC-temp1'][0]+' ^\\circ C} \\cdot ( '+takeOffLandingUIPairs['FC-temp2'][0]+'^\\circ C'+takeOffLandingUIPairs['FC-temp3'][0]+' ^\\circ C) + '+takeOffLandingUIPairs['FC-pa2-rpm2-temp2-map3'][0]+'\\tfrac{lt}{h}'));
+    $('.FC-alt1-rpm1-temp3-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['FC-pa1-rpm1-temp1-map3'][0]+'\\tfrac{lt}{h} - '+takeOffLandingUIPairs['FC-pa1-rpm1-temp2-map3'][0]+'\\tfrac{lt}{h} }{'+takeOffLandingUIPairs['FC-temp2'][0]+'^\\circ C - '+takeOffLandingUIPairs['FC-temp1'][0]+' ^\\circ C} \\cdot ( '+takeOffLandingUIPairs['FC-temp2'][0]+'^\\circ C - '+takeOffLandingUIPairs['FC-temp3'][0]+' ^\\circ C) + '+takeOffLandingUIPairs['FC-pa1-rpm1-temp2-map3'][0]+'\\tfrac{lt}{h} = '+takeOffLandingUIPairs['FC-pa1-rpm1-temp3-map3'][0]+'\\tfrac{lt}{h}'));
+    $('.FC-alt1-rpm2--map3-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['FC-pa1-rpm2-temp1-map3'][0]+'\\tfrac{lt}{h} - '+takeOffLandingUIPairs['FC-pa1-rpm2-temp2-map3'][0]+'\\tfrac{lt}{h} }{'+takeOffLandingUIPairs['FC-temp2'][0]+'^\\circ C - '+takeOffLandingUIPairs['FC-temp1'][0]+' ^\\circ C} \\cdot ( '+takeOffLandingUIPairs['FC-temp2'][0]+'^\\circ C - '+takeOffLandingUIPairs['FC-temp3'][0]+' ^\\circ C) + '+takeOffLandingUIPairs['FC-pa1-rpm2-temp2-map3'][0]+'\\tfrac{lt}{h} = '+takeOffLandingUIPairs['FC-pa1-rpm2-temp3-map3'][0]+'\\tfrac{lt}{h}'));
+    //Interpolation b-map3etween temp for alt2-rpm1&2
+    $('.FC-alt2-rpm1-temp3-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['FC-pa2-rpm1-temp1-map3'][0]+'\\tfrac{lt}{h} - '+takeOffLandingUIPairs['FC-pa2-rpm1-temp2-map3'][0]+'\\tfrac{lt}{h} }{'+takeOffLandingUIPairs['FC-temp2'][0]+'^\\circ C - '+takeOffLandingUIPairs['FC-temp1'][0]+' ^\\circ C} \\cdot ( '+takeOffLandingUIPairs['FC-temp2'][0]+'^\\circ C - '+takeOffLandingUIPairs['FC-temp3'][0]+' ^\\circ C) + '+takeOffLandingUIPairs['FC-pa2-rpm1-temp2-map3'][0]+'\\tfrac{lt}{h} = '+takeOffLandingUIPairs['FC-pa2-rpm1-temp3-map3'][0]+'\\tfrac{lt}{h}'));
+    $('.FC-alt2-rpm2-temp3-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['FC-pa2-rpm2-temp1-map3'][0]+'\\tfrac{lt}{h} - '+takeOffLandingUIPairs['FC-pa2-rpm2-temp2-map3'][0]+'\\tfrac{lt}{h} }{'+takeOffLandingUIPairs['FC-temp2'][0]+'^\\circ C - '+takeOffLandingUIPairs['FC-temp1'][0]+' ^\\circ C} \\cdot ( '+takeOffLandingUIPairs['FC-temp2'][0]+'^\\circ C - '+takeOffLandingUIPairs['FC-temp3'][0]+' ^\\circ C) + '+takeOffLandingUIPairs['FC-pa2-rpm2-temp2-map3'][0]+'\\tfrac{lt}{h} = '+takeOffLandingUIPairs['FC-pa2-rpm2-temp3-map3'][0]+'\\tfrac{lt}{h}'));
 
     //Interpolation between rpm for alt1&2
-    $('.FC-alt1-rpm3-temp3-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['FC-pa1-rpm2-temp3-map3'][0]+'\\tfrac{lt}{h} -'+takeOffLandingUIPairs['FC-pa1-rpm1-temp3-map3'][0]+'\\tfrac{lt}{h} }{'+takeOffLandingUIPairs['FC-rpm2'][0]+'RPM - '+takeOffLandingUIPairs['FC-rpm1'][0]+' RPM} \\cdot ( '+takeOffLandingUIPairs['FC-rpm3'][0]+'RPM'+takeOffLandingUIPairs['FC-rpm1'][0]+' RPM) + '+takeOffLandingUIPairs['FC-pa1-rpm1-temp3-map3'][0]+'\\tfrac{lt}{h}'));
-    $('.FC-alt2-rpm3-temp3-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['FC-pa1-rpm2-temp3-map3'][0]+'\\tfrac{lt}{h} -'+takeOffLandingUIPairs['FC-pa1-rpm1-temp3-map3'][0]+'\\tfrac{lt}{h} }{'+takeOffLandingUIPairs['FC-rpm2'][0]+'RPM - '+takeOffLandingUIPairs['FC-rpm1'][0]+' RPM} \\cdot ( '+takeOffLandingUIPairs['FC-rpm3'][0]+'RPM'+takeOffLandingUIPairs['FC-rpm1'][0]+' RPM) + '+takeOffLandingUIPairs['FC-pa1-rpm1-temp3-map3'][0]+'\\tfrac{lt}{h}'));
+    $('.FC-alt1-rpm3-temp3-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['FC-pa1-rpm2-temp3-map3'][0]+'\\tfrac{lt}{h} - '+takeOffLandingUIPairs['FC-pa1-rpm1-temp3-map3'][0]+'\\tfrac{lt}{h} }{'+takeOffLandingUIPairs['FC-RPM2'][0]+'RPM - '+takeOffLandingUIPairs['FC-RPM1'][0]+' RPM} \\cdot ( '+takeOffLandingUIPairs['FC-RPM3'][0]+'RPM - '+takeOffLandingUIPairs['FC-RPM1'][0]+' RPM) + '+takeOffLandingUIPairs['FC-pa1-rpm1-temp3-map3'][0]+'\\tfrac{lt}{h} = '+takeOffLandingUIPairs['FC-pa1-rpm3-temp3-map3'][0]+'\\tfrac{lt}{h}'));
+    $('.FC-alt2-rpm3-temp3-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['FC-pa1-rpm2-temp3-map3'][0]+'\\tfrac{lt}{h} - '+takeOffLandingUIPairs['FC-pa1-rpm1-temp3-map3'][0]+'\\tfrac{lt}{h} }{'+takeOffLandingUIPairs['FC-RPM2'][0]+'RPM - '+takeOffLandingUIPairs['FC-RPM1'][0]+' RPM} \\cdot ( '+takeOffLandingUIPairs['FC-RPM3'][0]+'RPM - '+takeOffLandingUIPairs['FC-RPM1'][0]+' RPM) + '+takeOffLandingUIPairs['FC-pa1-rpm1-temp3-map3'][0]+'\\tfrac{lt}{h} = '+takeOffLandingUIPairs['FC-pa2-rpm3-temp3-map3'][0]+'\\tfrac{lt}{h}'));
 
     //Interpolation between alt
-    $('.FC-alt3-rpm3-temp3-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['FC-pa1-rpm3-temp3-map3'][0]+'\\tfrac{lt}{h} -'+takeOffLandingUIPairs['FC-pa2-rpm3-temp3-map3'][0]+'\\tfrac{lt}{h} }{'+takeOffLandingUIPairs['FC-alt2'][0]+'ft - '+takeOffLandingUIPairs['FC-alt1'][0]+' ft} \\cdot ( '+takeOffLandingUIPairs['FC-alt2'][0]+'ft'+takeOffLandingUIPairs['FC-alt3'][0]+' RPM) + '+takeOffLandingUIPairs['FC-pa2-rpm3-temp3-map3'][0]+'\\tfrac{lt}{h}'));
+    $('.FC-alt3-rpm3-temp3-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['FC-pa1-rpm3-temp3-map3'][0]+'\\tfrac{lt}{h} - '+takeOffLandingUIPairs['FC-pa2-rpm3-temp3-map3'][0]+'\\tfrac{lt}{h} }{'+takeOffLandingUIPairs['FC-alt2'][0]+'ft - '+takeOffLandingUIPairs['FC-alt1'][0]+' ft} \\cdot ( '+takeOffLandingUIPairs['FC-alt2'][0]+'ft - '+takeOffLandingUIPairs['FC-alt3'][0]+' RPM) + '+takeOffLandingUIPairs['FC-pa2-rpm3-temp3-map3'][0]+'\\tfrac{lt}{h} = '+takeOffLandingUIPairs['FC-pa3-rpm3-temp3-map3'][0]+'\\tfrac{lt}{h}'));
+    
 }
 
 function floorOrCeil(value)
