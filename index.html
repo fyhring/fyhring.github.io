@@ -549,7 +549,32 @@
                                     <td class="angle-vx">-</td>
                             </tr>
                     </table>
-                </div>   
+                </div>  
+                <h3>Cruise data</h3> 
+                <div class="row">
+                    <table class="table table-borderless">
+                        <tr>
+                            <td>
+                                Fuel Consumption per engine @ cruise
+                            </td>
+                            <td width="10%" class="fuelConsumption1E">-</td>
+                            <td>
+                                Fuel Consumption both engines @ cruise
+                            </td>
+                            <td width="10%" class="fuelConsumption2E">-</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Power Setting @ cruise
+                            </td>
+                            <td width="10%" class="powerSetting">-</td>
+                            <td>
+                                KTAS @ cruise
+                            </td>
+                            <td width="10%" class="KTAS">-</td>
+                        </tr>
+                    </table>
+                </div>
             </form>
         </div>
         <div class="tab-pane fade" id="resultsTab" role="tabpanel">
@@ -1839,6 +1864,30 @@
                 </div>
             </div>
             <!-- Space for more data... -->
+            <hr>
+            <div class="row" id="cruise">
+                <div class="col-sm-6">
+                    <h4>Fuel Consumption</h4>
+                    <div class="results-weight-sector">
+                        <table class="table table-sm">
+                            <thead>
+                                <th>MAP</th>
+                                <th>F.C.</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="FC-MAP1AA">MAP1AA</td>
+                                    <td>F.C.1</td>
+                                </tr>
+                                <tr>
+                                    <td class="FC-MAP2AA">MAP2AA</td>
+                                    <td>F.C.2</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <div class="container">
