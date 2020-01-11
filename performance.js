@@ -112,6 +112,9 @@ function calculateFromInputs()
     var data = calculateAll(pressureElevation, pressureAltitude, pressureMSA, tempIsaDeviation, weightInput);
     console.log(data);
 
+    var rocAltitude = toTrueAltitude(getROCAltitude(pressureMSA, pressureAltitude, pressureElevation)),
+        rocPressureAlt = toPressureAltitude(rocAltitude);
+
     data.env = {
         qnh: pressureInput,
         temp: temperatureInput,
@@ -121,8 +124,8 @@ function calculateFromInputs()
         pressureElevation: pressureElevation,
         cruiseAlt: cruiseInput,
         cruisePressureAltitude: pressureAltitude,
-        rocAlt: null,
-        rocPressureAlt: data.rocVySe.keys.alt3
+        rocAlt: rocAltitude,
+        rocPressureAlt: rocPressureAlt
     };
 
     var temperatures = Object.keys(data.takeoff.uncorrectedGround.data['1D1']);
@@ -1197,22 +1200,22 @@ function calculateToROCVx(pa, isaDeviation, tom) {
 }
 
 function calculateRocVy(pa, isaDeviation, tom) {
-    var sfcTemp = isaDeviation + 15
+    var sfcTemp = Math.round((isaDeviation + 15) * 10) / 10;
     return interpolate3D(pa, sfcTemp, tom, ROCVyMatrix)
 }
 
 function calculateRocVx(pa, isaDeviation, tom) {
-    var sfcTemp = isaDeviation + 15
+    var sfcTemp = Math.round((isaDeviation + 15) * 10) / 10;
     return interpolate3D(pa, sfcTemp, tom, ROCVxMatrix)
 }
 
 function calculateRocVySe(pa, isaDeviation, tom) {
-    var sfcTemp = isaDeviation + 15;
+    var sfcTemp = Math.round((isaDeviation + 15) * 10) / 10;
     return interpolate3D(pa, sfcTemp, tom, ROCVySeMatrix);
 }
 
 function calculateRocVxSe(pa, isaDeviation, tom) {
-    var sfcTemp = isaDeviation + 15;
+    var sfcTemp = Math.round((isaDeviation + 15) * 10) / 10;
     return interpolate3D(pa, sfcTemp, tom, ROCVxSeMatrix)
 }
 
@@ -1517,12 +1520,20 @@ function landingCorrectedCalculations(pa, isaDeviation, tom, slope) {
     };
 }
 
-function calculateAll(pe, pa, msa, isaDeviation, tom, useTwoThirds)
+function getROCAltitude(msa, pa, pe)
 {
     var rocAltitude = msa;
     if (!useMSAROC) {
         rocAltitude = (pa - pe) / 3 * 2 + pe;
     }
+
+    return rocAltitude;
+}
+
+function calculateAll(pe, pa, msa, isaDeviation, tom, useTwoThirds)
+{
+    var rocAltitude = getROCAltitude(msa, pa, pe);
+    var rocISADeviation = isaDeviation - (1.98 * (rocAltitude / 1000));
 
     var MAP = 24,
         RPM = 2100;
@@ -1550,28 +1561,28 @@ function calculateAll(pe, pa, msa, isaDeviation, tom, useTwoThirds)
         'toAngleVx': calculateAngle(calculateToGradientVx(rocAltitude,isaDeviation,tom).result),
         //Enroute Vy (flaps&gear up)
         'Vy': calculateVy(rocAltitude, isaDeviation,tom),
-        'rocVy': calculateRocVy(rocAltitude, isaDeviation, tom),
+        'rocVy': calculateRocVy(rocAltitude, rocISADeviation, tom),
         'gradVy': calculateGradientVy(rocAltitude, isaDeviation,tom),
         'angleVy': calculateAngle(calculateGradientVy(rocAltitude,isaDeviation,tom).result),
         //Enroute Vx (flaps up)
         'Vx': calculateVx(rocAltitude, isaDeviation, tom),
-        'rocVx': calculateRocVx(rocAltitude, isaDeviation, tom),
+        'rocVx': calculateRocVx(rocAltitude, rocISADeviation, tom),
         'gradVx': calculateGradientVx(rocAltitude, isaDeviation,tom),
         'angleVx': calculateAngle(calculateGradientVx(rocAltitude,isaDeviation,tom).result),
         //VySe (one engine inoperative, and feathered, flaps up)
         'VySe': calculateVySe(rocAltitude, isaDeviation, tom),
-        'rocVySe': calculateRocVySe(rocAltitude, isaDeviation, tom, true),
+        'rocVySe': calculateRocVySe(rocAltitude, rocISADeviation, tom, true),
         'gradVySe': calculateGradientVySe(rocAltitude,isaDeviation,tom),
         'angleVySe': calculateAngle(calculateGradientVySe(rocAltitude,isaDeviation,tom).result),
         //VxSe (one engine inoperative, and feathered, flaps up)
         'VxSe': calculateVxSe(rocAltitude, isaDeviation, tom),
-        'rocVxSe': calculateRocVxSe(rocAltitude, isaDeviation, tom),
+        'rocVxSe': calculateRocVxSe(rocAltitude, rocISADeviation, tom),
         'gradVxSe': calculateGradientVxSe(rocAltitude, isaDeviation, tom),
         'angleVxSe': calculateAngle(calculateGradientVxSe(rocAltitude,isaDeviation,tom).result),
 
         //Ceilings (one engine inoperative, and feathered, flaps up)
-        'OEIserviceCeiling': calculateOEIceiling(isaDeviation,tom),
-        'OEIabsoluteCeiling': calculateOEIabsoluteCeiling(isaDeviation,tom)
+        'OEIserviceCeiling': calculateOEIceiling(rocISADeviation,tom),
+        'OEIabsoluteCeiling': calculateOEIabsoluteCeiling(rocISADeviation,tom)
     };
 }
 
