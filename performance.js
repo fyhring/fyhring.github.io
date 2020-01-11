@@ -187,6 +187,15 @@ function calculateFromInputs()
         'oei-roc-vyse-mass1': [data.rocVySe.keys.mass1, 'kg'],
         'oei-roc-vyse-mass2': [data.rocVySe.keys.mass2, 'kg'],
         'oei-roc-vyse-mass3': [data.rocVySe.keys.mass3, 'kg'],
+        'service-ceiling-roc-temp1': [data.OEIserviceCeiling.data[2][2].keys.temp1, '&deg;C'],
+        'service-ceiling-roc-temp2': [data.OEIserviceCeiling.data[2][2].keys.temp2, '&deg;C'],
+        'service-ceiling-roc-temp3': [data.OEIserviceCeiling.data[2][2].keys.temp3, '&deg;C'],
+        'service-ceiling-roc-alt1': [data.OEIserviceCeiling.data[2][2].keys.alt1, 'ft'],
+        'service-ceiling-roc-alt2': [data.OEIserviceCeiling.data[2][2].keys.alt2, 'ft'],
+        'service-ceiling-roc-alt3': [Math.round(data.OEIserviceCeiling.data[2][2].keys.alt3), 'ft'],
+        'service-ceiling-roc-mass1': [data.OEIserviceCeiling.data[2][2].keys.mass1, 'kg'],
+        'service-ceiling-roc-mass2': [data.OEIserviceCeiling.data[2][2].keys.mass2, 'kg'],
+        'service-ceiling-roc-mass3': [data.OEIserviceCeiling.data[2][2].keys.mass3, 'kg'],
         'roc-vy-temp1': [data.rocVy.keys.temp1, '&deg;C'],
         'roc-vy-temp2': [data.rocVy.keys.temp2, '&deg;C'],
         'roc-vy-temp3': [data.rocVy.keys.temp3, '&deg;C'],
@@ -362,12 +371,38 @@ function calculateFromInputs()
 
         // OEI Service Ceiling
         'oei-service-ceiling-alt1-alt': [Math.round(data.OEIserviceCeiling.data[0][0]), 'ft'],
-        'oei-service-ceiling-alt1-roc': [Math.round(data.OEIserviceCeiling.data[0][1]), 'fpm'],
+        'oei-service-ceiling-alt1-roc': [Math.floor(data.OEIserviceCeiling.data[0][1]), 'fpm'],
         'oei-service-ceiling-alt2-alt': [Math.round(data.OEIserviceCeiling.data[1][0]), 'ft'],
-        'oei-service-ceiling-alt2-roc': [Math.round(data.OEIserviceCeiling.data[1][1]), 'fpm'],
+        'oei-service-ceiling-alt2-roc': [Math.floor(data.OEIserviceCeiling.data[1][1]), 'fpm'],
         'oei-service-ceiling-alt3-alt': [Math.round(data.OEIserviceCeiling.data[2][0]), 'ft'],
-        'oei-service-ceiling-alt3-roc': [Math.round(data.OEIserviceCeiling.data[2][1]), 'fpm'],
+        'oei-service-ceiling-alt3-roc': [Math.floor(data.OEIserviceCeiling.data[2][1]), 'fpm'],
+        'oei-service-ceiling-alt4-alt': [Math.round(data.OEIserviceCeiling.data[3][0]), 'ft'],
+        'oei-service-ceiling-alt4-roc': [Math.floor(data.OEIserviceCeiling.data[3][1]), 'fpm'],
+        'oei-service-ceiling-alt5-alt': [Math.round(data.OEIserviceCeiling.data[4][0]), 'ft'],
+        'oei-service-ceiling-alt5-roc': [Math.floor(data.OEIserviceCeiling.data[4][1]), 'fpm'],
 
+        'service-ceiling-pressure-alt': [data.OEIserviceCeiling.pressureCeiling, 'ft'],
+        'service-ceiling-pressure-correction': [data.OEIserviceCeiling.pressureCorrection > 0 ? '+'+ data.OEIserviceCeiling.pressureCorrection : data.OEIserviceCeiling.pressureCorrection, 'ft'],
+        'service-ceiling-true-alt': [data.OEIserviceCeiling.ceiling, 'ft'],
+
+        // OEI Service Ceiling - ROC
+        'service-ceiling-roc-w1-alt1-temp1': [Math.floor(data.OEIserviceCeiling.data[2][2].data['1D1'][temperatures[0]+'-raw'][1]), 'fpm'],
+        'service-ceiling-roc-w1-alt1-temp2': [Math.floor(data.OEIserviceCeiling.data[2][2].data['1D1'][temperatures[1]+'-raw'][1]), 'fpm'],
+        'service-ceiling-roc-w1-alt2-temp1': [Math.floor(data.OEIserviceCeiling.data[2][2].data['1D1'][temperatures[0]+'-raw'][0]), 'fpm'],
+        'service-ceiling-roc-w1-alt2-temp2': [Math.floor(data.OEIserviceCeiling.data[2][2].data['1D1'][temperatures[1]+'-raw'][0]), 'fpm'],
+        'service-ceiling-roc-w1-alt3-temp1': [Math.floor(data.OEIserviceCeiling.data[2][2].data['1D1'][temperatures[0]]), 'fpm'],
+        'service-ceiling-roc-w1-alt3-temp2': [Math.floor(data.OEIserviceCeiling.data[2][2].data['1D1'][temperatures[1]]), 'fpm'],
+        'service-ceiling-roc-w1-alt3-temp3': [Math.floor(data.OEIserviceCeiling.data[2][2].data['2D'][weights[1]]), 'fpm'],
+
+        'service-ceiling-roc-w2-alt1-temp1': [Math.floor(data.OEIserviceCeiling.data[2][2].data['1D2'][temperatures[0]+'-raw'][1]), 'fpm'],
+        'service-ceiling-roc-w2-alt1-temp2': [Math.floor(data.OEIserviceCeiling.data[2][2].data['1D2'][temperatures[1]+'-raw'][1]), 'fpm'],
+        'service-ceiling-roc-w2-alt2-temp1': [Math.floor(data.OEIserviceCeiling.data[2][2].data['1D2'][temperatures[0]+'-raw'][0]), 'fpm'],
+        'service-ceiling-roc-w2-alt2-temp2': [Math.floor(data.OEIserviceCeiling.data[2][2].data['1D2'][temperatures[1]+'-raw'][0]), 'fpm'],
+        'service-ceiling-roc-w2-alt3-temp1': [Math.floor(data.OEIserviceCeiling.data[2][2].data['1D2'][temperatures[0]]), 'fpm'],
+        'service-ceiling-roc-w2-alt3-temp2': [Math.floor(data.OEIserviceCeiling.data[2][2].data['1D2'][temperatures[1]]), 'fpm'],
+        'service-ceiling-roc-w2-alt3-temp3': [Math.floor(data.OEIserviceCeiling.data[2][2].data['2D'][weights[0]]), 'fpm'],
+
+        'service-ceiling-roc-w3-alt3-temp3': [Math.floor(data.OEIserviceCeiling.data[2][2].data['3D']['result']), 'fpm'],
 
     };
     
@@ -604,22 +639,30 @@ function getWindComponents()
     };
 }
 
-function toTrueAltitude(pa) {
-    return pa + ((pressureInput - STD_PRESSURE) * STD_HECTOPASCAL_HEIGHT)
+function getPressureCorrection()
+{
+    return ((pressureInput - STD_PRESSURE) * STD_HECTOPASCAL_HEIGHT);
 }
 
-function toPressureAltitude(ta) {
-    return ta - ((pressureInput - STD_PRESSURE) * STD_HECTOPASCAL_HEIGHT)
+function toTrueAltitude(pa)
+{
+    return pa + getPressureCorrection();
 }
 
-function toDegrees (angle) {
+function toPressureAltitude(ta)
+{
+    return ta - getPressureCorrection();
+}
+
+function toDegrees(angle)
+{
     return angle * (180 / Math.PI);
 }
 
-function toRadians (angle) {
+function toRadians(angle)
+{
     return angle * (Math.PI / 180);
 }
-
 
 function parseIntOrFloat(n)
 {
@@ -1166,14 +1209,18 @@ function calculateOEIceiling(isaDeviation, tom) {
         if (serviceCeiling % 100 === 0) {
             interpolations.push([serviceCeiling, lastInterpolation.result]);
 
-            if (breakLoopNextModulusIteration) {
+            if (breakLoopNextModulusIteration === 2) {
                 break;
+            }
+
+            if (breakLoopNextModulusIteration !== false) {
+                breakLoopNextModulusIteration++;
             }
         }
 
         if (fpm >= 50) {
-            if (!breakLoopNextModulusIteration) {
-                breakLoopNextModulusIteration = true;
+            if (breakLoopNextModulusIteration === false) {
+                breakLoopNextModulusIteration = 1;
                 interpolations.push([serviceCeiling, lastInterpolation.result, lastInterpolation]);
             }
         }
@@ -1184,17 +1231,18 @@ function calculateOEIceiling(isaDeviation, tom) {
     interpolations = interpolations.reverse();
 
     // Set the service ceiling to be the correct one.
-    serviceCeiling = interpolations[1][0];
+    serviceCeiling = interpolations[2][0];
     
     //convert pressure altitude to true altitude
     var trueServiceCeiling = toTrueAltitude(serviceCeiling);
 
     // Flag if result is outside dataset.
     var isTopOfData = (serviceCeiling == 7000);
-    
+
     return {
         'ceiling': trueServiceCeiling,
         'pressureCeiling': serviceCeiling,
+        'pressureCorrection': getPressureCorrection(),
         'isTopOfData': isTopOfData,
         'data': interpolations
     };
