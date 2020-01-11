@@ -390,7 +390,7 @@ function calculateFromInputs()
         'oei-service-ceiling-alt3-alt': [Math.round(data.OEIserviceCeiling.data[2][0]), 'ft'],
         'oei-service-ceiling-alt3-roc': [Math.round(data.OEIserviceCeiling.data[2][1]), 'fpm'],
 
-        //Fuel Consumption  -   Contains duplicate data, to be optimized later
+        //Fuel Consumption
         'FC-pa1-rpm1-temp1-map1': data.FuelConsumption.data["1D1"][data.FuelConsumption.keys.temp1+'-raw'][0],
         'FC-pa1-rpm1-temp1-map2': data.FuelConsumption.data["1D1"][data.FuelConsumption.keys.temp1+'-raw'][1],
         'FC-pa1-rpm1-temp1-map3': data.FuelConsumption.data["1D1"][data.FuelConsumption.keys.temp1],
@@ -416,29 +416,13 @@ function calculateFromInputs()
         'FC-pa2-rpm2-temp2-map2': data.FuelConsumption.data["1D4"][data.FuelConsumption.keys.temp2+'-raw'][1],
         'FC-pa2-rpm2-temp2-map3': data.FuelConsumption.data["1D4"][data.FuelConsumption.keys.temp2],
 
-        'FC-pa1-rpm1-temp1-map3': data.FuelConsumption.data["2D1"][data.FuelConsumption.keys.RPM1+'-raw'][0],
-        'FC-pa1-rpm1-temp2-map3': data.FuelConsumption.data["2D1"][data.FuelConsumption.keys.RPM1+'-raw'][1],
         'FC-pa1-rpm1-temp3-map3': data.FuelConsumption.data["2D1"][data.FuelConsumption.keys.RPM1],
-        'FC-pa1-rpm2-temp1-map3': data.FuelConsumption.data["2D1"][data.FuelConsumption.keys.RPM2+'-raw'][0],
-        'FC-pa1-rpm2-temp2-map3': data.FuelConsumption.data["2D1"][data.FuelConsumption.keys.RPM2+'-raw'][1],
         'FC-pa1-rpm2-temp3-map3': data.FuelConsumption.data["2D1"][data.FuelConsumption.keys.RPM2],
-        'FC-pa2-rpm1-temp1-map3': data.FuelConsumption.data["2D2"][data.FuelConsumption.keys.RPM1+'-raw'][0],
-        'FC-pa2-rpm1-temp2-map3': data.FuelConsumption.data["2D2"][data.FuelConsumption.keys.RPM1+'-raw'][1],
         'FC-pa2-rpm1-temp3-map3': data.FuelConsumption.data["2D2"][data.FuelConsumption.keys.RPM1],
-        'FC-pa2-rpm2-temp1-map3': data.FuelConsumption.data["2D2"][data.FuelConsumption.keys.RPM2+'-raw'][0],
-        'FC-pa2-rpm2-temp2-map3': data.FuelConsumption.data["2D2"][data.FuelConsumption.keys.RPM2+'-raw'][1],
         'FC-pa2-rpm2-temp3-map3': data.FuelConsumption.data["2D2"][data.FuelConsumption.keys.RPM2],
 
-        'FC-pa1-rpm1-temp3-map3': data.FuelConsumption.data["3D"][data.FuelConsumption.keys.alt1+'-raw'][0],
-        'FC-pa1-rpm2-temp3-map3': data.FuelConsumption.data["3D"][data.FuelConsumption.keys.alt1+'-raw'][1],
         'FC-pa1-rpm3-temp3-map3': data.FuelConsumption.data["3D"][data.FuelConsumption.keys.alt1],
-        'FC-pa2-rpm1-temp3-map3': data.FuelConsumption.data["3D"][data.FuelConsumption.keys.alt2+'-raw'][0],
-        'FC-pa2-rpm2-temp3-map3': data.FuelConsumption.data["3D"][data.FuelConsumption.keys.alt2+'-raw'][1],
         'FC-pa2-rpm3-temp3-map3': data.FuelConsumption.data["3D"][data.FuelConsumption.keys.alt2],
-
-        'FC-pa1-rpm3-temp3-map3': data.FuelConsumption.data["4D"]['raw'][0],
-        'FC-pa2-rpm3-temp3-map3': data.FuelConsumption.data["4D"]['raw'][1],
-        'FC-pa3-rpm3-temp3-map3': data.FuelConsumption.data["4D"]['result'],
         
         'FC-pa3-rpm3-temp3-map3': data.FuelConsumption.result,
 
