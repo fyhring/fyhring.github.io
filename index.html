@@ -201,7 +201,22 @@
             <h6>Gradients</h6>
             Gradients are calculated with the formula:
             $$Gradient = {Rate Of Climb \over ClimbSpeed \cdot 6076{ft \over nm} / 60{min \over hour}}$$
-            .....
+            
+            <h6>Fuel Consumption, Powersetting and Cruise TAS</h6>
+            <ul>
+                <li>First, the values are interpolated between manifold pressures, for each temperature, RPM and altitude:<br>
+                    $$value_{actual} = {value_{lowMAP} - value_{highMAP} \over MAP_{high} - MAP_{low}} \cdot (MAP_{actual} - MAP_{low})+value_{lowMAP}$$
+                </li>
+                <li>Then, the results from above are interpolated between temperatures, for each RPM and altitude:
+                    $$value_{actual} = {value_{cold} - value_{warm} \over temp_{warm} - temp_{cold}} \cdot (temp_{warm} - temp_{actual})+value_{warm}$$
+                </li>
+                <li>Then, the results from that are interpolated between RPM's for each altitude:
+                    $$value_{actual} = {value_{fast} - value_{slow} \over RPM_{fast} - RPM_{slow}} \cdot (RPM_{actual} - RPM_{slow}) + value_{slow}$$
+                </li>
+                <li>Finally, the results from that are interpolated between altitudes:
+                    $$value_{actual} = {value_{low} - value_{high} \over alt_{high} - alt_{low}} \cdot (alt_{high} - alt_{actual}) + value_{high}$$
+                </li>
+            </ul>
 
         </div>
         <div class="tab-pane fade" id="massAndBalanceTab" role="tabpanel">
