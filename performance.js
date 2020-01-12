@@ -117,6 +117,7 @@ function calculateFromInputs()
 
     data.env = {
         qnh: pressureInput,
+        pressureCorrection: (1013-pressureInput)*27,
         temp: temperatureInput,
         isaDev: tempIsaDeviation,
         weight: weightInput,
@@ -236,6 +237,7 @@ function calculateFromInputs()
 
         // Environment
         'env-qnh': [data.env.qnh, 'hPa'],
+        'env-pressure-correction': [data.env.pressureCorrection, 'ft'],
         'env-temp': [data.env.temp, '&deg;'],
         'env-isa-dev': [data.env.isaDev, ''],
         'env-weight': [data.env.weight, 'kg'],
@@ -507,6 +509,22 @@ function calculateFromInputs()
     /**********************
      * Math Jax Equations *
      **********************/
+
+    //Enviromental
+    $('.env-pressure-correction-equation').html(MathJax.tex2svg('('+STD_PRESSURE+'hPa - '+pressureInput+'hPa) \\cdot '+STD_HECTOPASCAL_HEIGHT+' \\tfrac{ft}{hPa} = '+getPressureCorrection()*-1+'ft'));
+
+    var pc = '+0'
+
+    if (getPressureCorrection()*-1 >= 0){
+        pc = '+'+(getPressureCorrection()*-1)+'ft'
+    }
+    else {
+        pc = '-'+getPressureCorrection()+'ft'
+    }
+
+    $('.env-pressure-elevation-equation').html(MathJax.tex2svg(''+elevationInput+'ft'+pc+'='+pressureElevation+'ft'))
+    $('.env-pressure-altitude-cruise-equation').html(MathJax.tex2svg(''+cruiseInput+'ft'+pc+'='+pressureAltitude+'ft'))
+    $('.env-pressure-altitude-roc-equation').html(MathJax.tex2svg(''+Math.ceil(rocAltitude)+'ft'+pc+'='+Math.ceil(rocPressureAlt)+'ft'))
 
     //Takeoff Groundroll
     //Interpolation between altitudes for mass1, temp1&2
