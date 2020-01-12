@@ -255,7 +255,7 @@ function calculateFromInputs()
         'to-g-w1-alt2-temp2': [Math.ceil(data.takeoff.uncorrectedGround.data['1D1'][temperatures[1]+'-raw'][1]), 'm'],
         'to-g-w1-alt3-temp1': [Math.ceil(data.takeoff.uncorrectedGround.data['1D1'][temperatures[0]]), 'm'],
         'to-g-w1-alt3-temp2': [Math.ceil(data.takeoff.uncorrectedGround.data['1D1'][temperatures[1]]), 'm'],
-        'to-g-w1-alt3-temp3': [Math.ceil(data.takeoff.uncorrectedGround.data['2D'][weights[1]]), 'm'],
+        'to-g-w1-alt3-temp3': [Math.ceil(data.takeoff.uncorrectedGround.data['2D'][weights[0]]), 'm'],
 
         'to-g-w2-alt1-temp1': [Math.ceil(data.takeoff.uncorrectedGround.data['1D2'][temperatures[0]+'-raw'][0]), 'm'],
         'to-g-w2-alt1-temp2': [Math.ceil(data.takeoff.uncorrectedGround.data['1D2'][temperatures[1]+'-raw'][0]), 'm'],
@@ -263,7 +263,7 @@ function calculateFromInputs()
         'to-g-w2-alt2-temp2': [Math.ceil(data.takeoff.uncorrectedGround.data['1D2'][temperatures[1]+'-raw'][1]), 'm'],
         'to-g-w2-alt3-temp1': [Math.ceil(data.takeoff.uncorrectedGround.data['1D2'][temperatures[0]]), 'm'],
         'to-g-w2-alt3-temp2': [Math.ceil(data.takeoff.uncorrectedGround.data['1D2'][temperatures[1]]), 'm'],
-        'to-g-w2-alt3-temp3': [Math.ceil(data.takeoff.uncorrectedGround.data['2D'][weights[0]]), 'm'],
+        'to-g-w2-alt3-temp3': [Math.ceil(data.takeoff.uncorrectedGround.data['2D'][weights[1]]), 'm'],
 
         'to-g-w3-alt3-temp3': [Math.ceil(data.takeoff.uncorrectedGround.data['3D']['result']), 'm'],
 
@@ -275,7 +275,7 @@ function calculateFromInputs()
         'to-d-w1-alt2-temp2': [Math.ceil(data.takeoff.uncorrectedDist.data['1D1'][temperatures[1]+'-raw'][1]), 'm'],
         'to-d-w1-alt3-temp1': [Math.ceil(data.takeoff.uncorrectedDist.data['1D1'][temperatures[0]]), 'm'],
         'to-d-w1-alt3-temp2': [Math.ceil(data.takeoff.uncorrectedDist.data['1D1'][temperatures[1]]), 'm'],
-        'to-d-w1-alt3-temp3': [Math.ceil(data.takeoff.uncorrectedDist.data['2D'][weights[1]]), 'm'],
+        'to-d-w1-alt3-temp3': [Math.ceil(data.takeoff.uncorrectedDist.data['2D'][weights[0]]), 'm'],
 
         'to-d-w2-alt1-temp1': [Math.ceil(data.takeoff.uncorrectedDist.data['1D2'][temperatures[0]+'-raw'][0]), 'm'],
         'to-d-w2-alt1-temp2': [Math.ceil(data.takeoff.uncorrectedDist.data['1D2'][temperatures[1]+'-raw'][0]), 'm'],
@@ -283,7 +283,7 @@ function calculateFromInputs()
         'to-d-w2-alt2-temp2': [Math.ceil(data.takeoff.uncorrectedDist.data['1D2'][temperatures[1]+'-raw'][1]), 'm'],
         'to-d-w2-alt3-temp1': [Math.ceil(data.takeoff.uncorrectedDist.data['1D2'][temperatures[0]]), 'm'],
         'to-d-w2-alt3-temp2': [Math.ceil(data.takeoff.uncorrectedDist.data['1D2'][temperatures[1]]), 'm'],
-        'to-d-w2-alt3-temp3': [Math.ceil(data.takeoff.uncorrectedDist.data['2D'][weights[0]]), 'm'],
+        'to-d-w2-alt3-temp3': [Math.ceil(data.takeoff.uncorrectedDist.data['2D'][weights[1]]), 'm'],
 
         'to-d-w3-alt3-temp3': [Math.ceil(data.takeoff.uncorrectedDist.data['3D']['result']), 'm'],
 
@@ -310,7 +310,7 @@ function calculateFromInputs()
         'ldg-g-w1-alt2-temp2': [Math.ceil(data.landing.uncorrectedGround.data['1D1'][temperatures[1]+'-raw'][1]), 'm'],
         'ldg-g-w1-alt3-temp1': [Math.ceil(data.landing.uncorrectedGround.data['1D1'][temperatures[0]]), 'm'],
         'ldg-g-w1-alt3-temp2': [Math.ceil(data.landing.uncorrectedGround.data['1D1'][temperatures[1]]), 'm'],
-        'ldg-g-w1-alt3-temp3': [Math.ceil(data.landing.uncorrectedGround.data['2D'][weights[1]]), 'm'],
+        'ldg-g-w1-alt3-temp3': [Math.ceil(data.landing.uncorrectedGround.data['2D'][weights[0]]), 'm'],
 
         'ldg-g-w2-alt1-temp1': [Math.ceil(data.landing.uncorrectedGround.data['1D2'][temperatures[0]+'-raw'][0]), 'm'],
         'ldg-g-w2-alt1-temp2': [Math.ceil(data.landing.uncorrectedGround.data['1D2'][temperatures[1]+'-raw'][0]), 'm'],
@@ -318,7 +318,7 @@ function calculateFromInputs()
         'ldg-g-w2-alt2-temp2': [Math.ceil(data.landing.uncorrectedGround.data['1D2'][temperatures[1]+'-raw'][1]), 'm'],
         'ldg-g-w2-alt3-temp1': [Math.ceil(data.landing.uncorrectedGround.data['1D2'][temperatures[0]]), 'm'],
         'ldg-g-w2-alt3-temp2': [Math.ceil(data.landing.uncorrectedGround.data['1D2'][temperatures[1]]), 'm'],
-        'ldg-g-w2-alt3-temp3': [Math.ceil(data.landing.uncorrectedGround.data['2D'][weights[0]]), 'm'],
+        'ldg-g-w2-alt3-temp3': [Math.ceil(data.landing.uncorrectedGround.data['2D'][weights[1]]), 'm'],
 
         'ldg-g-w3-alt3-temp3': [Math.ceil(data.landing.uncorrectedGround.data['3D']['result']), 'm'],
 
@@ -329,7 +329,7 @@ function calculateFromInputs()
         'ldg-d-w1-alt2-temp2': [Math.ceil(data.landing.uncorrectedDist.data['1D1'][temperatures[1]+'-raw'][1]), 'm'],
         'ldg-d-w1-alt3-temp1': [Math.ceil(data.landing.uncorrectedDist.data['1D1'][temperatures[0]]), 'm'],
         'ldg-d-w1-alt3-temp2': [Math.ceil(data.landing.uncorrectedDist.data['1D1'][temperatures[1]]), 'm'],
-        'ldg-d-w1-alt3-temp3': [Math.ceil(data.landing.uncorrectedDist.data['2D'][weights[1]]), 'm'],
+        'ldg-d-w1-alt3-temp3': [Math.ceil(data.landing.uncorrectedDist.data['2D'][weights[0]]), 'm'],
 
         'ldg-d-w2-alt1-temp1': [Math.ceil(data.landing.uncorrectedDist.data['1D2'][temperatures[0]+'-raw'][0]), 'm'],
         'ldg-d-w2-alt1-temp2': [Math.ceil(data.landing.uncorrectedDist.data['1D2'][temperatures[1]+'-raw'][0]), 'm'],
@@ -337,7 +337,7 @@ function calculateFromInputs()
         'ldg-d-w2-alt2-temp2': [Math.ceil(data.landing.uncorrectedDist.data['1D2'][temperatures[1]+'-raw'][1]), 'm'],
         'ldg-d-w2-alt3-temp1': [Math.ceil(data.landing.uncorrectedDist.data['1D2'][temperatures[0]]), 'm'],
         'ldg-d-w2-alt3-temp2': [Math.ceil(data.landing.uncorrectedDist.data['1D2'][temperatures[1]]), 'm'],
-        'ldg-d-w2-alt3-temp3': [Math.ceil(data.landing.uncorrectedDist.data['2D'][weights[0]]), 'm'],
+        'ldg-d-w2-alt3-temp3': [Math.ceil(data.landing.uncorrectedDist.data['2D'][weights[1]]), 'm'],
 
         'ldg-d-w3-alt3-temp3': [Math.ceil(data.landing.uncorrectedDist.data['3D']['result']), 'm'],
 
@@ -365,7 +365,7 @@ function calculateFromInputs()
         'roc-vy-w1-alt2-temp2': [Math.floor(data.rocVy.data['1D1'][rocTemperatures[1]+'-raw'][1]), 'fpm'],
         'roc-vy-w1-alt3-temp1': [Math.floor(data.rocVy.data['1D1'][rocTemperatures[0]]), 'fpm'],
         'roc-vy-w1-alt3-temp2': [Math.floor(data.rocVy.data['1D1'][rocTemperatures[1]]), 'fpm'],
-        'roc-vy-w1-alt3-temp3': [Math.floor(data.rocVy.data['2D'][weights[1]]), 'fpm'],
+        'roc-vy-w1-alt3-temp3': [Math.floor(data.rocVy.data['2D'][weights[0]]), 'fpm'],
 
         'roc-vy-w2-alt1-temp1': [Math.floor(data.rocVy.data['1D2'][rocTemperatures[0]+'-raw'][0]), 'fpm'],
         'roc-vy-w2-alt1-temp2': [Math.floor(data.rocVy.data['1D2'][rocTemperatures[1]+'-raw'][0]), 'fpm'],
@@ -373,7 +373,7 @@ function calculateFromInputs()
         'roc-vy-w2-alt2-temp2': [Math.floor(data.rocVy.data['1D2'][rocTemperatures[1]+'-raw'][1]), 'fpm'],
         'roc-vy-w2-alt3-temp1': [Math.floor(data.rocVy.data['1D2'][rocTemperatures[0]]), 'fpm'],
         'roc-vy-w2-alt3-temp2': [Math.floor(data.rocVy.data['1D2'][rocTemperatures[1]]), 'fpm'],
-        'roc-vy-w2-alt3-temp3': [Math.floor(data.rocVy.data['2D'][weights[0]]), 'fpm'],
+        'roc-vy-w2-alt3-temp3': [Math.floor(data.rocVy.data['2D'][weights[1]]), 'fpm'],
 
         'roc-vy-w3-alt3-temp3': [Math.floor(data.rocVy.data['3D']['result']), 'fpm'],
         
@@ -384,7 +384,7 @@ function calculateFromInputs()
         'oei-roc-vyse-w1-alt2-temp2': [Math.floor(data.rocVySe.data['1D1'][rocTemperatures[1]+'-raw'][1]), 'fpm'],
         'oei-roc-vyse-w1-alt3-temp1': [Math.floor(data.rocVySe.data['1D1'][rocTemperatures[0]]), 'fpm'],
         'oei-roc-vyse-w1-alt3-temp2': [Math.floor(data.rocVySe.data['1D1'][rocTemperatures[1]]), 'fpm'],
-        'oei-roc-vyse-w1-alt3-temp3': [Math.floor(data.rocVySe.data['2D'][weights[1]]), 'fpm'],
+        'oei-roc-vyse-w1-alt3-temp3': [Math.floor(data.rocVySe.data['2D'][weights[0]]), 'fpm'],
 
         'oei-roc-vyse-w2-alt1-temp1': [Math.floor(data.rocVySe.data['1D2'][rocTemperatures[0]+'-raw'][0]), 'fpm'],
         'oei-roc-vyse-w2-alt1-temp2': [Math.floor(data.rocVySe.data['1D2'][rocTemperatures[1]+'-raw'][0]), 'fpm'],
@@ -392,7 +392,7 @@ function calculateFromInputs()
         'oei-roc-vyse-w2-alt2-temp2': [Math.floor(data.rocVySe.data['1D2'][rocTemperatures[1]+'-raw'][1]), 'fpm'],
         'oei-roc-vyse-w2-alt3-temp1': [Math.floor(data.rocVySe.data['1D2'][rocTemperatures[0]]), 'fpm'],
         'oei-roc-vyse-w2-alt3-temp2': [Math.floor(data.rocVySe.data['1D2'][rocTemperatures[1]]), 'fpm'],
-        'oei-roc-vyse-w2-alt3-temp3': [Math.floor(data.rocVySe.data['2D'][weights[0]]), 'fpm'],
+        'oei-roc-vyse-w2-alt3-temp3': [Math.floor(data.rocVySe.data['2D'][weights[1]]), 'fpm'],
 
         'oei-roc-vyse-w3-alt3-temp3': [Math.floor(data.rocVySe.data['3D']['result']), 'fpm'],
 
