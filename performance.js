@@ -522,9 +522,12 @@ function calculateFromInputs()
         pc = '-'+getPressureCorrection()+'ft'
     }
 
-    $('.env-pressure-elevation-equation').html(MathJax.tex2svg(''+elevationInput+'ft'+pc+'='+pressureElevation+'ft'))
-    $('.env-pressure-altitude-cruise-equation').html(MathJax.tex2svg(''+cruiseInput+'ft'+pc+'='+pressureAltitude+'ft'))
-    $('.env-pressure-altitude-roc-equation').html(MathJax.tex2svg(''+Math.ceil(rocAltitude)+'ft'+pc+'='+Math.ceil(rocPressureAlt)+'ft'))
+    //Enviromental
+    $('.env-pressure-elevation-equation').html(MathJax.tex2svg(''+elevationInput+'ft'+pc+'='+pressureElevation+'ft'));
+    $('.env-pressure-altitude-cruise-equation').html(MathJax.tex2svg(''+cruiseInput+'ft'+pc+'='+pressureAltitude+'ft'));
+    $('.env-pressure-altitude-roc-equation').html(MathJax.tex2svg(''+Math.ceil(rocAltitude)+'ft'+pc+'='+Math.ceil(rocPressureAlt)+'ft'));
+    $('.env-headwind-component-equation').html(MathJax.tex2svg('cos( '+rwyDirInput+'^ \\circ -'+windDirInput+'^\\circ ) \\cdot '+windSpdInput+'kts = '+Math.ceil(Math.abs(getWindComponents().head*100))/100+'kts'));
+    $('.env-crosswind-component-equation').html(MathJax.tex2svg('sin( '+rwyDirInput+'^ \\circ -'+windDirInput+'^\\circ ) \\cdot '+windSpdInput+'kts = '+Math.ceil(Math.abs(getWindComponents().cross*100))/100+'kts'));
 
     //Takeoff Groundroll
     //Interpolation between altitudes for mass1, temp1&2
