@@ -124,8 +124,8 @@ function calculateFromInputs()
         pressureElevation: pressureElevation,
         cruiseAlt: cruiseInput,
         cruisePressureAltitude: pressureAltitude,
-        rocAlt: rocAltitude,
-        rocPressureAlt: rocPressureAlt
+        rocAlt: Math.floor(rocAltitude),
+        rocPressureAlt: Math.floor(rocPressureAlt)
     };
 
     var temperatures = Object.keys(data.takeoff.uncorrectedGround.data['1D1']);
