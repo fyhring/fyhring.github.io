@@ -414,21 +414,21 @@ function calculateFromInputs()
         'service-ceiling-true-alt': [data.OEIserviceCeiling.ceiling, 'ft'],
 
         // OEI Service Ceiling - ROC
-        'service-ceiling-roc-w1-alt1-temp1': [Math.floor(data.OEIserviceCeiling.data[2][2].data['1D1'][rocTemperatures[0]+'-raw'][1]), 'fpm'],
-        'service-ceiling-roc-w1-alt1-temp2': [Math.floor(data.OEIserviceCeiling.data[2][2].data['1D1'][rocTemperatures[1]+'-raw'][1]), 'fpm'],
-        'service-ceiling-roc-w1-alt2-temp1': [Math.floor(data.OEIserviceCeiling.data[2][2].data['1D1'][rocTemperatures[0]+'-raw'][0]), 'fpm'],
-        'service-ceiling-roc-w1-alt2-temp2': [Math.floor(data.OEIserviceCeiling.data[2][2].data['1D1'][rocTemperatures[1]+'-raw'][0]), 'fpm'],
+        'service-ceiling-roc-w1-alt1-temp1': [Math.floor(data.OEIserviceCeiling.data[2][2].data['1D1'][rocTemperatures[0]+'-raw'][0]), 'fpm'],
+        'service-ceiling-roc-w1-alt1-temp2': [Math.floor(data.OEIserviceCeiling.data[2][2].data['1D1'][rocTemperatures[1]+'-raw'][0]), 'fpm'],
+        'service-ceiling-roc-w1-alt2-temp1': [Math.floor(data.OEIserviceCeiling.data[2][2].data['1D1'][rocTemperatures[0]+'-raw'][1]), 'fpm'],
+        'service-ceiling-roc-w1-alt2-temp2': [Math.floor(data.OEIserviceCeiling.data[2][2].data['1D1'][rocTemperatures[1]+'-raw'][1]), 'fpm'],
         'service-ceiling-roc-w1-alt3-temp1': [Math.floor(data.OEIserviceCeiling.data[2][2].data['1D1'][rocTemperatures[0]]), 'fpm'],
         'service-ceiling-roc-w1-alt3-temp2': [Math.floor(data.OEIserviceCeiling.data[2][2].data['1D1'][rocTemperatures[1]]), 'fpm'],
-        'service-ceiling-roc-w1-alt3-temp3': [Math.floor(data.OEIserviceCeiling.data[2][2].data['2D'][weights[1]]), 'fpm'],
+        'service-ceiling-roc-w1-alt3-temp3': [Math.floor(data.OEIserviceCeiling.data[2][2].data['2D'][weights[0]]), 'fpm'],
 
-        'service-ceiling-roc-w2-alt1-temp1': [Math.floor(data.OEIserviceCeiling.data[2][2].data['1D2'][rocTemperatures[0]+'-raw'][1]), 'fpm'],
-        'service-ceiling-roc-w2-alt1-temp2': [Math.floor(data.OEIserviceCeiling.data[2][2].data['1D2'][rocTemperatures[1]+'-raw'][1]), 'fpm'],
-        'service-ceiling-roc-w2-alt2-temp1': [Math.floor(data.OEIserviceCeiling.data[2][2].data['1D2'][rocTemperatures[0]+'-raw'][0]), 'fpm'],
-        'service-ceiling-roc-w2-alt2-temp2': [Math.floor(data.OEIserviceCeiling.data[2][2].data['1D2'][rocTemperatures[1]+'-raw'][0]), 'fpm'],
+        'service-ceiling-roc-w2-alt1-temp1': [Math.floor(data.OEIserviceCeiling.data[2][2].data['1D2'][rocTemperatures[0]+'-raw'][0]), 'fpm'],
+        'service-ceiling-roc-w2-alt1-temp2': [Math.floor(data.OEIserviceCeiling.data[2][2].data['1D2'][rocTemperatures[1]+'-raw'][0]), 'fpm'],
+        'service-ceiling-roc-w2-alt2-temp1': [Math.floor(data.OEIserviceCeiling.data[2][2].data['1D2'][rocTemperatures[0]+'-raw'][1]), 'fpm'],
+        'service-ceiling-roc-w2-alt2-temp2': [Math.floor(data.OEIserviceCeiling.data[2][2].data['1D2'][rocTemperatures[1]+'-raw'][1]), 'fpm'],
         'service-ceiling-roc-w2-alt3-temp1': [Math.floor(data.OEIserviceCeiling.data[2][2].data['1D2'][rocTemperatures[0]]), 'fpm'],
         'service-ceiling-roc-w2-alt3-temp2': [Math.floor(data.OEIserviceCeiling.data[2][2].data['1D2'][rocTemperatures[1]]), 'fpm'],
-        'service-ceiling-roc-w2-alt3-temp3': [Math.floor(data.OEIserviceCeiling.data[2][2].data['2D'][weights[0]]), 'fpm'],
+        'service-ceiling-roc-w2-alt3-temp3': [Math.floor(data.OEIserviceCeiling.data[2][2].data['2D'][weights[1]]), 'fpm'],
 
         'service-ceiling-roc-w3-alt3-temp3': [Math.floor(data.OEIserviceCeiling.data[2][2].data['3D']['result']), 'fpm'],
 
