@@ -818,7 +818,7 @@ function findKeysForInterpolation(needle, haystack)
     }
     //TODO add warning to end user that data is out of parameters
 
-    return [largerValue, lessValue];
+    return [lessValue, largerValue];
 }
 
 function findDataValuesInDataset(needle, dataset, keys)

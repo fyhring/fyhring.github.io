@@ -1883,20 +1883,97 @@
             <div class="row" id="cruise">
                 <div class="col-sm-6">
                     <h4>Fuel Consumption</h4>
-                    <div class="results-weight-sector">
+                    <b class="FC-alt1">-</b>
+                    <div class="result-weight-sector">
                         <table class="table table-sm">
                             <thead>
-                                <th>MAP</th>
-                                <th>F.C.</th>
+                                <th>Temp/MAP</th>
+                                <!-- First letter meaning altitude, second RPM -->
+                                <th class="FC-MAP1AB">-</th>
+                                <th class="FC-MAP2AB">-</th>
+                                <th class="FC-MAP3">-</th>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td class="FC-MAP1AA">MAP1AA</td>
-                                    <td>F.C.1</td>
+                                    <td><strong class="FC-temp1"></strong></td>
+                                    <td class="FC-pa1-rpm2-temp1-map1">-</td>
+                                    <td class="FC-pa1-rpm2-temp1-map2">-</td>
+                                    <td class="FC-pa1-rpm2-temp1-map3">-</td>
                                 </tr>
                                 <tr>
-                                    <td class="FC-MAP2AA">MAP2AA</td>
-                                    <td>F.C.2</td>
+                                    <td><strong class="FC-temp2"></strong></td>
+                                    <td class="FC-pa1-rpm2-temp2-map1">-</td>
+                                    <td class="FC-pa1-rpm2-temp2-map2">-</td>
+                                    <td class="FC-pa1-rpm2-temp2-map3">-</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <b class="FC-alt2">-</b>
+                    <div class="result-weight-sector">
+                        <table class="table table-sm">
+                            <thead>
+                                <th>Temp/MAP</th>
+                                <th class="FC-MAP1BB">-</th>
+                                <th class="FC-MAP2BB">-</th>
+                                <th class="FC-MAP3">-</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong class="FC-temp1"></strong></td>
+                                    <td class="FC-pa2-rpm2-temp1-map1">-</td>
+                                    <td class="FC-pa2-rpm2-temp1-map2">-</td>
+                                    <td class="FC-pa2-rpm2-temp1-map3">-</td>
+                                </tr>
+                                <tr>
+                                    <td><strong class="FC-temp2"></strong></td>
+                                    <td class="FC-pa2-rpm2-temp2-map1">-</td>
+                                    <td class="FC-pa2-rpm2-temp2-map2">-</td>
+                                    <td class="FC-pa2-rpm2-temp2-map3">-</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="result-weight-sector">
+                        <table class="table table-sm">
+                            <thead>
+                                <th>Alt/Temp</th>
+                                <th class="FC-temp1"></th>
+                                <th class="FC-temp2"></th>
+                                <th class="FC-temp3"></th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="FC-alt1"></td>
+                                    <td class="FC-pa1-rpm2-temp1-map3">-</td>
+                                    <td class="FC-pa1-rpm2-temp2-map3">-</td>
+                                    <td class="FC-pa1-rpm2-temp3-map3">-</td>
+                                </tr>
+                                <tr>
+                                    <td class="FC-alt2"></td>
+                                    <td class="FC-pa2-rpm2-temp1-map3">-</td>
+                                    <td class="FC-pa2-rpm2-temp2-map3">-</td>
+                                    <td class="FC-pa2-rpm2-temp3-map3">-</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="result-weight-sector">
+                        <table class="table table-sm">
+                            <thead>
+                                <th>Temp/Alt</th>
+                                <th class="FC-alt1">-</th>
+                                <th class="FC-alt2">-</th>
+                                <th class="FC-alt3">-</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="FC-temp3">-</td>
+                                    <td class="FC-pa1-rpm3-temp3-map3">-</td>
+                                    <td class="FC-pa2-rpm3-temp3-map3">-</td>
+                                    <td class="FC-pa3-rpm3-temp3-map3">-</td>
                                 </tr>
                             </tbody>
                         </table>
