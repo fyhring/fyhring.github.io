@@ -66,6 +66,10 @@
     min-width: 55px;
 }
 
+hr.thicc {
+    border-top-width: 3px;
+}
+
 .result-weight-sector {
     margin-bottom: 20px;
     background: rgba(236, 236, 236, 0.3);
