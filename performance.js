@@ -247,6 +247,7 @@ function calculateFromInputs()
         'env-cruise-pressure-alt': [data.env.cruisePressureAltitude, 'ft'],
         'env-roc-alt': [data.env.rocAlt, 'ft'],
         'env-pressure-roc-alt': [Math.round(data.env.rocPressureAlt), 'ft'],
+        'env-headOrTail-component': [getWindComponents().headOrTail+' component',''],
         'env-headwind-component': [(Math.ceil((Math.abs(getWindComponents().head))*100))/100,'kts'],
         'env-crosswind-component': [(Math.ceil((Math.abs(getWindComponents().cross))*100))/100,'kts'],
 
@@ -755,6 +756,17 @@ function getWindComponents()
     var headwindComponent =  Math.ceil(Math.cos(toRadians(windDirInput - rwyDirInput)) * windSpdInput *10)/10;
     var crosswindComponent = Math.ceil(Math.sin(toRadians(windDirInput - rwyDirInput)) * windSpdInput *10)/10;
 
+    var headOrTail = 'Headwind'
+
+    //if component is negative, round down instead of up
+    if (Math.cos(toRadians(windDirInput - rwyDirInput)) * windSpdInput < 0){
+        var headwindComponent = Math.floor(Math.cos(toRadians(windDirInput - rwyDirInput)) * windSpdInput *10)/10;
+        headOrTail = 'Tailwind'
+    }
+    if (Math.sin(toRadians(windDirInput - rwyDirInput)) * windSpdInput < 0){
+        var headwindComponent = Math.floor(Math.sin(toRadians(windDirInput - rwyDirInput)) * windSpdInput *10)/10;
+    }
+
     if (isNaN(headwindComponent)) {
         headwindComponent = 0;
     }
@@ -764,6 +776,7 @@ function getWindComponents()
     }
 
     return {
+        'headOrTail': headOrTail,
         'head': headwindComponent,
         'cross': crosswindComponent
     };
