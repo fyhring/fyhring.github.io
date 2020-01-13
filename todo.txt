@@ -1,9 +1,4 @@
-- Log calculations for climb
-- Replace 'N/A' with '-' in A/C picker
 - Finetune heights of empty spaces in results tab
-- Check outputs on results tab for reasonable rounding (headwind/tailwind is not rounded, but check others as well)
-- The interpolation weights and temperatures for climb calculations should draw from their own variables, and not the ones from landing
 - Add logic to change 'headwind' to 'tailwind' as appropriate, and also change the formula to be correct
-- Don't round wind components, should always use whole knots. -not even 1 decimal?
 - Add warning to end users when input data is out of AFM parameters
 - Double check that roc pressure altitude is not double corrected for pressure

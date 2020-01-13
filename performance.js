@@ -294,7 +294,7 @@ function calculateFromInputs()
         'to-corrections-paved-rwy': [Math.ceil(data.takeoff.corrections.pavedRwyCorrection), 'm'],
         'to-corrections-sloped-rwy': [Math.ceil(data.takeoff.corrections.slopeCorrection), 'm'],
         'to-corrections-soft-rwy': [Math.ceil(data.takeoff.corrections.softSfcCorrection), 'm'],
-        'to-corrections-windlabel': [(Math.ceil((Math.abs(getWindComponents().head))*100))/100,'kts '+(getWindComponents().head > 0 ? 'headwind' : 'tailwind')],
+        'to-corrections-windlabel': [(Math.abs(getWindComponents().head)),'kts '+(getWindComponents().head > 0 ? 'headwind' : 'tailwind')],
         'to-corrections-wind': [Math.ceil(data.takeoff.corrections.windCorrection), 'm'],
         'to-corrections-combined': [Math.ceil(data.takeoff.corrections.combined), 'm'],
         //Corrected distances
@@ -347,7 +347,7 @@ function calculateFromInputs()
         'ldg-corrections-paved-rwy': [Math.ceil(data.landing.corrections.pavedRwyCorrection), 'm'],
         'ldg-corrections-sloped-rwy': [Math.ceil(data.landing.corrections.slopeCorrection), 'm'],
         'ldg-corrections-soft-rwy': [Math.ceil(data.landing.corrections.softSfcCorrection), 'm'],
-        'ldg-corrections-windlabel': [(Math.ceil((Math.abs(getWindComponents().head))*100))/100,'kts '+(getWindComponents().head > 0 ? 'headwind' : 'tailwind')],
+        'ldg-corrections-windlabel': [Math.abs(getWindComponents().head),'kts '+(getWindComponents().head > 0 ? 'headwind' : 'tailwind')],
         'ldg-corrections-wind': [Math.ceil(data.landing.corrections.windCorrection), 'm'],
         'ldg-corrections-app-spd': [Math.ceil(data.landing.corrections.appSpeedCorrection), 'm'],
         'ldg-corrections-combined': [floorOrCeil(data.landing.corrections.combined), 'm'],
@@ -528,8 +528,8 @@ function calculateFromInputs()
     //the following equations is not used, but also not correct
     $('.env-true-altitude-roc-equation').html(MathJax.tex2svg('('+pressureAltitude+'ft - '+pressureElevation+'ft) \\cdot \\frac{2}{3} + '+pressureElevation+'ft = '+rocPressureAlt+''));
     $('.env-pressure-altitude-roc-equation').html(MathJax.tex2svg(''+Math.ceil(rocAltitude)+'ft'+pc+'='+Math.ceil(rocPressureAlt)+'ft'));
-    $('.env-headwind-component-equation').html(MathJax.tex2svg('cos( '+rwyDirInput+'^ \\circ -'+windDirInput+'^\\circ ) \\cdot '+windSpdInput+'kts = '+Math.ceil(Math.abs(getWindComponents().head*100))/100+'kts'));
-    $('.env-crosswind-component-equation').html(MathJax.tex2svg('sin( '+rwyDirInput+'^ \\circ -'+windDirInput+'^\\circ ) \\cdot '+windSpdInput+'kts = '+Math.ceil(Math.abs(getWindComponents().cross*100))/100+'kts'));
+    $('.env-headwind-component-equation').html(MathJax.tex2svg('cos( '+rwyDirInput+'^ \\circ -'+windDirInput+'^\\circ ) \\cdot '+windSpdInput+'kts = '+Math.abs(getWindComponents().head)+'kts'));
+    $('.env-crosswind-component-equation').html(MathJax.tex2svg('sin( '+rwyDirInput+'^ \\circ -'+windDirInput+'^\\circ ) \\cdot '+windSpdInput+'kts = '+Math.abs(getWindComponents().cross)+'kts'));
 
     //Takeoff Groundroll
     //Interpolation between altitudes for mass1, temp1&2
@@ -606,7 +606,7 @@ function calculateFromInputs()
     $('.ldg-correction-slope-equation').html(MathJax.tex2svg(takeOffLandingUIPairs['ldg-g-w3-alt3-temp3'][0]+'m \\cdot ('+ (data.takeoff.corrections.slope * 100) +'\\%/1\\%) \\cdot 5\\% = '+ takeOffLandingUIPairs['ldg-corrections-sloped-rwy'][0]+'m', {display: true}));
     $('.ldg-correction-soft-equation').html(MathJax.tex2svg(takeOffLandingUIPairs['ldg-g-w3-alt3-temp3'][0]+'m \\cdot '+ ((useSoftSfc)?'\\25%' : '0\\%') +' = '+ takeOffLandingUIPairs['ldg-corrections-soft-rwy'][0]+'m', {display: true}));
 
-    var roundedHeadWindComponent = Math.ceil(Math.abs(getWindComponents().head)*10)/10;
+    var roundedHeadWindComponent = Math.abs(getWindComponents().head);
     $('.ldg-correction-wind-equation').html(MathJax.tex2svg((getWindComponents().head>0 ? '-5m \\cdot '+ roundedHeadWindComponent +'kts' : '11m \\cdot ' + roundedHeadWindComponent + 'kts')+' = '+ takeOffLandingUIPairs['ldg-corrections-wind'][0]+'m', {display: true}));
 
     //Corrected
@@ -752,8 +752,8 @@ function updateUIValues(dataset)
 function getWindComponents()
 {
     // Calculate HWC/TWC and XWC.
-    var headwindComponent =  Math.cos(toRadians(windDirInput - rwyDirInput)) * windSpdInput;
-    var crosswindComponent = Math.sin(toRadians(windDirInput - rwyDirInput)) * windSpdInput;
+    var headwindComponent =  Math.ceil(Math.cos(toRadians(windDirInput - rwyDirInput)) * windSpdInput *10)/10;
+    var crosswindComponent = Math.ceil(Math.sin(toRadians(windDirInput - rwyDirInput)) * windSpdInput *10)/10;
 
     if (isNaN(headwindComponent)) {
         headwindComponent = 0;
