@@ -6,3 +6,4 @@
 - Add logic to change 'headwind' to 'tailwind' as appropriate, and also change the formula to be correct
 - Don't round wind components, should always use whole knots. -not even 1 decimal?
 - Add warning to end users when input data is out of AFM parameters
+- Double check that roc pressure altitude is not double corrected for pressure
