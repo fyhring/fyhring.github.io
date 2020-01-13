@@ -2,3 +2,4 @@
 - Add logic to change 'headwind' to 'tailwind' as appropriate, and also change the formula to be correct
 - Add warning to end users when input data is out of AFM parameters
 - Double check that roc pressure altitude is not double corrected for pressure
+- Add some sort of label to the equations on the printed version of the results
