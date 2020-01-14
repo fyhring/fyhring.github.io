@@ -165,9 +165,9 @@ function calculateFromInputs()
         'to-grad-vx': [(Math.floor(data.toGradVx * 10000)/100),'%'],
         //'to-angle-vx': [(Math.floor(data.angleToVx * 100)/100),'&#176'],   //Calculation not yet made
         'useMSAOrNotTxt': [(useMSAROC ? 'MSA' : '2/3 cruise alt.'), ''],
-        'fuelConsumption1E': [Math.ceil(data.FuelConsumption.result*100)/100,'lt/h'],
-        'fuelConsumption2E': [Math.ceil(data.FuelConsumption.result * 200)/100,'lt/h'],
-        'powerSetting': [Math.ceil(data.Powersetting.result*100)/100,'%'],
+        'fuelConsumption1E': [Math.ceil(data.FuelConsumption.result*10)/10,'lt/h'],
+        'fuelConsumption2E': [Math.ceil(data.FuelConsumption.result * 20)/10,'lt/h'],
+        'powerSetting': [Math.ceil(data.Powersetting.result*10)/10,'%'],
         'KTAS': [Math.round(data.KTAS.result),'kts'],
 
         // General interpolation data
