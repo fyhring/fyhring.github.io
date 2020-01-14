@@ -248,8 +248,8 @@ function calculateFromInputs()
         'env-roc-alt': [data.env.rocAlt, 'ft'],
         'env-pressure-roc-alt': [Math.round(data.env.rocPressureAlt), 'ft'],
         'env-headOrTail-component': [getWindComponents().headOrTail+' component',''],
-        'env-headwind-component': [(Math.ceil((Math.abs(getWindComponents().head))*100))/100,'kts'],
-        'env-crosswind-component': [(Math.ceil((Math.abs(getWindComponents().cross))*100))/100,'kts'],
+        'env-headwind-component': [Math.abs(getWindComponents().head),'kts'],
+        'env-crosswind-component': [Math.abs(getWindComponents().cross),'kts'],
 
         // T/O Groundroll
         'to-g-w1-alt1-temp1': [Math.ceil(data.takeoff.uncorrectedGround.data['1D1'][temperatures[0]+'-raw'][0]), 'm'],
@@ -756,8 +756,7 @@ function getWindComponents()
     // Calculate HWC/TWC and XWC.
     var headwindComponent =  Math.ceil(Math.cos(toRadians(windDirInput - rwyDirInput)) * windSpdInput *10)/10;
     var crosswindComponent = Math.ceil(Math.sin(toRadians(windDirInput - rwyDirInput)) * windSpdInput *10)/10;
-
-    var headOrTail = 'Headwind'
+    var headOrTail = 'Headwind';
 
     //if component is negative, round down instead of up
     if (Math.cos(toRadians(windDirInput - rwyDirInput)) * windSpdInput < 0){
@@ -765,7 +764,7 @@ function getWindComponents()
         headOrTail = 'Tailwind'
     }
     if (Math.sin(toRadians(windDirInput - rwyDirInput)) * windSpdInput < 0){
-        var headwindComponent = Math.floor(Math.sin(toRadians(windDirInput - rwyDirInput)) * windSpdInput *10)/10;
+        var crosswindComponent = Math.floor(Math.sin(toRadians(windDirInput - rwyDirInput)) * windSpdInput *10)/10;
     }
 
     if (isNaN(headwindComponent)) {
