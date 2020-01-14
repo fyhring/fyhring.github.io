@@ -1353,7 +1353,8 @@ function calculateOEIceiling(isaDeviation, tom) {
         breakLoopNextModulusIteration = false;
     
     while (true) {
-        lastInterpolation = calculateRocVySe(serviceCeiling, isaDeviation, tom);
+        var tempAtAlt = getTempAtAlt(isaDeviation,serviceCeiling)
+        lastInterpolation = calculateRocVySe(serviceCeiling, tempAtAlt, tom);
         fpm = lastInterpolation.result;
 
         if (serviceCeiling % 100 === 0) {
@@ -1402,7 +1403,8 @@ function calculateOEIabsoluteCeiling(isaDeviation, tom) {
     var absoluteCeiling = 7000;
     var fpm = -1;
     while (fpm < 0) {
-        fpm = calculateRocVySe(absoluteCeiling, isaDeviation, tom).result;
+        var tempAtAlt = getTempAtAlt(isaDeviation, absoluteCeiling)
+        fpm = calculateRocVySe(absoluteCeiling, tempAtAlt, tom).result;
         
         if (fpm < 0) {
             absoluteCeiling -= 10;
@@ -1574,10 +1576,15 @@ function getROCAltitude(msa, pa, pe)
     return rocAltitude;
 }
 
+function getTempAtAlt(temp,altAbove){
+    return temp - (1.98 * (altAbove/1000));
+}
+
 function calculateAll(pe, pa, msa, isaDeviation, tom, useTwoThirds)
 {
     var rocAltitude = getROCAltitude(msa, pa, pe);
-    var rocISADeviation = isaDeviation - (1.98 * (rocAltitude / 1000));
+    //var rocISADeviation = isaDeviation - (1.98 * (rocAltitude / 1000));
+    //The above name is misleading, as the isaDeviation is assumed to be the same at all altitudes
 
     var MAP = 24,
         RPM = 2100;
@@ -1625,8 +1632,8 @@ function calculateAll(pe, pa, msa, isaDeviation, tom, useTwoThirds)
         'angleVxSe': calculateAngle(calculateGradientVxSe(rocAltitude,isaDeviation,tom).result),
 
         //Ceilings (one engine inoperative, and feathered, flaps up)
-        'OEIserviceCeiling': calculateOEIceiling(rocISADeviation,tom),
-        'OEIabsoluteCeiling': calculateOEIabsoluteCeiling(rocISADeviation,tom)
+        'OEIserviceCeiling': calculateOEIceiling(isaDeviation,tom),
+        'OEIabsoluteCeiling': calculateOEIabsoluteCeiling(isaDeviation,tom)
     };
 }
 
