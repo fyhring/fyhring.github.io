@@ -1255,7 +1255,8 @@ function calculateRocVx(pa, isaDeviation, tom) {
 
 function calculateRocVySe(pa, isaDeviation, tom) {
     var sfcTemp = Math.round((isaDeviation + 15) * 10) / 10;
-    return interpolate3D(pa, sfcTemp, tom, ROCVySeMatrix);
+    var altTemp = getTempAtAlt(sfcTemp, pa);
+    return interpolate3D(pa, altTemp, tom, ROCVySeMatrix);
 }
 
 function calculateRocVxSe(pa, isaDeviation, tom) {
@@ -1352,9 +1353,10 @@ function calculateOEIceiling(isaDeviation, tom) {
         interpolations = [],
         breakLoopNextModulusIteration = false;
     
+    var temp = isaDeviation + 15;
     while (true) {
-        var tempAtAlt = getTempAtAlt(isaDeviation,serviceCeiling)
-        lastInterpolation = calculateRocVySe(serviceCeiling, tempAtAlt, tom);
+        var tempAtAlt = getTempAtAlt(temp, serviceCeiling);
+        lastInterpolation = calculateRocVySe(serviceCeiling, isaDeviation, tom);
         fpm = lastInterpolation.result;
 
         if (serviceCeiling % 100 === 0) {
@@ -1577,7 +1579,7 @@ function getROCAltitude(msa, pa, pe)
 }
 
 function getTempAtAlt(temp,altAbove){
-    return temp - (1.98 * (altAbove/1000));
+    return Math.ceil(temp - (1.98 * (altAbove/1000)));
 }
 
 function calculateAll(pe, pa, msa, isaDeviation, tom, useTwoThirds)
