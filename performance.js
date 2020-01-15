@@ -1612,22 +1612,22 @@ function calculateAll(pe, pa, msa, isaDeviation, tom, useTwoThirds)
         'toAngleVx': calculateAngle(calculateToGradientVx(rocAltitude,isaDeviation,tom).result),
         //Enroute Vy (flaps&gear up)
         'Vy': calculateVy(rocAltitude, isaDeviation,tom),
-        'rocVy': calculateRocVy(rocAltitude, rocISADeviation, tom),
+        'rocVy': calculateRocVy(rocAltitude, isaDeviation, tom),
         'gradVy': calculateGradientVy(rocAltitude, isaDeviation,tom),
         'angleVy': calculateAngle(calculateGradientVy(rocAltitude,isaDeviation,tom).result),
         //Enroute Vx (flaps up)
         'Vx': calculateVx(rocAltitude, isaDeviation, tom),
-        'rocVx': calculateRocVx(rocAltitude, rocISADeviation, tom),
+        'rocVx': calculateRocVx(rocAltitude, isaDeviation, tom),
         'gradVx': calculateGradientVx(rocAltitude, isaDeviation,tom),
         'angleVx': calculateAngle(calculateGradientVx(rocAltitude,isaDeviation,tom).result),
         //VySe (one engine inoperative, and feathered, flaps up)
         'VySe': calculateVySe(rocAltitude, isaDeviation, tom),
-        'rocVySe': calculateRocVySe(rocAltitude, rocISADeviation, tom, true),
+        'rocVySe': calculateRocVySe(rocAltitude, isaDeviation, tom, true),
         'gradVySe': calculateGradientVySe(rocAltitude,isaDeviation,tom),
         'angleVySe': calculateAngle(calculateGradientVySe(rocAltitude,isaDeviation,tom).result),
         //VxSe (one engine inoperative, and feathered, flaps up)
         'VxSe': calculateVxSe(rocAltitude, isaDeviation, tom),
-        'rocVxSe': calculateRocVxSe(rocAltitude, rocISADeviation, tom),
+        'rocVxSe': calculateRocVxSe(rocAltitude, isaDeviation, tom),
         'gradVxSe': calculateGradientVxSe(rocAltitude, isaDeviation, tom),
         'angleVxSe': calculateAngle(calculateGradientVxSe(rocAltitude,isaDeviation,tom).result),
 
