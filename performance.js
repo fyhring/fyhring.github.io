@@ -814,7 +814,7 @@ function calculateFromInputs()
     //$('.FC-alt2-rpm3-temp3-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['FC-pa1-rpm2-temp3-map3'][0]+'\\tfrac{lt}{h} - '+takeOffLandingUIPairs['FC-pa1-rpm1-temp3-map3'][0]+'\\tfrac{lt}{h} }{'+takeOffLandingUIPairs['FC-RPM2'][0]+'RPM - '+takeOffLandingUIPairs['FC-RPM1'][0]+' RPM} \\cdot ( '+takeOffLandingUIPairs['FC-RPM3'][0]+'RPM - '+takeOffLandingUIPairs['FC-RPM1'][0]+' RPM) + '+takeOffLandingUIPairs['FC-pa1-rpm1-temp3-map3'][0]+'\\tfrac{lt}{h} = '+takeOffLandingUIPairs['FC-pa2-rpm3-temp3-map3'][0]+'\\tfrac{lt}{h}'));
 
     //Interpolation between alt
-    $('.FC-alt3-rpm3-temp3-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['FC-pa1-rpm3-temp3-map3'][0]+'\\tfrac{lt}{h} - '+takeOffLandingUIPairs['FC-pa2-rpm3-temp3-map3'][0]+'\\tfrac{lt}{h} }{'+takeOffLandingUIPairs['FC-alt2'][0]+'ft - '+takeOffLandingUIPairs['FC-alt1'][0]+' ft} \\cdot ( '+takeOffLandingUIPairs['FC-alt2'][0]+'ft - '+takeOffLandingUIPairs['FC-alt3'][0]+' ft) + '+takeOffLandingUIPairs['FC-pa2-rpm3-temp3-map3'][0]+'\\tfrac{lt}{h} = '+takeOffLandingUIPairs['FC-pa3-rpm3-temp3-map3'][0]+'\\tfrac{lt}{h}'));
+    $('.FC-alt3-rpm3-temp3-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['FC-pa2-rpm3-temp3-map3'][0]+'\\tfrac{lt}{h} - '+takeOffLandingUIPairs['FC-pa1-rpm3-temp3-map3'][0]+'\\tfrac{lt}{h} }{'+takeOffLandingUIPairs['FC-alt2'][0]+'ft - '+takeOffLandingUIPairs['FC-alt1'][0]+' ft} \\cdot ( '+takeOffLandingUIPairs['FC-alt3'][0]+'ft - '+takeOffLandingUIPairs['FC-alt1'][0]+' ft) + '+takeOffLandingUIPairs['FC-pa1-rpm3-temp3-map3'][0]+'\\tfrac{lt}{h} = '+takeOffLandingUIPairs['FC-pa3-rpm3-temp3-map3'][0]+'\\tfrac{lt}{h}'));
 
 
     //KTAS
@@ -843,7 +843,7 @@ function calculateFromInputs()
     //$('.KTAS-alt2-rpm3-temp3-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['KTAS-pa1-rpm2-temp3-map3'][0]+'kts - '+takeOffLandingUIPairs['KTAS-pa1-rpm1-temp3-map3'][0]+'kts }{'+takeOffLandingUIPairs['KTAS-RPM2'][0]+'RPM - '+takeOffLandingUIPairs['KTAS-RPM1'][0]+' RPM} \\cdot ( '+takeOffLandingUIPairs['KTAS-RPM3'][0]+'RPM - '+takeOffLandingUIPairs['KTAS-RPM1'][0]+' RPM) + '+takeOffLandingUIPairs['KTAS-pa1-rpm1-temp3-map3'][0]+'kts = '+takeOffLandingUIPairs['KTAS-pa2-rpm3-temp3-map3'][0]+'kts'));
 
     //Interpolation between alt
-    $('.KTAS-alt3-rpm3-temp3-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['KTAS-pa1-rpm3-temp3-map3'][0]+'kts - '+takeOffLandingUIPairs['KTAS-pa2-rpm3-temp3-map3'][0]+'kts }{'+takeOffLandingUIPairs['KTAS-alt2'][0]+'ft - '+takeOffLandingUIPairs['KTAS-alt1'][0]+' ft} \\cdot ( '+takeOffLandingUIPairs['KTAS-alt2'][0]+'ft - '+takeOffLandingUIPairs['KTAS-alt3'][0]+' ft) + '+takeOffLandingUIPairs['KTAS-pa2-rpm3-temp3-map3'][0]+'kts = '+takeOffLandingUIPairs['KTAS-pa3-rpm3-temp3-map3'][0]+'kts'));
+    $('.KTAS-alt3-rpm3-temp3-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['KTAS-pa2-rpm3-temp3-map3'][0]+'kts - '+takeOffLandingUIPairs['KTAS-pa1-rpm3-temp3-map3'][0]+'kts }{'+takeOffLandingUIPairs['KTAS-alt2'][0]+'ft - '+takeOffLandingUIPairs['KTAS-alt1'][0]+' ft} \\cdot ( '+takeOffLandingUIPairs['KTAS-alt3'][0]+'ft - '+takeOffLandingUIPairs['KTAS-alt1'][0]+' ft) + '+takeOffLandingUIPairs['KTAS-pa1-rpm3-temp3-map3'][0]+'kts = '+takeOffLandingUIPairs['KTAS-pa3-rpm3-temp3-map3'][0]+'kts'));
 
 
     //PWR
@@ -872,7 +872,7 @@ function calculateFromInputs()
     //$('.PWR-alt2-rpm3-temp3-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['PWR-pa1-rpm2-temp3-map3'][0]+'\\% - '+takeOffLandingUIPairs['PWR-pa1-rpm1-temp3-map3'][0]+'\\% }{'+takeOffLandingUIPairs['PWR-RPM2'][0]+'RPM - '+takeOffLandingUIPairs['PWR-RPM1'][0]+' RPM} \\cdot ( '+takeOffLandingUIPairs['PWR-RPM3'][0]+'RPM - '+takeOffLandingUIPairs['PWR-RPM1'][0]+' RPM) + '+takeOffLandingUIPairs['PWR-pa1-rpm1-temp3-map3'][0]+'\\% = '+takeOffLandingUIPairs['PWR-pa2-rpm3-temp3-map3'][0]+'\\%'));
 
     //Interpolation between alt
-    $('.PWR-alt3-rpm3-temp3-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['PWR-pa1-rpm3-temp3-map3'][0]+'\\% - '+takeOffLandingUIPairs['PWR-pa2-rpm3-temp3-map3'][0]+'\\% }{'+takeOffLandingUIPairs['PWR-alt2'][0]+'ft - '+takeOffLandingUIPairs['PWR-alt1'][0]+' ft} \\cdot ( '+takeOffLandingUIPairs['PWR-alt2'][0]+'ft - '+takeOffLandingUIPairs['PWR-alt3'][0]+' ft) + '+takeOffLandingUIPairs['PWR-pa2-rpm3-temp3-map3'][0]+'\\% = '+takeOffLandingUIPairs['PWR-pa3-rpm3-temp3-map3'][0]+'\\%'));
+    $('.PWR-alt3-rpm3-temp3-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['PWR-pa2-rpm3-temp3-map3'][0]+'\\% - '+takeOffLandingUIPairs['PWR-pa1-rpm3-temp3-map3'][0]+'\\% }{'+takeOffLandingUIPairs['PWR-alt2'][0]+'ft - '+takeOffLandingUIPairs['PWR-alt1'][0]+' ft} \\cdot ( '+takeOffLandingUIPairs['PWR-alt3'][0]+'ft - '+takeOffLandingUIPairs['PWR-alt1'][0]+' ft) + '+takeOffLandingUIPairs['PWR-pa1-rpm3-temp3-map3'][0]+'\\% = '+takeOffLandingUIPairs['PWR-pa3-rpm3-temp3-map3'][0]+'\\%'));
     
 }
 
