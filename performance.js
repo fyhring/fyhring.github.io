@@ -1433,6 +1433,24 @@ function calculateRocVxSe(pa, isaDeviation, tom) {
     return interpolate3D(pa, sfcTemp, tom, ROCVxSeMatrix)
 }
 
+//Time in climb
+function minutesInClimb(pa1,pa2,isaDeviation,mass) {
+    var alt = pa1
+    var minutes = 0
+    while (alt < pa2){
+        alt += 10
+        minutes += 10 / calculateRocVy(alt,isaDeviation,mass).result
+    }
+    return minutes
+}
+
+function boringMinutesInClimb(pa1,pa2,isaDeviation,mass) {
+    var distToClimb = pa2 - pa1
+    var rocAlt = (pa2 - pa1) / 3 * 2 + pa1
+    var rocVy = calculateRocVy(rocAlt,isaDeviation,mass).result
+    return distToClimb / rocVy
+}
+
 //Gradients
 function calculateToGradientVy(pa, isaDeviation, tom) {
     var ias = calculateToVy(pa, isaDeviation, tom).result
