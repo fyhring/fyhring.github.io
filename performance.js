@@ -816,6 +816,8 @@ function calculateFromInputs()
     //Interpolation between alt
     $('.FC-alt3-rpm3-temp3-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['FC-pa2-rpm3-temp3-map3'][0]+'\\tfrac{lt}{h} - '+takeOffLandingUIPairs['FC-pa1-rpm3-temp3-map3'][0]+'\\tfrac{lt}{h} }{'+takeOffLandingUIPairs['FC-alt2'][0]+'ft - '+takeOffLandingUIPairs['FC-alt1'][0]+' ft} \\cdot ( '+takeOffLandingUIPairs['FC-alt3'][0]+'ft - '+takeOffLandingUIPairs['FC-alt1'][0]+' ft) + '+takeOffLandingUIPairs['FC-pa1-rpm3-temp3-map3'][0]+'\\tfrac{lt}{h} = '+takeOffLandingUIPairs['FC-pa3-rpm3-temp3-map3'][0]+'\\tfrac{lt}{h}'));
 
+    $('.FC-both-engine-equation').html(MathJax.tex2svg(takeOffLandingUIPairs['FC-pa3-rpm3-temp3-map3'][0]+'\\tfrac{lt}{h} \\cdot 2 engines = '+takeOffLandingUIPairs['fuelConsumption2E'][0]+'\\tfrac{lt}{h}'));
+
 
     //KTAS
     //Interpolation between MAP for alt1-rpm1-temp1&2
