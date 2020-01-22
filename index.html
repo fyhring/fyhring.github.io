@@ -214,7 +214,7 @@
                     $$value_{actual} = {value_{fast} - value_{slow} \over RPM_{fast} - RPM_{slow}} \cdot (RPM_{actual} - RPM_{slow}) + value_{slow}$$
                 </li>
                 <li>Finally, the results from that are interpolated between altitudes:
-                    $$value_{actual} = {value_{low} - value_{high} \over alt_{high} - alt_{low}} \cdot (alt_{high} - alt_{actual}) + value_{high}$$
+                    $$value_{actual} = {value_{high} - value_{low} \over alt_{high} - alt_{low}} \cdot (alt_{actual} - alt_{low}) + value_{low}$$
                 </li>
             </ul>
 
