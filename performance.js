@@ -150,6 +150,9 @@ function calculateFromInputs()
         'roc-vy': [Math.floor(data.rocVy.result), 'fpm'],
         'grad-vy': [(Math.floor(data.gradVy.result * 10000)/100),'%'],
         'angle-vy': [(Math.floor(data.angleVy * 100)/100),'&#176'],
+        'min-in-climb': [data.minInClimb.string,'min'],
+        'dist-in-climb': [Math.ceil(data.distInClimb*100)/100, 'NM'],
+        'time-in-climb-vy': [Math.round(data.minInClimb.Vy.result),'kts'],
         'to-vy': [Math.round(data.toVy.result),'kias'],
         'to-roc-vy': [Math.round(data.toRocVy.result),'fpm'],
         'to-grad-vy': [(Math.floor(data.toGradVy * 10000)/100),'%'],
@@ -1436,19 +1439,38 @@ function calculateRocVxSe(pa, isaDeviation, tom) {
 //Time in climb
 function minutesInClimb(pa1,pa2,isaDeviation,mass) {
     var alt = pa1
-    var minutes = 0
+    var min = 0
     while (alt < pa2){
         alt += 10
-        minutes += 10 / calculateRocVy(alt,isaDeviation,mass).result
+        min += 10 / calculateRocVy(alt,isaDeviation,mass).result
     }
-    return minutes
+    var minutesDecimal = Math.ceil(min * 60) / 60
+    var minutes = Math.floor(minutesDecimal)
+    var seconds = Math.round((minutesDecimal - minutes) * 60)
+
+    return {
+        'number': minutesDecimal,
+        'string': minutes+':'+ ("0"+seconds).slice(-2)
+    }
 }
 
 function boringMinutesInClimb(pa1,pa2,isaDeviation,mass) {
     var distToClimb = pa2 - pa1
     var rocAlt = (pa2 - pa1) / 3 * 2 + pa1
     var rocVy = calculateRocVy(rocAlt,isaDeviation,mass).result
-    return distToClimb / rocVy
+    var Vy = calculateVy(rocAlt, isaDeviation,mass)
+    var minutesDecimal = Math.ceil(distToClimb / rocVy *60)/60
+    var minutes = Math.floor(minutesDecimal)
+    var seconds = Math.round((minutesDecimal - minutes) * 60)
+    return {
+        'number': minutesDecimal,
+        'string': minutes+':'+ ("0"+seconds).slice(-2),
+        'Vy': Vy
+    }
+}
+
+function distanceInMinutes(minutes, groundspeed) {
+    return groundspeed * (minutes / 60)
 }
 
 //Gradients
@@ -1778,6 +1800,8 @@ function calculateAll(pe, pa, msa, isaDeviation, tom, useTwoThirds)
     var MAP = 24,
         RPM = 2100;
 
+    var boringMinInClimb = boringMinutesInClimb(pe,pa,isaDeviation,tom);
+
     return {
         //CruiseData
         'Powersetting': calculatePowerSetting(pa,isaDeviation,MAP,RPM),
@@ -1819,6 +1843,10 @@ function calculateAll(pe, pa, msa, isaDeviation, tom, useTwoThirds)
         'rocVxSe': calculateRocVxSe(rocAltitude, isaDeviation, tom),
         'gradVxSe': calculateGradientVxSe(rocAltitude, isaDeviation, tom),
         'angleVxSe': calculateAngle(calculateGradientVxSe(rocAltitude,isaDeviation,tom).result),
+
+        //Climb
+        'minInClimb': boringMinInClimb,
+        'distInClimb': distanceInMinutes(boringMinInClimb.number,boringMinInClimb.Vy.result),
 
         //Ceilings (one engine inoperative, and feathered, flaps up)
         'OEIserviceCeiling': calculateOEIceiling(isaDeviation,tom),
