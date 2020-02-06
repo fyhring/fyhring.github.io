@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>M&amp;B P06T</title>
+    <title>Performance Calculator P06T</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -214,7 +214,7 @@
                     $$value_{actual} = {value_{fast} - value_{slow} \over RPM_{fast} - RPM_{slow}} \cdot (RPM_{actual} - RPM_{slow}) + value_{slow}$$
                 </li>
                 <li>Finally, the results from that are interpolated between altitudes:
-                    $$value_{actual} = {value_{low} - value_{high} \over alt_{high} - alt_{low}} \cdot (alt_{high} - alt_{actual}) + value_{high}$$
+                    $$value_{actual} = {value_{high} - value_{low} \over alt_{high} - alt_{low}} \cdot (alt_{actual} - alt_{low}) + value_{low}$$
                 </li>
             </ul>
 
@@ -477,7 +477,7 @@
                 <div class="row">
                     <table class="table table-borderless">
                         <tr>
-                            <td class="bold" width="40%">OEI Service Ceiling:</td>
+                            <td class="bold" width="40%">OEI Service Ceiling (True Alt):</td>
                             <td width="10%" class="bold oei-serviceceil">-</td>
 
                             <td>
@@ -488,7 +488,7 @@
 
                         </tr>
                         <tr>
-                            <td>OEI Absolute Ceiling:</td>
+                            <td>OEI Absolute Ceiling (True Alt):</td>
                             <td class="oei-absceil">-</td>
 
                             <td>
@@ -531,15 +531,15 @@
                             <td class="angle-vy">-</td>
                         </tr>
                         <tr>
-                                <td width="40%">
-                                    OEI ROC @ <span class="useMSAOrNotTxt">-</span> at V<sub>x<sub>se</sub></sub> <span class="vxse">-</span>
-                                </td>
-                                <td width="10%" class="roc-vxse">-</td>
-    
-                                <td>
-                                    M.E ROC @ <span class="useMSAOrNotTxt">-</span> at V<sub>x</sub> <span class="vx">-</span>
-                                </td>
-                                <td class="roc-vx">-</td>
+                            <td width="40%">
+                                OEI ROC @ <span class="useMSAOrNotTxt">-</span> at V<sub>x<sub>se</sub></sub> <span class="vxse">-</span>
+                            </td>
+                            <td width="10%" class="roc-vxse">-</td>
+
+                            <td>
+                                M.E ROC @ <span class="useMSAOrNotTxt">-</span> at V<sub>x</sub> <span class="vx">-</span>
+                            </td>
+                            <td class="roc-vx">-</td>
                                 
                             </tr>
                             <tr>
@@ -554,14 +554,24 @@
                                 <td class="grad-vx">-</td>
                             </tr>
                             <tr>
-                                    <td>
-                                        OEI Angle @ <span class="useMSAOrNotTxt">-</span> at V<sub>x<sub>se</sub></sub> <span class="vxse">-</span>
-                                    </td>
-                                    <td class="angle-vxse">-</td>
-                                    <td>
-                                        M.E Angle @ <span class="useMSAOrNotTxt">-</span> at V<sub>x</sub> <span class="vx">-</span>
-                                    </td>
-                                    <td class="angle-vx">-</td>
+                                <td>
+                                    OEI Angle @ <span class="useMSAOrNotTxt">-</span> at V<sub>x<sub>se</sub></sub> <span class="vxse">-</span>
+                                </td>
+                                <td class="angle-vxse">-</td>
+                                <td>
+                                    M.E Angle @ <span class="useMSAOrNotTxt">-</span> at V<sub>x</sub> <span class="vx">-</span>
+                                </td>
+                                <td class="angle-vx">-</td>
+                            </tr>
+                            <tr>
+                                <td class="bold">
+                                    Minutes in climb at V<sub>y</sub> <span class="time-in-climb-vy">-</span>
+                                </td>
+                                <td class="bold min-in-climb">-</td>
+                                <td class="bold">
+                                    Distance in climb at V<sub>y</sub> <span class="time-in-climb-vy">-</span>, No wind
+                                </td>
+                                <td class="bold dist-in-climb">-</td>
                             </tr>
                     </table>
                 </div>  
@@ -1891,7 +1901,8 @@
             </div>
             <!-- Space for more data... -->
             <hr>
-            <div class="row" id="cruise">
+            <div class="page-break"></div>
+            <div class="row" id="fuelConsumption">
                 <div class="col-sm-6">
                     <h4>Fuel Consumption</h4>
                     <b class="FC-alt1">-</b>
@@ -2014,8 +2025,264 @@
                     <div class="FC-alt2-rpm3-temp3-equation"></div>
                     <br><hr class="thicc"><br>
                     <div class="FC-alt3-rpm3-temp3-equation"></div>
+                    <div class="FC-both-engine-equation"></div>
                 </div>
             </div>
+            <hr>
+            <div class="page-break"></div>
+            <div class="row" id="KTAS">
+                <div class="col-sm-6">
+                    <h4>True Airspeed</h4>
+                    <b class="KTAS-alt1">-</b>
+                    <div class="result-weight-sector">
+                        <table class="table table-sm">
+                            <thead>
+                                <th>Temp\MAP</th>
+                                <!-- First letter meaning altitude, second RPM -->
+                                <th class="KTAS-MAP1AB">-</th>
+                                <th class="KTAS-MAP2AB">-</th>
+                                <th class="KTAS-MAP3">-</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong class="KTAS-temp1"></strong></td>
+                                    <td class="KTAS-pa1-rpm2-temp1-map1">-</td>
+                                    <td class="KTAS-pa1-rpm2-temp1-map2">-</td>
+                                    <td class="KTAS-pa1-rpm2-temp1-map3">-</td>
+                                </tr>
+                                <tr>
+                                    <td><strong class="KTAS-temp2"></strong></td>
+                                    <td class="KTAS-pa1-rpm2-temp2-map1">-</td>
+                                    <td class="KTAS-pa1-rpm2-temp2-map2">-</td>
+                                    <td class="KTAS-pa1-rpm2-temp2-map3">-</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <b class="KTAS-alt2">-</b>
+                    <div class="result-weight-sector">
+                        <table class="table table-sm">
+                            <thead>
+                                <th>Temp\MAP</th>
+                                <th class="KTAS-MAP1BB">-</th>
+                                <th class="KTAS-MAP2BB">-</th>
+                                <th class="KTAS-MAP3">-</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong class="KTAS-temp1"></strong></td>
+                                    <td class="KTAS-pa2-rpm2-temp1-map1">-</td>
+                                    <td class="KTAS-pa2-rpm2-temp1-map2">-</td>
+                                    <td class="KTAS-pa2-rpm2-temp1-map3">-</td>
+                                </tr>
+                                <tr>
+                                    <td><strong class="KTAS-temp2"></strong></td>
+                                    <td class="KTAS-pa2-rpm2-temp2-map1">-</td>
+                                    <td class="KTAS-pa2-rpm2-temp2-map2">-</td>
+                                    <td class="KTAS-pa2-rpm2-temp2-map3">-</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="result-weight-sector">
+                        <table class="table table-sm">
+                            <thead>
+                                <th>Alt\Temp</th>
+                                <th class="KTAS-temp1"></th>
+                                <th class="KTAS-temp2"></th>
+                                <th class="KTAS-temp3"></th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong class="KTAS-alt1"></strong></td>
+                                    <td class="KTAS-pa1-rpm2-temp1-map3">-</td>
+                                    <td class="KTAS-pa1-rpm2-temp2-map3">-</td>
+                                    <td class="KTAS-pa1-rpm2-temp3-map3">-</td>
+                                </tr>
+                                <tr>
+                                    <td><strong class="KTAS-alt2"></strong></td>
+                                    <td class="KTAS-pa2-rpm2-temp1-map3">-</td>
+                                    <td class="KTAS-pa2-rpm2-temp2-map3">-</td>
+                                    <td class="KTAS-pa2-rpm2-temp3-map3">-</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="result-weight-sector">
+                        <table class="table table-sm">
+                            <thead>
+                                <th>Temp\Alt</th>
+                                <th class="KTAS-alt1">-</th>
+                                <th class="KTAS-alt2">-</th>
+                                <th class="KTAS-alt3">-</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong class="KTAS-temp3"></strong></td>
+                                    <td class="KTAS-pa1-rpm3-temp3-map3">-</td>
+                                    <td class="KTAS-pa2-rpm3-temp3-map3">-</td>
+                                    <td class="KTAS-pa3-rpm3-temp3-map3">-</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div style="margin-top: 30px">&nbsp;</div>
+                    <div class="KTAS-alt1-rpm1-temp1-equation"></div>
+                    <div class="KTAS-alt1-rpm1-temp2-equation"></div>
+                    <hr>
+                    <div class="KTAS-alt1-rpm2-temp1-equation"></div>
+                    <div class="KTAS-alt1-rpm2-temp2-equation"></div>
+                    <hr>
+                    <div class="KTAS-alt2-rpm1-temp1-equation"></div>
+                    <div class="KTAS-alt2-rpm1-temp2-equation"></div>
+                    <hr>
+                    <div class="KTAS-alt2-rpm2-temp1-equation"></div>
+                    <div class="KTAS-alt2-rpm2-temp2-equation"></div>
+                    <br><hr class="thicc"><br>
+                    <div class="KTAS-alt1-rpm1-temp3-equation"></div>
+                    <div class="KTAS-alt1-rpm2-temp3-equation"></div>
+                    <hr>
+                    <div class="KTAS-alt2-rpm1-temp3-equation"></div>
+                    <div class="KTAS-alt2-rpm2-temp3-equation"></div>
+                    <br><hr class="thicc"><br>
+                    <div class="KTAS-alt1-rpm3-temp3-equation"></div>
+                    <div class="KTAS-alt2-rpm3-temp3-equation"></div>
+                    <br><hr class="thicc"><br>
+                    <div class="KTAS-alt3-rpm3-temp3-equation"></div>
+                </div>
+            </div>
+            <hr>
+            <div class="page-break"></div>
+            <div class="row" id="PWR">
+                <div class="col-sm-6">
+                    <h4>Power Setting</h4>
+                    <b class="PWR-alt1">-</b>
+                    <div class="result-weight-sector">
+                        <table class="table table-sm">
+                            <thead>
+                                <th>Temp\MAP</th>
+                                <!-- First letter meaning altitude, second RPM -->
+                                <th class="PWR-MAP1AB">-</th>
+                                <th class="PWR-MAP2AB">-</th>
+                                <th class="PWR-MAP3">-</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong class="PWR-temp1"></strong></td>
+                                    <td class="PWR-pa1-rpm2-temp1-map1">-</td>
+                                    <td class="PWR-pa1-rpm2-temp1-map2">-</td>
+                                    <td class="PWR-pa1-rpm2-temp1-map3">-</td>
+                                </tr>
+                                <tr>
+                                    <td><strong class="PWR-temp2"></strong></td>
+                                    <td class="PWR-pa1-rpm2-temp2-map1">-</td>
+                                    <td class="PWR-pa1-rpm2-temp2-map2">-</td>
+                                    <td class="PWR-pa1-rpm2-temp2-map3">-</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <b class="PWR-alt2">-</b>
+                    <div class="result-weight-sector">
+                        <table class="table table-sm">
+                            <thead>
+                                <th>Temp\MAP</th>
+                                <th class="PWR-MAP1BB">-</th>
+                                <th class="PWR-MAP2BB">-</th>
+                                <th class="PWR-MAP3">-</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong class="PWR-temp1"></strong></td>
+                                    <td class="PWR-pa2-rpm2-temp1-map1">-</td>
+                                    <td class="PWR-pa2-rpm2-temp1-map2">-</td>
+                                    <td class="PWR-pa2-rpm2-temp1-map3">-</td>
+                                </tr>
+                                <tr>
+                                    <td><strong class="PWR-temp2"></strong></td>
+                                    <td class="PWR-pa2-rpm2-temp2-map1">-</td>
+                                    <td class="PWR-pa2-rpm2-temp2-map2">-</td>
+                                    <td class="PWR-pa2-rpm2-temp2-map3">-</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="result-weight-sector">
+                        <table class="table table-sm">
+                            <thead>
+                                <th>Alt\Temp</th>
+                                <th class="PWR-temp1"></th>
+                                <th class="PWR-temp2"></th>
+                                <th class="PWR-temp3"></th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong class="PWR-alt1"></strong></td>
+                                    <td class="PWR-pa1-rpm2-temp1-map3">-</td>
+                                    <td class="PWR-pa1-rpm2-temp2-map3">-</td>
+                                    <td class="PWR-pa1-rpm2-temp3-map3">-</td>
+                                </tr>
+                                <tr>
+                                    <td><strong class="PWR-alt2"></strong></td>
+                                    <td class="PWR-pa2-rpm2-temp1-map3">-</td>
+                                    <td class="PWR-pa2-rpm2-temp2-map3">-</td>
+                                    <td class="PWR-pa2-rpm2-temp3-map3">-</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="result-weight-sector">
+                        <table class="table table-sm">
+                            <thead>
+                                <th>Temp\Alt</th>
+                                <th class="PWR-alt1">-</th>
+                                <th class="PWR-alt2">-</th>
+                                <th class="PWR-alt3">-</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong class="PWR-temp3"></strong></td>
+                                    <td class="PWR-pa1-rpm3-temp3-map3">-</td>
+                                    <td class="PWR-pa2-rpm3-temp3-map3">-</td>
+                                    <td class="PWR-pa3-rpm3-temp3-map3">-</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div style="margin-top: 30px">&nbsp;</div>
+                    <div class="PWR-alt1-rpm1-temp1-equation"></div>
+                    <div class="PWR-alt1-rpm1-temp2-equation"></div>
+                    <hr>
+                    <div class="PWR-alt1-rpm2-temp1-equation"></div>
+                    <div class="PWR-alt1-rpm2-temp2-equation"></div>
+                    <hr>
+                    <div class="PWR-alt2-rpm1-temp1-equation"></div>
+                    <div class="PWR-alt2-rpm1-temp2-equation"></div>
+                    <hr>
+                    <div class="PWR-alt2-rpm2-temp1-equation"></div>
+                    <div class="PWR-alt2-rpm2-temp2-equation"></div>
+                    <br><hr class="thicc"><br>
+                    <div class="PWR-alt1-rpm1-temp3-equation"></div>
+                    <div class="PWR-alt1-rpm2-temp3-equation"></div>
+                    <hr>
+                    <div class="PWR-alt2-rpm1-temp3-equation"></div>
+                    <div class="PWR-alt2-rpm2-temp3-equation"></div>
+                    <br><hr class="thicc"><br>
+                    <div class="PWR-alt1-rpm3-temp3-equation"></div>
+                    <div class="PWR-alt2-rpm3-temp3-equation"></div>
+                    <br><hr class="thicc"><br>
+                    <div class="PWR-alt3-rpm3-temp3-equation"></div>
+                </div>
+            </div>
+        </div>
         </div>
     </div>
     <div class="container screen-only">

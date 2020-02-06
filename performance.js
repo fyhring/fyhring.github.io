@@ -150,6 +150,9 @@ function calculateFromInputs()
         'roc-vy': [Math.floor(data.rocVy.result), 'fpm'],
         'grad-vy': [(Math.floor(data.gradVy.result * 10000)/100),'%'],
         'angle-vy': [(Math.floor(data.angleVy * 100)/100),'&#176'],
+        'min-in-climb': [data.minInClimb.string,'min'],
+        'dist-in-climb': [Math.ceil(data.distInClimb*100)/100, 'NM'],
+        'time-in-climb-vy': [Math.round(data.minInClimb.Vy.result),'kts'],
         'to-vy': [Math.round(data.toVy.result),'kias'],
         'to-roc-vy': [Math.round(data.toRocVy.result),'fpm'],
         'to-grad-vy': [(Math.floor(data.toGradVy * 10000)/100),'%'],
@@ -236,6 +239,42 @@ function calculateFromInputs()
         'FC-alt1': [data.FuelConsumption.keys.alt1,'ft'],
         'FC-alt2': [data.FuelConsumption.keys.alt2,'ft'],
         'FC-alt3': [data.FuelConsumption.keys.alt3,'ft'],
+        'KTAS-MAP1AA': [data.KTAS.keys.MAP1AA,'inHg'],
+        'KTAS-MAP1AB': [data.KTAS.keys.MAP1AB,'inHg'],
+        'KTAS-MAP1BA': [data.KTAS.keys.MAP1BA,'inHg'],
+        'KTAS-MAP1BB': [data.KTAS.keys.MAP1BB,'inHg'],
+        'KTAS-MAP2AA': [data.KTAS.keys.MAP2AA,'inHg'],
+        'KTAS-MAP2AB': [data.KTAS.keys.MAP2AB,'inHg'],
+        'KTAS-MAP2BA': [data.KTAS.keys.MAP2BA,'inHg'],
+        'KTAS-MAP2BB': [data.KTAS.keys.MAP2BB,'inHg'],
+        'KTAS-MAP3': [data.KTAS.keys.MAP3,'inHg'],
+        'KTAS-temp1': [data.KTAS.keys.temp1,'&deg;C'],
+        'KTAS-temp2': [data.KTAS.keys.temp2,'&deg;C'],
+        'KTAS-temp3': [data.KTAS.keys.temp3,'&deg;C'],
+        'KTAS-RPM1': [data.KTAS.keys.RPM1,'RPM'],
+        'KTAS-RPM2': [data.KTAS.keys.RPM2,'RPM'],
+        'KTAS-RPM3': [data.KTAS.keys.RPM3,'RPM'],
+        'KTAS-alt1': [data.KTAS.keys.alt1,'ft'],
+        'KTAS-alt2': [data.KTAS.keys.alt2,'ft'],
+        'KTAS-alt3': [data.KTAS.keys.alt3,'ft'],
+        'PWR-MAP1AA': [data.Powersetting.keys.MAP1AA,'inHg'],
+        'PWR-MAP1AB': [data.Powersetting.keys.MAP1AB,'inHg'],
+        'PWR-MAP1BA': [data.Powersetting.keys.MAP1BA,'inHg'],
+        'PWR-MAP1BB': [data.Powersetting.keys.MAP1BB,'inHg'],
+        'PWR-MAP2AA': [data.Powersetting.keys.MAP2AA,'inHg'],
+        'PWR-MAP2AB': [data.Powersetting.keys.MAP2AB,'inHg'],
+        'PWR-MAP2BA': [data.Powersetting.keys.MAP2BA,'inHg'],
+        'PWR-MAP2BB': [data.Powersetting.keys.MAP2BB,'inHg'],
+        'PWR-MAP3': [data.Powersetting.keys.MAP3,'inHg'],
+        'PWR-temp1': [data.Powersetting.keys.temp1,'&deg;C'],
+        'PWR-temp2': [data.Powersetting.keys.temp2,'&deg;C'],
+        'PWR-temp3': [data.Powersetting.keys.temp3,'&deg;C'],
+        'PWR-RPM1': [data.Powersetting.keys.RPM1,'RPM'],
+        'PWR-RPM2': [data.Powersetting.keys.RPM2,'RPM'],
+        'PWR-RPM3': [data.Powersetting.keys.RPM3,'RPM'],
+        'PWR-alt1': [data.Powersetting.keys.alt1,'ft'],
+        'PWR-alt2': [data.Powersetting.keys.alt2,'ft'],
+        'PWR-alt3': [data.Powersetting.keys.alt3,'ft'],
 
         // Environment
         'env-qnh': [data.env.qnh, 'hPa'],
@@ -473,6 +512,78 @@ function calculateFromInputs()
         
         'FC-pa3-rpm3-temp3-map3': [Math.ceil(data.FuelConsumption.result*10)/10,'lt/h'],
 
+        //KTAS
+        'KTAS-pa1-rpm1-temp1-map1': [Math.ceil(data.KTAS.data["1D1"][data.KTAS.keys.temp1+'-raw'][0]*10)/10,'kts'],
+        'KTAS-pa1-rpm1-temp1-map2': [Math.ceil(data.KTAS.data["1D1"][data.KTAS.keys.temp1+'-raw'][1]*10)/10,'kts'],
+        'KTAS-pa1-rpm1-temp1-map3': [Math.ceil(data.KTAS.data["1D1"][data.KTAS.keys.temp1]*10)/10,'kts'],
+        'KTAS-pa1-rpm1-temp2-map1': [Math.ceil(data.KTAS.data["1D1"][data.KTAS.keys.temp2+'-raw'][0]*10)/10,'kts'],
+        'KTAS-pa1-rpm1-temp2-map2': [Math.ceil(data.KTAS.data["1D1"][data.KTAS.keys.temp2+'-raw'][1]*10)/10,'kts'],
+        'KTAS-pa1-rpm1-temp2-map3': [Math.ceil(data.KTAS.data["1D1"][data.KTAS.keys.temp2]*10)/10,'kts'],
+        'KTAS-pa1-rpm2-temp1-map1': [Math.ceil(data.KTAS.data["1D2"][data.KTAS.keys.temp1+'-raw'][0]*10)/10,'kts'],
+        'KTAS-pa1-rpm2-temp1-map2': [Math.ceil(data.KTAS.data["1D2"][data.KTAS.keys.temp1+'-raw'][1]*10)/10,'kts'],
+        'KTAS-pa1-rpm2-temp1-map3': [Math.ceil(data.KTAS.data["1D2"][data.KTAS.keys.temp1]*10)/10,'kts'],
+        'KTAS-pa1-rpm2-temp2-map1': [Math.ceil(data.KTAS.data["1D2"][data.KTAS.keys.temp2+'-raw'][0]*10)/10,'kts'],
+        'KTAS-pa1-rpm2-temp2-map2': [Math.ceil(data.KTAS.data["1D2"][data.KTAS.keys.temp2+'-raw'][1]*10)/10,'kts'],
+        'KTAS-pa1-rpm2-temp2-map3': [Math.ceil(data.KTAS.data["1D2"][data.KTAS.keys.temp2]*10)/10,'kts'],
+        'KTAS-pa2-rpm1-temp1-map1': [Math.ceil(data.KTAS.data["1D3"][data.KTAS.keys.temp1+'-raw'][0]*10)/10,'kts'],
+        'KTAS-pa2-rpm1-temp1-map2': [Math.ceil(data.KTAS.data["1D3"][data.KTAS.keys.temp1+'-raw'][1]*10)/10,'kts'],
+        'KTAS-pa2-rpm1-temp1-map3': [Math.ceil(data.KTAS.data["1D3"][data.KTAS.keys.temp1]*10)/10,'kts'],
+        'KTAS-pa2-rpm1-temp2-map1': [Math.ceil(data.KTAS.data["1D3"][data.KTAS.keys.temp2+'-raw'][0]*10)/10,'kts'],
+        'KTAS-pa2-rpm1-temp2-map2': [Math.ceil(data.KTAS.data["1D3"][data.KTAS.keys.temp2+'-raw'][1]*10)/10,'kts'],
+        'KTAS-pa2-rpm1-temp2-map3': [Math.ceil(data.KTAS.data["1D3"][data.KTAS.keys.temp2]*10)/10,'kts'],
+        'KTAS-pa2-rpm2-temp1-map1': [Math.ceil(data.KTAS.data["1D4"][data.KTAS.keys.temp1+'-raw'][0]*10)/10,'kts'],
+        'KTAS-pa2-rpm2-temp1-map2': [Math.ceil(data.KTAS.data["1D4"][data.KTAS.keys.temp1+'-raw'][1]*10)/10,'kts'],
+        'KTAS-pa2-rpm2-temp1-map3': [Math.ceil(data.KTAS.data["1D4"][data.KTAS.keys.temp1]*10)/10,'kts'],
+        'KTAS-pa2-rpm2-temp2-map1': [Math.ceil(data.KTAS.data["1D4"][data.KTAS.keys.temp2+'-raw'][0]*10)/10,'kts'],
+        'KTAS-pa2-rpm2-temp2-map2': [Math.ceil(data.KTAS.data["1D4"][data.KTAS.keys.temp2+'-raw'][1]*10)/10,'kts'],
+        'KTAS-pa2-rpm2-temp2-map3': [Math.ceil(data.KTAS.data["1D4"][data.KTAS.keys.temp2]*10)/10,'kts'],
+
+        'KTAS-pa1-rpm1-temp3-map3': [Math.ceil(data.KTAS.data["2D1"][data.KTAS.keys.RPM1]*10)/10,'kts'],
+        'KTAS-pa1-rpm2-temp3-map3': [Math.ceil(data.KTAS.data["2D1"][data.KTAS.keys.RPM2]*10)/10,'kts'],
+        'KTAS-pa2-rpm1-temp3-map3': [Math.ceil(data.KTAS.data["2D2"][data.KTAS.keys.RPM1]*10)/10,'kts'],
+        'KTAS-pa2-rpm2-temp3-map3': [Math.ceil(data.KTAS.data["2D2"][data.KTAS.keys.RPM2]*10)/10,'kts'],
+
+        'KTAS-pa1-rpm3-temp3-map3': [Math.ceil(data.KTAS.data["3D"][data.KTAS.keys.alt1]*10)/10,'kts'],
+        'KTAS-pa2-rpm3-temp3-map3': [Math.ceil(data.KTAS.data["3D"][data.KTAS.keys.alt2]*10)/10,'kts'],
+        
+        'KTAS-pa3-rpm3-temp3-map3': [Math.ceil(data.KTAS.result*10)/10,'kts'],
+
+        //Power Setting
+        'PWR-pa1-rpm1-temp1-map1': [Math.ceil(data.Powersetting.data["1D1"][data.Powersetting.keys.temp1+'-raw'][0]*10)/10,'%'],
+        'PWR-pa1-rpm1-temp1-map2': [Math.ceil(data.Powersetting.data["1D1"][data.Powersetting.keys.temp1+'-raw'][1]*10)/10,'%'],
+        'PWR-pa1-rpm1-temp1-map3': [Math.ceil(data.Powersetting.data["1D1"][data.Powersetting.keys.temp1]*10)/10,'%'],
+        'PWR-pa1-rpm1-temp2-map1': [Math.ceil(data.Powersetting.data["1D1"][data.Powersetting.keys.temp2+'-raw'][0]*10)/10,'%'],
+        'PWR-pa1-rpm1-temp2-map2': [Math.ceil(data.Powersetting.data["1D1"][data.Powersetting.keys.temp2+'-raw'][1]*10)/10,'%'],
+        'PWR-pa1-rpm1-temp2-map3': [Math.ceil(data.Powersetting.data["1D1"][data.Powersetting.keys.temp2]*10)/10,'%'],
+        'PWR-pa1-rpm2-temp1-map1': [Math.ceil(data.Powersetting.data["1D2"][data.Powersetting.keys.temp1+'-raw'][0]*10)/10,'%'],
+        'PWR-pa1-rpm2-temp1-map2': [Math.ceil(data.Powersetting.data["1D2"][data.Powersetting.keys.temp1+'-raw'][1]*10)/10,'%'],
+        'PWR-pa1-rpm2-temp1-map3': [Math.ceil(data.Powersetting.data["1D2"][data.Powersetting.keys.temp1]*10)/10,'%'],
+        'PWR-pa1-rpm2-temp2-map1': [Math.ceil(data.Powersetting.data["1D2"][data.Powersetting.keys.temp2+'-raw'][0]*10)/10,'%'],
+        'PWR-pa1-rpm2-temp2-map2': [Math.ceil(data.Powersetting.data["1D2"][data.Powersetting.keys.temp2+'-raw'][1]*10)/10,'%'],
+        'PWR-pa1-rpm2-temp2-map3': [Math.ceil(data.Powersetting.data["1D2"][data.Powersetting.keys.temp2]*10)/10,'%'],
+        'PWR-pa2-rpm1-temp1-map1': [Math.ceil(data.Powersetting.data["1D3"][data.Powersetting.keys.temp1+'-raw'][0]*10)/10,'%'],
+        'PWR-pa2-rpm1-temp1-map2': [Math.ceil(data.Powersetting.data["1D3"][data.Powersetting.keys.temp1+'-raw'][1]*10)/10,'%'],
+        'PWR-pa2-rpm1-temp1-map3': [Math.ceil(data.Powersetting.data["1D3"][data.Powersetting.keys.temp1]*10)/10,'%'],
+        'PWR-pa2-rpm1-temp2-map1': [Math.ceil(data.Powersetting.data["1D3"][data.Powersetting.keys.temp2+'-raw'][0]*10)/10,'%'],
+        'PWR-pa2-rpm1-temp2-map2': [Math.ceil(data.Powersetting.data["1D3"][data.Powersetting.keys.temp2+'-raw'][1]*10)/10,'%'],
+        'PWR-pa2-rpm1-temp2-map3': [Math.ceil(data.Powersetting.data["1D3"][data.Powersetting.keys.temp2]*10)/10,'%'],
+        'PWR-pa2-rpm2-temp1-map1': [Math.ceil(data.Powersetting.data["1D4"][data.Powersetting.keys.temp1+'-raw'][0]*10)/10,'%'],
+        'PWR-pa2-rpm2-temp1-map2': [Math.ceil(data.Powersetting.data["1D4"][data.Powersetting.keys.temp1+'-raw'][1]*10)/10,'%'],
+        'PWR-pa2-rpm2-temp1-map3': [Math.ceil(data.Powersetting.data["1D4"][data.Powersetting.keys.temp1]*10)/10,'%'],
+        'PWR-pa2-rpm2-temp2-map1': [Math.ceil(data.Powersetting.data["1D4"][data.Powersetting.keys.temp2+'-raw'][0]*10)/10,'%'],
+        'PWR-pa2-rpm2-temp2-map2': [Math.ceil(data.Powersetting.data["1D4"][data.Powersetting.keys.temp2+'-raw'][1]*10)/10,'%'],
+        'PWR-pa2-rpm2-temp2-map3': [Math.ceil(data.Powersetting.data["1D4"][data.Powersetting.keys.temp2]*10)/10,'%'],
+
+        'PWR-pa1-rpm1-temp3-map3': [Math.ceil(data.Powersetting.data["2D1"][data.Powersetting.keys.RPM1]*10)/10,'%'],
+        'PWR-pa1-rpm2-temp3-map3': [Math.ceil(data.Powersetting.data["2D1"][data.Powersetting.keys.RPM2]*10)/10,'%'],
+        'PWR-pa2-rpm1-temp3-map3': [Math.ceil(data.Powersetting.data["2D2"][data.Powersetting.keys.RPM1]*10)/10,'%'],
+        'PWR-pa2-rpm2-temp3-map3': [Math.ceil(data.Powersetting.data["2D2"][data.Powersetting.keys.RPM2]*10)/10,'%'],
+
+        'PWR-pa1-rpm3-temp3-map3': [Math.ceil(data.Powersetting.data["3D"][data.Powersetting.keys.alt1]*10)/10,'%'],
+        'PWR-pa2-rpm3-temp3-map3': [Math.ceil(data.Powersetting.data["3D"][data.Powersetting.keys.alt2]*10)/10,'%'],
+        
+        'PWR-pa3-rpm3-temp3-map3': [Math.ceil(data.Powersetting.result*10)/10,'%'],
+
     };
     
     updateUIValues(takeOffLandingUIPairs);
@@ -681,7 +792,6 @@ function calculateFromInputs()
     $('.service-ceiling-roc-w3-temp3-equation').html(MathJax.tex2svg('\\frac{ '+ takeOffLandingUIPairs['service-ceiling-roc-w1-alt3-temp3'][0] +'\\tfrac{ft}{min} - '+ takeOffLandingUIPairs['service-ceiling-roc-w2-alt3-temp3'][0] +'\\tfrac{ft}{min} }{ '+ takeOffLandingUIPairs['service-ceiling-roc-mass2'][0] +'kg - '+ takeOffLandingUIPairs['service-ceiling-roc-mass1'][0] +'kg } \\cdot ('+ takeOffLandingUIPairs['service-ceiling-roc-mass1'][0] +'kg - '+ takeOffLandingUIPairs['service-ceiling-roc-mass3'][0] +'kg) + '+ takeOffLandingUIPairs['service-ceiling-roc-w1-alt3-temp3'][0] +'\\tfrac{ft}{min} = '+ takeOffLandingUIPairs['service-ceiling-roc-w3-alt3-temp3'][0] +'\\tfrac{ft}{min}', {display: true}));
 
     //Fuel Consumption
-    //OBS OBS OBS - These are not double checked to be correct
     //Interpolation between MAP for alt1-rpm1-temp1&2
     //$('.FC-alt1-rpm1-temp1-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['FC-pa1-rpm1-temp1-map2'][0]+'\\tfrac{lt}{h} - '+takeOffLandingUIPairs['FC-pa1-rpm1-temp1-map1'][0]+'\\tfrac{lt}{h} }{'+takeOffLandingUIPairs['FC-MAP2AA'][0]+'inHg - '+takeOffLandingUIPairs['FC-MAP1AA'][0]+' inHg} \\cdot ( '+takeOffLandingUIPairs['FC-MAP3'][0]+'inHg - '+takeOffLandingUIPairs['FC-MAP1AA'][0]+' inHg) + '+takeOffLandingUIPairs['FC-pa1-rpm1-temp1-map1'][0]+'\\tfrac{lt}{h} = '+takeOffLandingUIPairs['FC-pa1-rpm1-temp1-map3'][0]+'\\tfrac{lt}{h}'));
     //$('.FC-alt1-rpm1-temp2-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['FC-pa1-rpm1-temp2-map2'][0]+'\\tfrac{lt}{h} - '+takeOffLandingUIPairs['FC-pa1-rpm1-temp2-map1'][0]+'\\tfrac{lt}{h} }{'+takeOffLandingUIPairs['FC-MAP2AA'][0]+'inHg - '+takeOffLandingUIPairs['FC-MAP1AA'][0]+' inHg} \\cdot ( '+takeOffLandingUIPairs['FC-MAP3'][0]+'inHg - '+takeOffLandingUIPairs['FC-MAP1AA'][0]+' inHg) + '+takeOffLandingUIPairs['FC-pa1-rpm1-temp2-map1'][0]+'\\tfrac{lt}{h} = '+takeOffLandingUIPairs['FC-pa1-rpm1-temp2-map3'][0]+'\\tfrac{lt}{h}'));
@@ -707,7 +817,67 @@ function calculateFromInputs()
     //$('.FC-alt2-rpm3-temp3-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['FC-pa1-rpm2-temp3-map3'][0]+'\\tfrac{lt}{h} - '+takeOffLandingUIPairs['FC-pa1-rpm1-temp3-map3'][0]+'\\tfrac{lt}{h} }{'+takeOffLandingUIPairs['FC-RPM2'][0]+'RPM - '+takeOffLandingUIPairs['FC-RPM1'][0]+' RPM} \\cdot ( '+takeOffLandingUIPairs['FC-RPM3'][0]+'RPM - '+takeOffLandingUIPairs['FC-RPM1'][0]+' RPM) + '+takeOffLandingUIPairs['FC-pa1-rpm1-temp3-map3'][0]+'\\tfrac{lt}{h} = '+takeOffLandingUIPairs['FC-pa2-rpm3-temp3-map3'][0]+'\\tfrac{lt}{h}'));
 
     //Interpolation between alt
-    $('.FC-alt3-rpm3-temp3-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['FC-pa1-rpm3-temp3-map3'][0]+'\\tfrac{lt}{h} - '+takeOffLandingUIPairs['FC-pa2-rpm3-temp3-map3'][0]+'\\tfrac{lt}{h} }{'+takeOffLandingUIPairs['FC-alt2'][0]+'ft - '+takeOffLandingUIPairs['FC-alt1'][0]+' ft} \\cdot ( '+takeOffLandingUIPairs['FC-alt2'][0]+'ft - '+takeOffLandingUIPairs['FC-alt3'][0]+' ft) + '+takeOffLandingUIPairs['FC-pa2-rpm3-temp3-map3'][0]+'\\tfrac{lt}{h} = '+takeOffLandingUIPairs['FC-pa3-rpm3-temp3-map3'][0]+'\\tfrac{lt}{h}'));
+    $('.FC-alt3-rpm3-temp3-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['FC-pa2-rpm3-temp3-map3'][0]+'\\tfrac{lt}{h} - '+takeOffLandingUIPairs['FC-pa1-rpm3-temp3-map3'][0]+'\\tfrac{lt}{h} }{'+takeOffLandingUIPairs['FC-alt2'][0]+'ft - '+takeOffLandingUIPairs['FC-alt1'][0]+' ft} \\cdot ( '+takeOffLandingUIPairs['FC-alt3'][0]+'ft - '+takeOffLandingUIPairs['FC-alt1'][0]+' ft) + '+takeOffLandingUIPairs['FC-pa1-rpm3-temp3-map3'][0]+'\\tfrac{lt}{h} = '+takeOffLandingUIPairs['FC-pa3-rpm3-temp3-map3'][0]+'\\tfrac{lt}{h}'));
+
+    $('.FC-both-engine-equation').html(MathJax.tex2svg(takeOffLandingUIPairs['FC-pa3-rpm3-temp3-map3'][0]+'\\tfrac{lt}{h} \\cdot 2 engines = '+takeOffLandingUIPairs['fuelConsumption2E'][0]+'\\tfrac{lt}{h}'));
+
+
+    //KTAS
+    //Interpolation between MAP for alt1-rpm1-temp1&2
+    //$('.KTAS-alt1-rpm1-temp1-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['KTAS-pa1-rpm1-temp1-map2'][0]+'kts - '+takeOffLandingUIPairs['KTAS-pa1-rpm1-temp1-map1'][0]+'kts }{'+takeOffLandingUIPairs['KTAS-MAP2AA'][0]+'inHg - '+takeOffLandingUIPairs['KTAS-MAP1AA'][0]+' inHg} \\cdot ( '+takeOffLandingUIPairs['KTAS-MAP3'][0]+'inHg - '+takeOffLandingUIPairs['KTAS-MAP1AA'][0]+' inHg) + '+takeOffLandingUIPairs['KTAS-pa1-rpm1-temp1-map1'][0]+'kts = '+takeOffLandingUIPairs['KTAS-pa1-rpm1-temp1-map3'][0]+'kts'));
+    //$('.KTAS-alt1-rpm1-temp2-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['KTAS-pa1-rpm1-temp2-map2'][0]+'kts - '+takeOffLandingUIPairs['KTAS-pa1-rpm1-temp2-map1'][0]+'kts }{'+takeOffLandingUIPairs['KTAS-MAP2AA'][0]+'inHg - '+takeOffLandingUIPairs['KTAS-MAP1AA'][0]+' inHg} \\cdot ( '+takeOffLandingUIPairs['KTAS-MAP3'][0]+'inHg - '+takeOffLandingUIPairs['KTAS-MAP1AA'][0]+' inHg) + '+takeOffLandingUIPairs['KTAS-pa1-rpm1-temp2-map1'][0]+'kts = '+takeOffLandingUIPairs['KTAS-pa1-rpm1-temp2-map3'][0]+'kts'));
+    //Interpolation between MAP for alt1-rpm2-temp1&2
+    $('.KTAS-alt1-rpm2-temp1-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['KTAS-pa1-rpm2-temp1-map2'][0]+'kts - '+takeOffLandingUIPairs['KTAS-pa1-rpm2-temp1-map1'][0]+'kts }{'+takeOffLandingUIPairs['KTAS-MAP2BA'][0]+'inHg - '+takeOffLandingUIPairs['KTAS-MAP1BA'][0]+' inHg} \\cdot ( '+takeOffLandingUIPairs['KTAS-MAP3'][0]+'inHg - '+takeOffLandingUIPairs['KTAS-MAP1BA'][0]+' inHg) + '+takeOffLandingUIPairs['KTAS-pa1-rpm2-temp1-map1'][0]+'kts = '+takeOffLandingUIPairs['KTAS-pa1-rpm2-temp1-map3'][0]+'kts'));
+    $('.KTAS-alt1-rpm2-temp2-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['KTAS-pa1-rpm2-temp2-map2'][0]+'kts - '+takeOffLandingUIPairs['KTAS-pa1-rpm2-temp2-map1'][0]+'kts }{'+takeOffLandingUIPairs['KTAS-MAP2BA'][0]+'inHg - '+takeOffLandingUIPairs['KTAS-MAP1BA'][0]+' inHg} \\cdot ( '+takeOffLandingUIPairs['KTAS-MAP3'][0]+'inHg - '+takeOffLandingUIPairs['KTAS-MAP1BA'][0]+' inHg) + '+takeOffLandingUIPairs['KTAS-pa1-rpm2-temp2-map1'][0]+'kts = '+takeOffLandingUIPairs['KTAS-pa1-rpm2-temp2-map3'][0]+'kts'));
+    //Interpolation between MAP for alt2-rpm1-temp1&2
+    //$('.KTAS-alt2-rpm1-temp1-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['KTAS-pa2-rpm1-temp1-map2'][0]+'kts - '+takeOffLandingUIPairs['KTAS-pa2-rpm1-temp1-map1'][0]+'kts }{'+takeOffLandingUIPairs['KTAS-MAP2AA'][0]+'inHg - '+takeOffLandingUIPairs['KTAS-MAP1AB'][0]+' inHg} \\cdot ( '+takeOffLandingUIPairs['KTAS-MAP3'][0]+'inHg - '+takeOffLandingUIPairs['KTAS-MAP1AB'][0]+' inHg) + '+takeOffLandingUIPairs['KTAS-pa2-rpm1-temp1-map1'][0]+'kts = '+takeOffLandingUIPairs['KTAS-pa2-rpm1-temp1-map3'][0]+'kts'));
+    //$('.KTAS-alt2-rpm1-temp2-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['KTAS-pa2-rpm1-temp2-map2'][0]+'kts - '+takeOffLandingUIPairs['KTAS-pa2-rpm1-temp2-map1'][0]+'kts }{'+takeOffLandingUIPairs['KTAS-MAP2AB'][0]+'inHg - '+takeOffLandingUIPairs['KTAS-MAP1AB'][0]+' inHg} \\cdot ( '+takeOffLandingUIPairs['KTAS-MAP3'][0]+'inHg - '+takeOffLandingUIPairs['KTAS-MAP1AB'][0]+' inHg) + '+takeOffLandingUIPairs['KTAS-pa2-rpm1-temp2-map1'][0]+'kts = '+takeOffLandingUIPairs['KTAS-pa2-rpm1-temp2-map3'][0]+'kts'));
+    //Interpolation between MAP for alt2-rpm2-temp1&2
+    $('.KTAS-alt2-rpm2-temp1-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['KTAS-pa2-rpm2-temp1-map2'][0]+'kts - '+takeOffLandingUIPairs['KTAS-pa2-rpm2-temp1-map1'][0]+'kts }{'+takeOffLandingUIPairs['KTAS-MAP2BA'][0]+'inHg - '+takeOffLandingUIPairs['KTAS-MAP1BB'][0]+' inHg} \\cdot ( '+takeOffLandingUIPairs['KTAS-MAP3'][0]+'inHg - '+takeOffLandingUIPairs['KTAS-MAP1BB'][0]+' inHg) + '+takeOffLandingUIPairs['KTAS-pa2-rpm2-temp1-map1'][0]+'kts = '+takeOffLandingUIPairs['KTAS-pa2-rpm2-temp1-map3'][0]+'kts'));
+    $('.KTAS-alt2-rpm2-temp2-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['KTAS-pa2-rpm2-temp2-map2'][0]+'kts - '+takeOffLandingUIPairs['KTAS-pa2-rpm2-temp2-map1'][0]+'kts }{'+takeOffLandingUIPairs['KTAS-MAP2BB'][0]+'inHg - '+takeOffLandingUIPairs['KTAS-MAP1BB'][0]+' inHg} \\cdot ( '+takeOffLandingUIPairs['KTAS-MAP3'][0]+'inHg - '+takeOffLandingUIPairs['KTAS-MAP1BB'][0]+' inHg) + '+takeOffLandingUIPairs['KTAS-pa2-rpm2-temp2-map1'][0]+'kts = '+takeOffLandingUIPairs['KTAS-pa2-rpm2-temp2-map3'][0]+'kts'));
+
+    //Interpolation between temp for alt1-rpm1&2
+    //$('.KTAS-alt1-rpm1-temp3-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['KTAS-pa1-rpm1-temp1-map3'][0]+'kts - '+takeOffLandingUIPairs['KTAS-pa1-rpm1-temp2-map3'][0]+'kts }{'+takeOffLandingUIPairs['KTAS-temp2'][0]+'^\\circ C - '+takeOffLandingUIPairs['KTAS-temp1'][0]+' ^\\circ C} \\cdot ( '+takeOffLandingUIPairs['KTAS-temp2'][0]+'^\\circ C - '+takeOffLandingUIPairs['KTAS-temp3'][0]+' ^\\circ C) + '+takeOffLandingUIPairs['KTAS-pa1-rpm1-temp2-map3'][0]+'kts = '+takeOffLandingUIPairs['KTAS-pa1-rpm1-temp3-map3'][0]+'kts'));
+    $('.KTAS-alt1-rpm2-temp3-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['KTAS-pa1-rpm2-temp1-map3'][0]+'kts - '+takeOffLandingUIPairs['KTAS-pa1-rpm2-temp2-map3'][0]+'kts }{'+takeOffLandingUIPairs['KTAS-temp2'][0]+'^\\circ C - '+takeOffLandingUIPairs['KTAS-temp1'][0]+' ^\\circ C} \\cdot ( '+takeOffLandingUIPairs['KTAS-temp2'][0]+'^\\circ C - '+takeOffLandingUIPairs['KTAS-temp3'][0]+' ^\\circ C) + '+takeOffLandingUIPairs['KTAS-pa1-rpm2-temp2-map3'][0]+'kts = '+takeOffLandingUIPairs['KTAS-pa1-rpm2-temp3-map3'][0]+'kts'));
+    //Interpolation b-map3etween temp for alt2-rpm1&2
+    //$('.KTAS-alt2-rpm1-temp3-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['KTAS-pa2-rpm1-temp1-map3'][0]+'kts - '+takeOffLandingUIPairs['KTAS-pa2-rpm1-temp2-map3'][0]+'kts }{'+takeOffLandingUIPairs['KTAS-temp2'][0]+'^\\circ C - '+takeOffLandingUIPairs['KTAS-temp1'][0]+' ^\\circ C} \\cdot ( '+takeOffLandingUIPairs['KTAS-temp2'][0]+'^\\circ C - '+takeOffLandingUIPairs['KTAS-temp3'][0]+' ^\\circ C) + '+takeOffLandingUIPairs['KTAS-pa2-rpm1-temp2-map3'][0]+'kts = '+takeOffLandingUIPairs['KTAS-pa2-rpm1-temp3-map3'][0]+'kts'));
+    $('.KTAS-alt2-rpm2-temp3-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['KTAS-pa2-rpm2-temp1-map3'][0]+'kts - '+takeOffLandingUIPairs['KTAS-pa2-rpm2-temp2-map3'][0]+'kts }{'+takeOffLandingUIPairs['KTAS-temp2'][0]+'^\\circ C - '+takeOffLandingUIPairs['KTAS-temp1'][0]+' ^\\circ C} \\cdot ( '+takeOffLandingUIPairs['KTAS-temp2'][0]+'^\\circ C - '+takeOffLandingUIPairs['KTAS-temp3'][0]+' ^\\circ C) + '+takeOffLandingUIPairs['KTAS-pa2-rpm2-temp2-map3'][0]+'kts = '+takeOffLandingUIPairs['KTAS-pa2-rpm2-temp3-map3'][0]+'kts'));
+
+    //Interpolation between rpm for alt1&2
+    //$('.KTAS-alt1-rpm3-temp3-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['KTAS-pa1-rpm2-temp3-map3'][0]+'kts - '+takeOffLandingUIPairs['KTAS-pa1-rpm1-temp3-map3'][0]+'kts }{'+takeOffLandingUIPairs['KTAS-RPM2'][0]+'RPM - '+takeOffLandingUIPairs['KTAS-RPM1'][0]+' RPM} \\cdot ( '+takeOffLandingUIPairs['KTAS-RPM3'][0]+'RPM - '+takeOffLandingUIPairs['KTAS-RPM1'][0]+' RPM) + '+takeOffLandingUIPairs['KTAS-pa1-rpm1-temp3-map3'][0]+'kts = '+takeOffLandingUIPairs['KTAS-pa1-rpm3-temp3-map3'][0]+'kts'));
+    //$('.KTAS-alt2-rpm3-temp3-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['KTAS-pa1-rpm2-temp3-map3'][0]+'kts - '+takeOffLandingUIPairs['KTAS-pa1-rpm1-temp3-map3'][0]+'kts }{'+takeOffLandingUIPairs['KTAS-RPM2'][0]+'RPM - '+takeOffLandingUIPairs['KTAS-RPM1'][0]+' RPM} \\cdot ( '+takeOffLandingUIPairs['KTAS-RPM3'][0]+'RPM - '+takeOffLandingUIPairs['KTAS-RPM1'][0]+' RPM) + '+takeOffLandingUIPairs['KTAS-pa1-rpm1-temp3-map3'][0]+'kts = '+takeOffLandingUIPairs['KTAS-pa2-rpm3-temp3-map3'][0]+'kts'));
+
+    //Interpolation between alt
+    $('.KTAS-alt3-rpm3-temp3-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['KTAS-pa2-rpm3-temp3-map3'][0]+'kts - '+takeOffLandingUIPairs['KTAS-pa1-rpm3-temp3-map3'][0]+'kts }{'+takeOffLandingUIPairs['KTAS-alt2'][0]+'ft - '+takeOffLandingUIPairs['KTAS-alt1'][0]+' ft} \\cdot ( '+takeOffLandingUIPairs['KTAS-alt3'][0]+'ft - '+takeOffLandingUIPairs['KTAS-alt1'][0]+' ft) + '+takeOffLandingUIPairs['KTAS-pa1-rpm3-temp3-map3'][0]+'kts = '+takeOffLandingUIPairs['KTAS-pa3-rpm3-temp3-map3'][0]+'kts'));
+
+
+    //PWR
+    //Interpolation between MAP for alt1-rpm1-temp1&2
+    //$('.PWR-alt1-rpm1-temp1-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['PWR-pa1-rpm1-temp1-map2'][0]+'kts - '+takeOffLandingUIPairs['PWR-pa1-rpm1-temp1-map1'][0]+'kts }{'+takeOffLandingUIPairs['PWR-MAP2AA'][0]+'inHg - '+takeOffLandingUIPairs['PWR-MAP1AA'][0]+' inHg} \\cdot ( '+takeOffLandingUIPairs['PWR-MAP3'][0]+'inHg - '+takeOffLandingUIPairs['PWR-MAP1AA'][0]+' inHg) + '+takeOffLandingUIPairs['PWR-pa1-rpm1-temp1-map1'][0]+'kts = '+takeOffLandingUIPairs['PWR-pa1-rpm1-temp1-map3'][0]+'kts'));
+    //$('.PWR-alt1-rpm1-temp2-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['PWR-pa1-rpm1-temp2-map2'][0]+'kts - '+takeOffLandingUIPairs['PWR-pa1-rpm1-temp2-map1'][0]+'kts }{'+takeOffLandingUIPairs['PWR-MAP2AA'][0]+'inHg - '+takeOffLandingUIPairs['PWR-MAP1AA'][0]+' inHg} \\cdot ( '+takeOffLandingUIPairs['PWR-MAP3'][0]+'inHg - '+takeOffLandingUIPairs['PWR-MAP1AA'][0]+' inHg) + '+takeOffLandingUIPairs['PWR-pa1-rpm1-temp2-map1'][0]+'kts = '+takeOffLandingUIPairs['PWR-pa1-rpm1-temp2-map3'][0]+'kts'));
+    //Interpolation between MAP for alt1-rpm2-temp1&2
+    $('.PWR-alt1-rpm2-temp1-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['PWR-pa1-rpm2-temp1-map2'][0]+'\\% - '+takeOffLandingUIPairs['PWR-pa1-rpm2-temp1-map1'][0]+'\\% }{'+takeOffLandingUIPairs['PWR-MAP2BA'][0]+'inHg - '+takeOffLandingUIPairs['PWR-MAP1BA'][0]+' inHg} \\cdot ( '+takeOffLandingUIPairs['PWR-MAP3'][0]+'inHg - '+takeOffLandingUIPairs['PWR-MAP1BA'][0]+' inHg) + '+takeOffLandingUIPairs['PWR-pa1-rpm2-temp1-map1'][0]+'\\% = '+takeOffLandingUIPairs['PWR-pa1-rpm2-temp1-map3'][0]+'\\%'));
+    $('.PWR-alt1-rpm2-temp2-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['PWR-pa1-rpm2-temp2-map2'][0]+'\\% - '+takeOffLandingUIPairs['PWR-pa1-rpm2-temp2-map1'][0]+'\\% }{'+takeOffLandingUIPairs['PWR-MAP2BA'][0]+'inHg - '+takeOffLandingUIPairs['PWR-MAP1BA'][0]+' inHg} \\cdot ( '+takeOffLandingUIPairs['PWR-MAP3'][0]+'inHg - '+takeOffLandingUIPairs['PWR-MAP1BA'][0]+' inHg) + '+takeOffLandingUIPairs['PWR-pa1-rpm2-temp2-map1'][0]+'\\% = '+takeOffLandingUIPairs['PWR-pa1-rpm2-temp2-map3'][0]+'\\%'));
+    //Interpolation between MAP for alt2-rpm1-temp1&2
+    //$('.PWR-alt2-rpm1-temp1-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['PWR-pa2-rpm1-temp1-map2'][0]+'\\% - '+takeOffLandingUIPairs['PWR-pa2-rpm1-temp1-map1'][0]+'\\% }{'+takeOffLandingUIPairs['PWR-MAP2AA'][0]+'inHg - '+takeOffLandingUIPairs['PWR-MAP1AB'][0]+' inHg} \\cdot ( '+takeOffLandingUIPairs['PWR-MAP3'][0]+'inHg - '+takeOffLandingUIPairs['PWR-MAP1AB'][0]+' inHg) + '+takeOffLandingUIPairs['PWR-pa2-rpm1-temp1-map1'][0]+'\\% = '+takeOffLandingUIPairs['PWR-pa2-rpm1-temp1-map3'][0]+'\\%'));
+    //$('.PWR-alt2-rpm1-temp2-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['PWR-pa2-rpm1-temp2-map2'][0]+'\\% - '+takeOffLandingUIPairs['PWR-pa2-rpm1-temp2-map1'][0]+'\\% }{'+takeOffLandingUIPairs['PWR-MAP2AB'][0]+'inHg - '+takeOffLandingUIPairs['PWR-MAP1AB'][0]+' inHg} \\cdot ( '+takeOffLandingUIPairs['PWR-MAP3'][0]+'inHg - '+takeOffLandingUIPairs['PWR-MAP1AB'][0]+' inHg) + '+takeOffLandingUIPairs['PWR-pa2-rpm1-temp2-map1'][0]+'\\% = '+takeOffLandingUIPairs['PWR-pa2-rpm1-temp2-map3'][0]+'\\%'));
+    //Interpolation between MAP for alt2-rpm2-temp1&2
+    $('.PWR-alt2-rpm2-temp1-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['PWR-pa2-rpm2-temp1-map2'][0]+'\\% - '+takeOffLandingUIPairs['PWR-pa2-rpm2-temp1-map1'][0]+'\\% }{'+takeOffLandingUIPairs['PWR-MAP2BA'][0]+'inHg - '+takeOffLandingUIPairs['PWR-MAP1BB'][0]+' inHg} \\cdot ( '+takeOffLandingUIPairs['PWR-MAP3'][0]+'inHg - '+takeOffLandingUIPairs['PWR-MAP1BB'][0]+' inHg) + '+takeOffLandingUIPairs['PWR-pa2-rpm2-temp1-map1'][0]+'\\% = '+takeOffLandingUIPairs['PWR-pa2-rpm2-temp1-map3'][0]+'\\%'));
+    $('.PWR-alt2-rpm2-temp2-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['PWR-pa2-rpm2-temp2-map2'][0]+'\\% - '+takeOffLandingUIPairs['PWR-pa2-rpm2-temp2-map1'][0]+'\\% }{'+takeOffLandingUIPairs['PWR-MAP2BB'][0]+'inHg - '+takeOffLandingUIPairs['PWR-MAP1BB'][0]+' inHg} \\cdot ( '+takeOffLandingUIPairs['PWR-MAP3'][0]+'inHg - '+takeOffLandingUIPairs['PWR-MAP1BB'][0]+' inHg) + '+takeOffLandingUIPairs['PWR-pa2-rpm2-temp2-map1'][0]+'\\% = '+takeOffLandingUIPairs['PWR-pa2-rpm2-temp2-map3'][0]+'\\%'));
+
+    //Interpolation between temp for alt1-rpm1&2
+    //$('.PWR-alt1-rpm1-temp3-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['PWR-pa1-rpm1-temp1-map3'][0]+'\\% - '+takeOffLandingUIPairs['PWR-pa1-rpm1-temp2-map3'][0]+'\\% }{'+takeOffLandingUIPairs['PWR-temp2'][0]+'^\\circ C - '+takeOffLandingUIPairs['PWR-temp1'][0]+' ^\\circ C} \\cdot ( '+takeOffLandingUIPairs['PWR-temp2'][0]+'^\\circ C - '+takeOffLandingUIPairs['PWR-temp3'][0]+' ^\\circ C) + '+takeOffLandingUIPairs['PWR-pa1-rpm1-temp2-map3'][0]+'\\% = '+takeOffLandingUIPairs['PWR-pa1-rpm1-temp3-map3'][0]+'\\%'));
+    $('.PWR-alt1-rpm2-temp3-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['PWR-pa1-rpm2-temp1-map3'][0]+'\\% - '+takeOffLandingUIPairs['PWR-pa1-rpm2-temp2-map3'][0]+'\\% }{'+takeOffLandingUIPairs['PWR-temp2'][0]+'^\\circ C - '+takeOffLandingUIPairs['PWR-temp1'][0]+' ^\\circ C} \\cdot ( '+takeOffLandingUIPairs['PWR-temp2'][0]+'^\\circ C - '+takeOffLandingUIPairs['PWR-temp3'][0]+' ^\\circ C) + '+takeOffLandingUIPairs['PWR-pa1-rpm2-temp2-map3'][0]+'\\% = '+takeOffLandingUIPairs['PWR-pa1-rpm2-temp3-map3'][0]+'\\%'));
+    //Interpolation b-map3etween temp for alt2-rpm1&2
+    //$('.PWR-alt2-rpm1-temp3-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['PWR-pa2-rpm1-temp1-map3'][0]+'\\% - '+takeOffLandingUIPairs['PWR-pa2-rpm1-temp2-map3'][0]+'\\% }{'+takeOffLandingUIPairs['PWR-temp2'][0]+'^\\circ C - '+takeOffLandingUIPairs['PWR-temp1'][0]+' ^\\circ C} \\cdot ( '+takeOffLandingUIPairs['PWR-temp2'][0]+'^\\circ C - '+takeOffLandingUIPairs['PWR-temp3'][0]+' ^\\circ C) + '+takeOffLandingUIPairs['PWR-pa2-rpm1-temp2-map3'][0]+'\\% = '+takeOffLandingUIPairs['PWR-pa2-rpm1-temp3-map3'][0]+'\\%'));
+    $('.PWR-alt2-rpm2-temp3-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['PWR-pa2-rpm2-temp1-map3'][0]+'\\% - '+takeOffLandingUIPairs['PWR-pa2-rpm2-temp2-map3'][0]+'\\% }{'+takeOffLandingUIPairs['PWR-temp2'][0]+'^\\circ C - '+takeOffLandingUIPairs['PWR-temp1'][0]+' ^\\circ C} \\cdot ( '+takeOffLandingUIPairs['PWR-temp2'][0]+'^\\circ C - '+takeOffLandingUIPairs['PWR-temp3'][0]+' ^\\circ C) + '+takeOffLandingUIPairs['PWR-pa2-rpm2-temp2-map3'][0]+'\\% = '+takeOffLandingUIPairs['PWR-pa2-rpm2-temp3-map3'][0]+'\\%'));
+
+    //Interpolation between rpm for alt1&2
+    //$('.PWR-alt1-rpm3-temp3-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['PWR-pa1-rpm2-temp3-map3'][0]+'\\% - '+takeOffLandingUIPairs['PWR-pa1-rpm1-temp3-map3'][0]+'\\% }{'+takeOffLandingUIPairs['PWR-RPM2'][0]+'RPM - '+takeOffLandingUIPairs['PWR-RPM1'][0]+' RPM} \\cdot ( '+takeOffLandingUIPairs['PWR-RPM3'][0]+'RPM - '+takeOffLandingUIPairs['PWR-RPM1'][0]+' RPM) + '+takeOffLandingUIPairs['PWR-pa1-rpm1-temp3-map3'][0]+'\\% = '+takeOffLandingUIPairs['PWR-pa1-rpm3-temp3-map3'][0]+'\\%'));
+    //$('.PWR-alt2-rpm3-temp3-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['PWR-pa1-rpm2-temp3-map3'][0]+'\\% - '+takeOffLandingUIPairs['PWR-pa1-rpm1-temp3-map3'][0]+'\\% }{'+takeOffLandingUIPairs['PWR-RPM2'][0]+'RPM - '+takeOffLandingUIPairs['PWR-RPM1'][0]+' RPM} \\cdot ( '+takeOffLandingUIPairs['PWR-RPM3'][0]+'RPM - '+takeOffLandingUIPairs['PWR-RPM1'][0]+' RPM) + '+takeOffLandingUIPairs['PWR-pa1-rpm1-temp3-map3'][0]+'\\% = '+takeOffLandingUIPairs['PWR-pa2-rpm3-temp3-map3'][0]+'\\%'));
+
+    //Interpolation between alt
+    $('.PWR-alt3-rpm3-temp3-equation').html(MathJax.tex2svg('\\frac{'+takeOffLandingUIPairs['PWR-pa2-rpm3-temp3-map3'][0]+'\\% - '+takeOffLandingUIPairs['PWR-pa1-rpm3-temp3-map3'][0]+'\\% }{'+takeOffLandingUIPairs['PWR-alt2'][0]+'ft - '+takeOffLandingUIPairs['PWR-alt1'][0]+' ft} \\cdot ( '+takeOffLandingUIPairs['PWR-alt3'][0]+'ft - '+takeOffLandingUIPairs['PWR-alt1'][0]+' ft) + '+takeOffLandingUIPairs['PWR-pa1-rpm3-temp3-map3'][0]+'\\% = '+takeOffLandingUIPairs['PWR-pa3-rpm3-temp3-map3'][0]+'\\%'));
     
 }
 
@@ -1266,6 +1436,43 @@ function calculateRocVxSe(pa, isaDeviation, tom) {
     return interpolate3D(pa, sfcTemp, tom, ROCVxSeMatrix)
 }
 
+//Time in climb
+function minutesInClimb(pa1,pa2,isaDeviation,mass) {
+    var alt = pa1
+    var min = 0
+    while (alt < pa2){
+        alt += 10
+        min += 10 / calculateRocVy(alt,isaDeviation,mass).result
+    }
+    var minutesDecimal = Math.ceil(min * 60) / 60
+    var minutes = Math.floor(minutesDecimal)
+    var seconds = Math.round((minutesDecimal - minutes) * 60)
+
+    return {
+        'number': minutesDecimal,
+        'string': minutes+':'+ ("0"+seconds).slice(-2)
+    }
+}
+
+function boringMinutesInClimb(pa1,pa2,isaDeviation,mass) {
+    var distToClimb = pa2 - pa1
+    var rocAlt = (pa2 - pa1) / 3 * 2 + pa1
+    var rocVy = calculateRocVy(rocAlt,isaDeviation,mass).result
+    var Vy = calculateVy(rocAlt, isaDeviation,mass)
+    var minutesDecimal = Math.ceil(distToClimb / rocVy *60)/60
+    var minutes = Math.floor(minutesDecimal)
+    var seconds = Math.round((minutesDecimal - minutes) * 60)
+    return {
+        'number': minutesDecimal,
+        'string': minutes+':'+ ("0"+seconds).slice(-2),
+        'Vy': Vy
+    }
+}
+
+function distanceInMinutes(minutes, groundspeed) {
+    return groundspeed * (minutes / 60)
+}
+
 //Gradients
 function calculateToGradientVy(pa, isaDeviation, tom) {
     var ias = calculateToVy(pa, isaDeviation, tom).result
@@ -1593,6 +1800,8 @@ function calculateAll(pe, pa, msa, isaDeviation, tom, useTwoThirds)
     var MAP = 24,
         RPM = 2100;
 
+    var boringMinInClimb = boringMinutesInClimb(pe,pa,isaDeviation,tom);
+
     return {
         //CruiseData
         'Powersetting': calculatePowerSetting(pa,isaDeviation,MAP,RPM),
@@ -1634,6 +1843,10 @@ function calculateAll(pe, pa, msa, isaDeviation, tom, useTwoThirds)
         'rocVxSe': calculateRocVxSe(rocAltitude, isaDeviation, tom),
         'gradVxSe': calculateGradientVxSe(rocAltitude, isaDeviation, tom),
         'angleVxSe': calculateAngle(calculateGradientVxSe(rocAltitude,isaDeviation,tom).result),
+
+        //Climb
+        'minInClimb': boringMinInClimb,
+        'distInClimb': distanceInMinutes(boringMinInClimb.number,boringMinInClimb.Vy.result),
 
         //Ceilings (one engine inoperative, and feathered, flaps up)
         'OEIserviceCeiling': calculateOEIceiling(isaDeviation,tom),
