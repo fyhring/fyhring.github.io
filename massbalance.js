@@ -26,7 +26,7 @@ $(document).ready(function()
     // Events
 
     form.querySelectorAll('input[type="number"]').forEach((element) => {
-        masses[element.id] = 0;
+        masses[element.id] = 0.0;
         element.addEventListener('change', triggerUpdate, false);
     });
 
@@ -64,11 +64,11 @@ $(document).ready(function()
             masses[element.id] = element.value;
 
             if (element.id == 'acMass' || element.id == 'emptyMassMoment') return;
-            acMass += element.value == '' ? 0 : parseInt(element.value);
+            acMass += element.value == '' ? 0.0 : parseFloat(element.value);
         });
 
-        masses['acMass'] = acMass;
-        form.querySelector('#acMass').value = acMass;
+        masses['acMass'] = Math.ceil(acMass);
+        form.querySelector('#acMass').value = Math.ceil(acMass);
         window.acTotalMass = acMass;
         
         drawBackground();
