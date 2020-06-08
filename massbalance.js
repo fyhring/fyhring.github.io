@@ -433,8 +433,8 @@ var preloadedAircrafts = {
         'emptyMassMoment': 385.26
     },
     'OY-GBF (SE-MGB)': {
-        'emptyMass': 855,
-        'emptyMassMoment': 340.48
+        'emptyMass': 878,
+        'emptyMassMoment': 394.48
     }
 }
 
