@@ -32,7 +32,7 @@ var elevationInput,
 
 $(document).ready(function()
 {
-    $('#performanceForm input').on('change', function(e)
+    $('#performanceForm input,#massForm input').on('change', function(e)
     {
         calculateFromInputs();
         MathJax.typeset();
@@ -110,7 +110,6 @@ function calculateFromInputs()
     }
 
     var data = calculateAll(pressureElevation, pressureAltitude, pressureMSA, tempIsaDeviation, weightInput);
-    console.log(data);
 
     var rocAltitude = toTrueAltitude(getROCAltitude(pressureMSA, pressureAltitude, pressureElevation)),
         rocPressureAlt = toPressureAltitude(rocAltitude);
@@ -140,6 +139,8 @@ function calculateFromInputs()
         'to-distance': [Math.ceil(data.takeoff.distance), 'm'],
         'ldg-groundroll': [Math.ceil(data.landing.groundroll), 'm'],
         'ldg-distance': [Math.ceil(data.landing.distance), 'm'],
+        'to-asdr': [Math.ceil(data.ASDR.corrected), 'm'],
+        'to-asdr-reaction-time-dist': [Math.ceil(data.ASDR.corrections.timeFactor), 'm'],
         'oei-serviceceil': [ceilingCheck(data.OEIserviceCeiling), 'ft'],
         'oei-absceil': [ceilingCheck(data.OEIabsoluteCeiling), 'ft'],
         'vyse': [Math.round(data.VySe.result), 'kias'],
@@ -284,7 +285,7 @@ function calculateFromInputs()
         'env-weight': [data.env.weight, 'kg'],
         'env-elevation': [data.env.elevation, 'ft'],
         'env-pressure-elevation': [data.env.pressureElevation, 'ft'],
-        'env-cruise-alt': [data.env.cruiseAlt, 'ft'],
+        'env-cruise-alt': (!useFL ? [data.env.cruiseAlt, 'ft'] : ['FL'+ data.env.cruiseAlt, '']),
         'env-cruise-pressure-alt': [data.env.cruisePressureAltitude, 'ft'],
         'env-roc-alt': [data.env.rocAlt, 'ft'],
         'env-pressure-roc-alt': [Math.round(data.env.rocPressureAlt), 'ft'],
@@ -587,7 +588,7 @@ function calculateFromInputs()
     };
     
     updateUIValues(takeOffLandingUIPairs);
-    console.log(data.rocVySe.data);
+    // console.log(data.rocVySe.data);
 
 
     /**********************
@@ -1722,7 +1723,7 @@ function landingCorrectedCalculations(pa, isaDeviation, tom, slope) {
         }
         else {                                                  //Else (If there is tailwind)
             windCorrection = (windComponents.head * -1) * 11;   //Add 11m per kt
-        }    
+        }
     }
 
     var appSpeedCorrection = 0
@@ -1777,6 +1778,46 @@ function landingCorrectedCalculations(pa, isaDeviation, tom, slope) {
     };
 }
 
+function calculateASDR(takeoff, landing)
+{
+    // ASDR = T/O gr (uncorrected) + LDG gr (minus 5-6 kts) +/- Wind (to get GS rather than TAS) * 1.25 + Time Factor
+
+    // TO GR
+    var ASDR = takeoff.uncorrectedGround.result;
+
+    // Landing GR - TAS should be 5 kts lower than stated in AFM.
+    var ldgGRCorrection = 5 * -5;
+    ASDR += landing.uncorrectedGround.result + ldgGRCorrection;
+
+    var uncorrected = ASDR;
+
+    // Wind Correction
+    var windCorrection;
+    if (useWindComponent) {
+        windCorrection = takeoff.corrections.windCorrection
+        ASDR += windCorrection;
+    }
+
+    // Safety Factor
+    var safetyFactor = ASDR * 0.25;
+    ASDR += safetyFactor;
+
+    // Time Factor
+    var timeFactor = 65 / 3600 * 3 * 1852;
+    ASDR += timeFactor;
+
+    return {
+        'uncorrected': uncorrected,
+        'corrected': ASDR,
+        'corrections': {
+            'wind': windCorrection,
+            'safetyFactor': safetyFactor,
+            'timeFactor': timeFactor
+        }
+    }
+
+}
+
 function getROCAltitude(msa, pa, pe)
 {
     var rocAltitude = msa;
@@ -1802,7 +1843,7 @@ function calculateAll(pe, pa, msa, isaDeviation, tom, useTwoThirds)
 
     var boringMinInClimb = boringMinutesInClimb(pe,pa,isaDeviation,tom);
 
-    return {
+    data = {
         //CruiseData
         'Powersetting': calculatePowerSetting(pa,isaDeviation,MAP,RPM),
         'KTAS': calculateTrueAirspeed(pa,isaDeviation,MAP,RPM),
@@ -1852,6 +1893,10 @@ function calculateAll(pe, pa, msa, isaDeviation, tom, useTwoThirds)
         'OEIserviceCeiling': calculateOEIceiling(isaDeviation,tom),
         'OEIabsoluteCeiling': calculateOEIabsoluteCeiling(isaDeviation,tom)
     };
+
+    data['ASDR'] = calculateASDR(data['takeoff'], data['landing'])
+
+    return data;
 }
 
 /*
