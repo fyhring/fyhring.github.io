@@ -32,7 +32,7 @@ var elevationInput,
 
 $(document).ready(function()
 {
-    $('#performanceForm input').on('change', function(e)
+    $('#performanceForm input,#massForm input').on('change', function(e)
     {
         calculateFromInputs();
         MathJax.typeset();
@@ -107,10 +107,13 @@ function calculateFromInputs()
         if (pressureElevation < 0) {
             pressureElevation = 0;
         }
+    } else {
+        if (useFL) {
+            pressureAltitude = cruiseInput * 100;
+        }
     }
 
     var data = calculateAll(pressureElevation, pressureAltitude, pressureMSA, tempIsaDeviation, weightInput);
-    console.log(data);
 
     var rocAltitude = toTrueAltitude(getROCAltitude(pressureMSA, pressureAltitude, pressureElevation)),
         rocPressureAlt = toPressureAltitude(rocAltitude);
@@ -140,6 +143,8 @@ function calculateFromInputs()
         'to-distance': [Math.ceil(data.takeoff.distance), 'm'],
         'ldg-groundroll': [Math.ceil(data.landing.groundroll), 'm'],
         'ldg-distance': [Math.ceil(data.landing.distance), 'm'],
+        'to-asdr': [Math.ceil(data.ASDR.corrected), 'm'],
+        'to-asdr-uncorrected': [Math.ceil(data.ASDR.uncorrected), 'm'],
         'oei-serviceceil': [ceilingCheck(data.OEIserviceCeiling), 'ft'],
         'oei-absceil': [ceilingCheck(data.OEIabsoluteCeiling), 'ft'],
         'vyse': [Math.round(data.VySe.result), 'kias'],
@@ -284,7 +289,7 @@ function calculateFromInputs()
         'env-weight': [data.env.weight, 'kg'],
         'env-elevation': [data.env.elevation, 'ft'],
         'env-pressure-elevation': [data.env.pressureElevation, 'ft'],
-        'env-cruise-alt': [data.env.cruiseAlt, 'ft'],
+        'env-cruise-alt': (!useFL ? [data.env.cruiseAlt, 'ft'] : ['FL'+ data.env.cruiseAlt, '']),
         'env-cruise-pressure-alt': [data.env.cruisePressureAltitude, 'ft'],
         'env-roc-alt': [data.env.rocAlt, 'ft'],
         'env-pressure-roc-alt': [Math.round(data.env.rocPressureAlt), 'ft'],
@@ -399,6 +404,18 @@ function calculateFromInputs()
         //Factorized distances
         'ldg-g-final': [Math.ceil(data.landing.groundroll), 'm'],
         'ldg-d-final': [Math.ceil(data.landing.distance), 'm'],
+
+
+        // ASDR
+        'asdr-uncorrected': [Math.ceil(data.ASDR.uncorrected), 'm'],
+        'asdr-correction-ldg-spd': [Math.ceil(data.ASDR.corrections.ldgCorrection), 'm'],
+        'asdr-corrections-wind': [Math.ceil(data.ASDR.corrections.wind), 'm'],
+        'asdr-correction-sum-before-safety': [Math.ceil(data.ASDR.beforeSafetyCorrection), 'm'],
+        'asdr-correction-safety-factor': [Math.ceil(data.ASDR.corrections.safetyFactor), 'm'],
+        'asdr-correction-sum-before-time': [Math.ceil(data.ASDR.beforeTimeCorrection), 'm'],
+        'asdr-correction-time-factor': [Math.ceil(data.ASDR.corrections.timeFactor), 'm'],
+        'asdr-corrected': [Math.ceil(data.ASDR.corrected), 'm'],
+        
 
         //CLIMB PERFORMANCE OUTPUTS
 
@@ -587,21 +604,21 @@ function calculateFromInputs()
     };
     
     updateUIValues(takeOffLandingUIPairs);
-    console.log(data.rocVySe.data);
+    // console.log(data.rocVySe.data);
 
 
     /**********************
      * Show applicable corrections only
      **********************/
 
-    $('.correction-wind-row,.to-correction-wind-equation,.ldg-correction-wind-equation').hide();
+    $('.correction-wind-row,.to-correction-wind-equation,.ldg-correction-wind-equation,.asdr-wind-correction-equation').hide();
     $('.correction-soft-rwy-row,.to-correction-soft-equation,.ldg-correction-soft-equation').hide();
     $('.correction-sloped-rwy-row,.to-correction-slope-equation,.ldg-correction-slope-equation').hide();
     $('.correction-paved-rwy-row,.to-correction-paved-equation,.ldg-correction-paved-equation').hide();
     $('.correction-inc-spd-row').hide();
 
     if (useWindComponent) {
-        $('.correction-wind-row,.to-correction-wind-equation,.ldg-correction-wind-equation').show();
+        $('.correction-wind-row,.to-correction-wind-equation,.ldg-correction-wind-equation,.asdr-wind-correction-equation').show();
     }
 
     if (useSoftSfc) {
@@ -732,7 +749,16 @@ function calculateFromInputs()
     $('.ldg-g-factorized-equation').html(MathJax.tex2svg(takeOffLandingUIPairs['ldg-g-corrected'][0]+'m \\cdot 1.43 = '+ takeOffLandingUIPairs['ldg-g-final'][0]+'m', {display: true}));
     $('.ldg-d-factorized-equation').html(MathJax.tex2svg(takeOffLandingUIPairs['ldg-d-corrected'][0]+'m \\cdot 1.43 = '+ takeOffLandingUIPairs['ldg-d-final'][0]+'m', {display: true}));
 
-// WIP
+
+    // ASDR
+    $('.asdr-groundroll-sum-equation').html(MathJax.tex2svg(takeOffLandingUIPairs['to-g-w3-alt3-temp3'][0]+'m +'+ takeOffLandingUIPairs['ldg-g-w3-alt3-temp3'][0]+'m = '+ takeOffLandingUIPairs['asdr-uncorrected'][0]+ 'm'));
+    $('.asdr-ldg-spd-equation').html(MathJax.tex2svg('-5\\tfrac{m}{kt} \\cdot 5 kts = -25 m'));
+    $('.asdr-wind-correction-equation').html(MathJax.tex2svg((getWindComponents().head>0 ? '-2.5\\tfrac{m}{kt} \\cdot '+ takeOffLandingUIPairs['env-headwind-component'][0] +'kts' : '10\\tfrac{m}{kt} \\cdot ' + takeOffLandingUIPairs['env-headwind-component'][0] + 'kts')+' = '+ takeOffLandingUIPairs['to-corrections-wind'][0]+'m', {display: true}));
+    $('.asdr-safety-factor-equation').html(MathJax.tex2svg(takeOffLandingUIPairs['asdr-correction-sum-before-safety'][0] +' \\cdot 1.25 = '+ takeOffLandingUIPairs['asdr-correction-sum-before-time'][0] +'m'));
+    $('.asdr-time-correction-equation').html(MathJax.tex2svg('\\tfrac{65}{3600} \\cdot 3 \\cdot 1852 = '+ takeOffLandingUIPairs['asdr-correction-time-factor'][0] +'m'));
+
+
+    // WIP
 
 /*
 <li>First, the climbrates are interpolated between altitudes, for each temperature and weight:<br>
@@ -1722,7 +1748,7 @@ function landingCorrectedCalculations(pa, isaDeviation, tom, slope) {
         }
         else {                                                  //Else (If there is tailwind)
             windCorrection = (windComponents.head * -1) * 11;   //Add 11m per kt
-        }    
+        }
     }
 
     var appSpeedCorrection = 0
@@ -1777,6 +1803,54 @@ function landingCorrectedCalculations(pa, isaDeviation, tom, slope) {
     };
 }
 
+function calculateASDR(takeoff, landing)
+{
+    // ASDR = T/O gr (uncorrected) + LDG gr (minus 5-6 kts) +/- Wind (to get GS rather than TAS) * 1.25 + Time Factor
+
+    // TO GR
+    var ASDR = takeoff.uncorrectedGround.result;
+
+    ASDR += landing.uncorrectedGround.result;
+    var uncorrected = ASDR;
+    
+    // Landing GR - TAS should be 5 kts lower than stated in AFM.
+    var ldgGRCorrection = 5 * -5;
+    ASDR = ASDR + ldgGRCorrection
+
+
+    // Wind Correction
+    var windCorrection;
+    if (useWindComponent) {
+        windCorrection = takeoff.corrections.windCorrection
+        ASDR = ASDR + windCorrection;
+    }
+
+    // Safety Factor
+    var beforeSafetyASDR = ASDR;
+    var safetyFactor = ASDR * 0.25;
+    ASDR = Math.ceil(ASDR + safetyFactor);
+
+    
+    // Time Factor
+    var beforeTimeASDR = ASDR;
+    var timeFactor = 65 / 3600 * 3 * 1852;
+    ASDR = Math.ceil(ASDR + timeFactor);
+
+    return {
+        'uncorrected': uncorrected,
+        'corrected': ASDR,
+        'beforeTimeCorrection': beforeTimeASDR,
+        'beforeSafetyCorrection': beforeSafetyASDR,
+        'corrections': {
+            'ldgCorrection': ldgGRCorrection,
+            'wind': windCorrection,
+            'safetyFactor': safetyFactor,
+            'timeFactor': timeFactor
+        }
+    }
+
+}
+
 function getROCAltitude(msa, pa, pe)
 {
     var rocAltitude = msa;
@@ -1802,7 +1876,7 @@ function calculateAll(pe, pa, msa, isaDeviation, tom, useTwoThirds)
 
     var boringMinInClimb = boringMinutesInClimb(pe,pa,isaDeviation,tom);
 
-    return {
+    data = {
         //CruiseData
         'Powersetting': calculatePowerSetting(pa,isaDeviation,MAP,RPM),
         'KTAS': calculateTrueAirspeed(pa,isaDeviation,MAP,RPM),
@@ -1852,6 +1926,10 @@ function calculateAll(pe, pa, msa, isaDeviation, tom, useTwoThirds)
         'OEIserviceCeiling': calculateOEIceiling(isaDeviation,tom),
         'OEIabsoluteCeiling': calculateOEIabsoluteCeiling(isaDeviation,tom)
     };
+
+    data['ASDR'] = calculateASDR(data['takeoff'], data['landing'])
+
+    return data;
 }
 
 /*

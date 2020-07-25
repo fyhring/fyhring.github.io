@@ -48,7 +48,7 @@
         @page {
             size: A4;
             margin: 11mm 17mm 17mm 17mm;
-        }   
+        }
     </style>
     <style media="print" type="text/css">
         body {
@@ -456,25 +456,173 @@
 
                 <h3>Start &amp; Landing</h3>
                 <div class="row">
-                    <table class="table table-borderless">
-                        <tr>
-                            <td width="40%">Take-off Groundroll:</td>
-                            <td width="10%" class="to-groundroll">-</td>
-                            <td>Landing Groundroll:</td>
-                            <td class="ldg-groundroll">-</td>
-                        </tr>
-                        <tr>
-                            <td width="40%">Take-off Distance (50 ft)</td>
-                            <td width="10%" class="to-distance">-</td>
-                            <td>Landing Distance (50 ft)</td>
-                            <td class="ldg-distance">-</td>
-                        </tr>
-                    </table>
+                    <div class="ui-box col-sm-12 col-md-6">
+                        <div class="ui-box-header">Take-off</div>
+                        <div class="ui-box-content">
+                            <div class="row">
+                                <div class="col-sm-6 col-md-9">Take-off Groundroll:</div>
+                                <div class="col-sm-6 col-md-3 to-groundroll">-</div>
+                                <div class="col-sm-6 col-md-9">Take-off Distance (50 ft):</div>
+                                <div class="col-sm-6 col-md-3 to-distance">-</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-box col-sm-12 col-md-6">
+                        <div class="ui-box-header">Landing</div>
+                        <div class="ui-box-content">
+                            <div class="row">
+                                <div class="col-sm-6 col-md-9">Landing Groundroll:</div>
+                                <div class="col-sm-6 col-md-3 ldg-groundroll">-</div>
+                                <div class="col-sm-6 col-md-9">Landing Distance (50 ft):</div>
+                                <div class="col-sm-6 col-md-3 ldg-distance">-</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="ui-box col-sm-12 col-md-6">
+                        <div class="ui-box-header">Accelerated Stop Distances</div>
+                        <div class="ui-box-content">
+                            <div class="row">
+                                <!-- <div class="col-sm-6 col-md-9">ASDA</div>
+                                <div class="col-sm-6 col-md-3 to-asda">{get runway/intersection length}</div> -->
+                                <div class="col-sm-6 col-md-9">Uncorrected ASDR</div>
+                                <div class="col-sm-6 col-md-3 to-asdr-uncorrected">-</div>
+                                <div class="col-sm-6 col-md-9">Corrected ASDR</div>
+                                <div class="col-sm-6 col-md-3 to-asdr">-</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <p>&nbsp;</p>
 
-                <h3>Ceiling &amp; ROC</h3>
+                <h3>Climb &amp; Ceilings</h3>
                 <div class="row">
+                    <div class="ui-box col-sm-12 col-md-6">
+                        <div class="ui-box-header">OEI ROC</div>
+                        <div class="ui-box-content">
+                            <div class="row">
+                                <div class="col-sm-6 col-md-9 bold">
+                                    OEI ROC @ <span class="useMSAOrNotTxt">-</span> at V<sub>y<sub>se</sub></sub> <span class="vyse">-</span>
+                                </div>
+                                <div class="col-sm-6 col-md-3 bold roc-vyse">-</div>
+                                <div class="col-sm-6 col-md-9 bold">
+                                    OEI Gradient @ <span class="useMSAOrNotTxt">-</span> at V<sub>y<sub>se</sub></sub> <span class="vyse">-</span>
+                                </div>
+                                <div class="col-sm-6 col-md-3 bold grad-vyse">-</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-box col-sm-12 col-md-6">
+                        <div class="ui-box-header">ME ROC</div>
+                        <div class="ui-box-content">
+                            <div class="row">
+                                <div class="col-sm-6 col-md-9 bold">
+                                    M.E ROC @ <span class="useMSAOrNotTxt">-</span> at V<sub>y</sub> <span class="vy">-</span>
+                                </div>
+                                <div class="col-sm-6 col-md-3 bold roc-vy">-</div>
+                                <div class="col-sm-6 col-md-9 bold">
+                                    M.E Gradient @ <span class="useMSAOrNotTxt">-</span> at V<sub>y</sub> <span class="vy">-</span>
+                                </div>
+                                <div class="col-sm-6 col-md-3 bold grad-vy">-</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="ui-box col-sm-12 col-md-6">
+                        <div class="ui-box-header">OEI Ceilings</div>
+                        <div class="ui-box-content">
+                            <div class="row">
+                                <div class="col-sm-6 col-md-9 bold">OEI Service Ceiling (True Alt):</div>
+                                <div class="col-sm-6 col-md-3 bold oei-serviceceil">-</div>
+                                <div class="col-sm-6 col-md-9">OEI Absolute Ceiling (True Alt):</div>
+                                <div class="col-sm-6 col-md-3 oei-absceil">-</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-box col-sm-12 col-md-6">
+                        <div class="ui-box-header">M.E Flaps Climb</div>
+                        <div class="ui-box-content">
+                            <div class="row">
+                                <div class="col-sm-6 col-md-9">
+                                    M.E ROC Flaps T/O @ <span class="useMSAOrNotTxt">-</span> at V<sub>y</sub> <span class="to-vy">-</span>
+                                </div>
+                                <div class="col-sm-6 col-md-3 to-roc-vy">-</div>
+                                <div class="col-sm-6 col-md-9">
+                                    M.E Gradient Flaps T/O @ <span class="useMSAOrNotTxt">-</span> V<sub>y</sub> <span class="to-vy">-</span>
+                                </div>
+                                <div class="col-sm-6 col-md-3 to-grad-vy">-</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="ui-box col-sm-12 col-md-6">
+                        <div class="ui-box-header">OEI Climb Angle &amp; V<sub>x</sub> Values</div>
+                        <div class="ui-box-content">
+                            <div class="row">
+                                <div class="col-sm-6 col-md-9">
+                                    OEI Angle @ <span class="useMSAOrNotTxt">-</span> at V<sub>y<sub>se</sub></sub> <span class="vyse">-</span>
+                                </div>
+                                <div class="col-sm-6 col-md-3 angle-vyse">-</div>
+                                <div class="col-sm-6 col-md-9">
+                                    OEI ROC @ <span class="useMSAOrNotTxt">-</span> at V<sub>x<sub>se</sub></sub> <span class="vxse">-</span>
+                                </div>
+                                <div class="col-sm-6 col-md-3 roc-vxse">-</div>
+                                <div class="col-sm-6 col-md-9">
+                                    OEI Gradient @ <span class="useMSAOrNotTxt">-</span> at V<sub>x<sub>se</sub></sub> <span class="vxse">-</span>
+                                </div>
+                                <div class="col-sm-6 col-md-3 grad-vxse"></div>
+                                <div class="col-sm-6 col-md-9">
+                                    OEI Angle @ <span class="useMSAOrNotTxt">-</span> at V<sub>x<sub>se</sub></sub> <span class="vxse">-</span>
+                                </div>
+                                <div class="col-sm-6 col-md-3 angle-vxse"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-box col-sm-12 col-md-6">
+                        <div class="ui-box-header">M.E Climb Angle &amp; V<sub>x</sub> Values</div>
+                        <div class="ui-box-content">
+                            <div class="row">
+                                <div class="col-sm-6 col-md-9">
+                                    M.E Angle @ <span class="useMSAOrNotTxt">-</span> at V<sub>y</sub> <span class="vy">-</span>
+                                </div>
+                                <div class="col-sm-6 col-md-3 angle-vy">-</div>
+                                <div class="col-sm-6 col-md-9">
+                                    M.E ROC @ <span class="useMSAOrNotTxt">-</span> at V<sub>x</sub> <span class="vx">-</span>
+                                </div>
+                                <div class="col-sm-6 col-md-3 roc-vx">-</div>
+                                <div class="col-sm-6 col-md-9">
+                                    M.E Gradient @ <span class="useMSAOrNotTxt">-</span> at V<sub>x</sub> <span class="vx">-</span>
+                                </div>
+                                <div class="col-sm-6 col-md-3 grad-vx"></div>
+                                <div class="col-sm-6 col-md-9">
+                                    M.E Angle @ <span class="useMSAOrNotTxt">-</span> at V<sub>x</sub> <span class="vx">-</span>
+                                </div>
+                                <div class="col-sm-6 col-md-3 angle-vx"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="ui-box col-sm-12 col-md-6">
+                        <div class="ui-box-header">Time &amp; Distance</div>
+                        <div class="ui-box-content">
+                            <div class="row">
+                                <div class="col-sm-6 col-md-9 bold">
+                                    Minutes in climb at V<sub>y</sub> <span class="time-in-climb-vy">-</span>
+                                </div>
+                                <div class="col-sm-6 col-md-3 bold min-in-climb">-</div>
+                                <div class="col-sm-6 col-md-9 bold">
+                                    Distance in climb at V<sub>y</sub> <span class="time-in-climb-vy">-</span>, No wind
+                                </div>
+                                <div class="col-sm-6 col-md-3 bold dist-in-climb">-</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="row">
                     <table class="table table-borderless">
                         <tr>
                             <td class="bold" width="40%">OEI Service Ceiling (True Alt):</td>
@@ -574,9 +722,34 @@
                                 <td class="bold dist-in-climb">-</td>
                             </tr>
                     </table>
-                </div>  
-                <h3>Cruise data</h3> 
+                </div> -->
+                <p>&nbsp;</p>
+                <h3>Cruise data</h3>
                 <div class="row">
+                    <div class="ui-box col-sm-12 col-md-6">
+                        <div class="ui-box-header">Fuel Consumption</div>
+                        <div class="ui-box-content">
+                            <div class="row">
+                                <div class="col-sm-6 col-md-9">F.C Per engine @ Cruise</div>
+                                <div class="col-sm-6 col-md-3 fuelConsumption1E">-</div>
+                                <div class="col-sm-6 col-md-9 bold">F.C Both engines @ Cruise</div>
+                                <div class="col-sm-6 col-md-3 bold fuelConsumption2E">-</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-box col-sm-12 col-md-6">
+                        <div class="ui-box-header">TAS &amp; Power</div>
+                        <div class="ui-box-content">
+                            <div class="row">
+                                <div class="col-sm-6 col-md-9 ">KTAS @ cruise</div>
+                                <div class="col-sm-6 col-md-3 KTAS">-</div>
+                                <div class="col-sm-6 col-md-9">Power Setting @ cruise</div>
+                                <div class="col-sm-6 col-md-3 powerSetting">-</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="row">
                     <table class="table table-borderless">
                         <tr>
                             <td>
@@ -599,7 +772,7 @@
                             <td width="10%" class="KTAS">-</td>
                         </tr>
                     </table>
-                </div>
+                </div> -->
             </form>
         </div>
         <div class="tab-pane fade" id="resultsTab" role="tabpanel">
@@ -620,6 +793,16 @@
                     <li><a href="#ldg-ground">Landing Groundroll</a></li>
                     <li><a href="#ldg-distance">Landing Distance</a></li>
                     <li><a href="#ldg-corrections">Landing Corrections</a></li>
+                    
+                    <li><a href="#asdr">Accelerated Stop Distance Required</a></li>
+
+                    <li><a href="#climb-roc">Rate Of Climb</a></li>
+                    <li><a href="#climb-oei-roc">OEI Rate Of Climb</a></li>
+                    <li><a href="#service-ceiling">Service Ceiling</a></li>
+
+                    <li><a href="#fuel-consumption">Fuel Consumption</a></li>
+                    <li><a href="#true-airspeed">True Airspeed</a></li>
+                    <li><a href="#power-setting">Power Setting</a></li>
                 </ul>
                 <p>&nbsp;</p>
                 <hr />
@@ -1456,6 +1639,89 @@
             <hr class="screen-only" />
             <div class="page-break"></div>
 
+            <div class="row" id="asdr">
+                <div class="col-sm-6">
+                    <h4>Accelerated Stop Distance Required <small class="text-muted">Corrections</small></h4>
+                    <b class="bold">Uncorrected</b>
+                    <div class="result-weight-sector">
+                        <table class="table table-sm">
+                            <tr>
+                                <td>T/O Groundroll</td>
+                                <td class="to-g-w3-alt3-temp3">-</td>
+                            </tr>
+                            <tr>
+                                <td>Landing Groundroll</td>
+                                <td class="ldg-g-w3-alt3-temp3">-</td>
+                            </tr>
+                            <tr class="table-secondary">
+                                <td><b>Summed up</b></td>
+                                <td class="asdr-uncorrected">-</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <b class="bold">Corrections</b>
+                    <div class="result-weight-sector">
+                        <table class="table table-sm">
+                            <thead>
+                                <th>Correction</th>
+                                <th>Factor</th>
+                                <th>Distance</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Ref LDG Speed down to 65</td>
+                                    <td><em>According to AFM</em></td>
+                                    <td class="asdr-correction-ldg-spd">-</td>
+                                </tr>
+                                <tr class="correction-wind-row">
+                                    <td class="to-corrections-windlabel">Wind</td>
+                                    <td><em>According to AFM for T/O</em></td>
+                                    <td class="asdr-corrections-wind">-</td>
+                                </tr>
+                                <tr class="table-secondary">
+                                    <td colspan="2">Sum</td>
+                                    <td class="asdr-correction-sum-before-safety">-</td>
+                                </tr>
+                                <tr>
+                                    <td>Safety Factor</td>
+                                    <td>1.25</td>
+                                    <td class="asdr-correction-sum-before-time">-</td>
+                                </tr>
+                                <!-- <tr class="table-secondary">
+                                    <td colspan="2">Sum</td>
+                                    <td class="asdr-correction-sum-before-time">-</td>
+                                </tr> -->
+                                <tr>
+                                    <td>Reaction Time</td>
+                                    <td>3s @ 65 kts</td>
+                                    <td class="asdr-correction-time-factor">-</td>
+                                </tr>
+                                <tr class="table-secondary">
+                                    <td colspan="2"><b>Corrected ASDR</b></td>
+                                    <td class="asdr-corrected">-</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="alert alert-warning">
+                        <em>The calcultion above for ASDR is not official and has not been approved.</em>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div style="margin-top: 95px;">&nbsp;</div>
+                    <div class="asdr-groundroll-sum-equation"></div>
+                    <div style="margin-top: 35px;">&nbsp;</div>
+                    <div class="asdr-ldg-spd-equation"></div>
+                    <div class="asdr-wind-correction-equation"></div>
+                    <div style="margin-top: -20px;">&nbsp;</div>
+                    <div class="asdr-safety-factor-equation"></div>
+                    <div class="asdr-time-correction-equation"></div>
+                    <div class="asdr-corrected-equation"></div>
+                </div>
+            </div>
+            <hr class="screen-only" />
+            <div class="page-break"></div>                            
+
             <div class="row" id="climb-roc">
                 <div class="col-sm-6">
                     <h4>Rate Of Climb <small class="text-muted">V<sub>y</sub></small></h4>
@@ -1902,7 +2168,8 @@
             <!-- Space for more data... -->
             <hr>
             <div class="page-break"></div>
-            <div class="row" id="fuelConsumption">
+
+            <div class="row" id="fuel-consumption">
                 <div class="col-sm-6">
                     <h4>Fuel Consumption</h4>
                     <b class="FC-alt1">-</b>
@@ -2030,7 +2297,8 @@
             </div>
             <hr>
             <div class="page-break"></div>
-            <div class="row" id="KTAS">
+
+            <div class="row" id="true-airspeed">
                 <div class="col-sm-6">
                     <h4>True Airspeed</h4>
                     <b class="KTAS-alt1">-</b>
@@ -2157,7 +2425,8 @@
             </div>
             <hr>
             <div class="page-break"></div>
-            <div class="row" id="PWR">
+
+            <div class="row" id="power-setting">
                 <div class="col-sm-6">
                     <h4>Power Setting</h4>
                     <b class="PWR-alt1">-</b>
@@ -2310,7 +2579,7 @@
     </script>
     <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
     <script>
-        var version = 2.6;
+        var version = 2.7;
 
         var scripts = [
             './polyfill.js',
