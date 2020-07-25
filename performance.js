@@ -144,7 +144,7 @@ function calculateFromInputs()
         'ldg-groundroll': [Math.ceil(data.landing.groundroll), 'm'],
         'ldg-distance': [Math.ceil(data.landing.distance), 'm'],
         'to-asdr': [Math.ceil(data.ASDR.corrected), 'm'],
-        'to-asdr-reaction-time-dist': [Math.ceil(data.ASDR.corrections.timeFactor), 'm'],
+        'to-asdr-uncorrected': [Math.ceil(data.ASDR.uncorrected), 'm'],
         'oei-serviceceil': [ceilingCheck(data.OEIserviceCeiling), 'ft'],
         'oei-absceil': [ceilingCheck(data.OEIabsoluteCeiling), 'ft'],
         'vyse': [Math.round(data.VySe.result), 'kias'],
@@ -405,6 +405,18 @@ function calculateFromInputs()
         'ldg-g-final': [Math.ceil(data.landing.groundroll), 'm'],
         'ldg-d-final': [Math.ceil(data.landing.distance), 'm'],
 
+
+        // ASDR
+        'asdr-uncorrected': [Math.ceil(data.ASDR.uncorrected), 'm'],
+        'asdr-correction-ldg-spd': [Math.ceil(data.ASDR.corrections.ldgCorrection), 'm'],
+        'asdr-corrections-wind': [Math.ceil(data.ASDR.corrections.wind), 'm'],
+        'asdr-correction-sum-before-safety': [Math.ceil(data.ASDR.beforeSafetyCorrection), 'm'],
+        'asdr-correction-safety-factor': [Math.ceil(data.ASDR.corrections.safetyFactor), 'm'],
+        'asdr-correction-sum-before-time': [Math.ceil(data.ASDR.beforeTimeCorrection), 'm'],
+        'asdr-correction-time-factor': [Math.ceil(data.ASDR.corrections.timeFactor), 'm'],
+        'asdr-corrected': [Math.ceil(data.ASDR.corrected), 'm'],
+        
+
         //CLIMB PERFORMANCE OUTPUTS
 
         // ROC Vy
@@ -599,14 +611,14 @@ function calculateFromInputs()
      * Show applicable corrections only
      **********************/
 
-    $('.correction-wind-row,.to-correction-wind-equation,.ldg-correction-wind-equation').hide();
+    $('.correction-wind-row,.to-correction-wind-equation,.ldg-correction-wind-equation,.asdr-wind-correction-equation').hide();
     $('.correction-soft-rwy-row,.to-correction-soft-equation,.ldg-correction-soft-equation').hide();
     $('.correction-sloped-rwy-row,.to-correction-slope-equation,.ldg-correction-slope-equation').hide();
     $('.correction-paved-rwy-row,.to-correction-paved-equation,.ldg-correction-paved-equation').hide();
     $('.correction-inc-spd-row').hide();
 
     if (useWindComponent) {
-        $('.correction-wind-row,.to-correction-wind-equation,.ldg-correction-wind-equation').show();
+        $('.correction-wind-row,.to-correction-wind-equation,.ldg-correction-wind-equation,.asdr-wind-correction-equation').show();
     }
 
     if (useSoftSfc) {
@@ -737,7 +749,16 @@ function calculateFromInputs()
     $('.ldg-g-factorized-equation').html(MathJax.tex2svg(takeOffLandingUIPairs['ldg-g-corrected'][0]+'m \\cdot 1.43 = '+ takeOffLandingUIPairs['ldg-g-final'][0]+'m', {display: true}));
     $('.ldg-d-factorized-equation').html(MathJax.tex2svg(takeOffLandingUIPairs['ldg-d-corrected'][0]+'m \\cdot 1.43 = '+ takeOffLandingUIPairs['ldg-d-final'][0]+'m', {display: true}));
 
-// WIP
+
+    // ASDR
+    $('.asdr-groundroll-sum-equation').html(MathJax.tex2svg(takeOffLandingUIPairs['to-g-w3-alt3-temp3'][0]+'m +'+ takeOffLandingUIPairs['ldg-g-w3-alt3-temp3'][0]+'m = '+ takeOffLandingUIPairs['asdr-uncorrected'][0]+ 'm'));
+    $('.asdr-ldg-spd-equation').html(MathJax.tex2svg('-5\\tfrac{m}{kt} \\cdot 5 kts = -25 m'));
+    $('.asdr-wind-correction-equation').html(MathJax.tex2svg((getWindComponents().head>0 ? '-2.5\\tfrac{m}{kt} \\cdot '+ takeOffLandingUIPairs['env-headwind-component'][0] +'kts' : '10\\tfrac{m}{kt} \\cdot ' + takeOffLandingUIPairs['env-headwind-component'][0] + 'kts')+' = '+ takeOffLandingUIPairs['to-corrections-wind'][0]+'m', {display: true}));
+    $('.asdr-safety-factor-equation').html(MathJax.tex2svg(takeOffLandingUIPairs['asdr-correction-sum-before-safety'][0] +' \\cdot 1.25 = '+ takeOffLandingUIPairs['asdr-correction-sum-before-time'][0] +'m'));
+    $('.asdr-time-correction-equation').html(MathJax.tex2svg('\\tfrac{65}{3600} \\cdot 3 \\cdot 1852 = '+ takeOffLandingUIPairs['asdr-correction-time-factor'][0] +'m'));
+
+
+    // WIP
 
 /*
 <li>First, the climbrates are interpolated between altitudes, for each temperature and weight:<br>
@@ -1789,31 +1810,39 @@ function calculateASDR(takeoff, landing)
     // TO GR
     var ASDR = takeoff.uncorrectedGround.result;
 
+    ASDR += landing.uncorrectedGround.result;
+    var uncorrected = ASDR;
+    
     // Landing GR - TAS should be 5 kts lower than stated in AFM.
     var ldgGRCorrection = 5 * -5;
-    ASDR += landing.uncorrectedGround.result + ldgGRCorrection;
+    ASDR = ASDR + ldgGRCorrection
 
-    var uncorrected = ASDR;
 
     // Wind Correction
     var windCorrection;
     if (useWindComponent) {
         windCorrection = takeoff.corrections.windCorrection
-        ASDR += windCorrection;
+        ASDR = ASDR + windCorrection;
     }
 
     // Safety Factor
+    var beforeSafetyASDR = ASDR;
     var safetyFactor = ASDR * 0.25;
-    ASDR += safetyFactor;
+    ASDR = Math.ceil(ASDR + safetyFactor);
 
+    
     // Time Factor
+    var beforeTimeASDR = ASDR;
     var timeFactor = 65 / 3600 * 3 * 1852;
-    ASDR += timeFactor;
+    ASDR = Math.ceil(ASDR + timeFactor);
 
     return {
         'uncorrected': uncorrected,
         'corrected': ASDR,
+        'beforeTimeCorrection': beforeTimeASDR,
+        'beforeSafetyCorrection': beforeSafetyASDR,
         'corrections': {
+            'ldgCorrection': ldgGRCorrection,
             'wind': windCorrection,
             'safetyFactor': safetyFactor,
             'timeFactor': timeFactor

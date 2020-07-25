@@ -486,10 +486,10 @@
                             <div class="row">
                                 <!-- <div class="col-sm-6 col-md-9">ASDA</div>
                                 <div class="col-sm-6 col-md-3 to-asda">{get runway/intersection length}</div> -->
-                                <div class="col-sm-6 col-md-9">ASDR</div>
+                                <div class="col-sm-6 col-md-9">Uncorrected ASDR</div>
+                                <div class="col-sm-6 col-md-3 to-asdr-uncorrected">-</div>
+                                <div class="col-sm-6 col-md-9">Corrected ASDR</div>
                                 <div class="col-sm-6 col-md-3 to-asdr">-</div>
-                                <div class="col-sm-6 col-md-9">Reaction Time Dist.</div>
-                                <div class="col-sm-6 col-md-3 to-asdr-reaction-time-dist">-</div>
                             </div>
                         </div>
                     </div>
@@ -550,7 +550,7 @@
                                 </div>
                                 <div class="col-sm-6 col-md-3 to-roc-vy">-</div>
                                 <div class="col-sm-6 col-md-9">
-                                    M.E Gradient Flaps T/O @ <span class="useMSAOrNotTxt">-</span> at V<sub>y</sub> <span class="to-vy">-</span>
+                                    M.E Gradient Flaps T/O @ <span class="useMSAOrNotTxt">-</span> V<sub>y</sub> <span class="to-vy">-</span>
                                 </div>
                                 <div class="col-sm-6 col-md-3 to-grad-vy">-</div>
                             </div>
@@ -793,6 +793,16 @@
                     <li><a href="#ldg-ground">Landing Groundroll</a></li>
                     <li><a href="#ldg-distance">Landing Distance</a></li>
                     <li><a href="#ldg-corrections">Landing Corrections</a></li>
+                    
+                    <li><a href="#asdr">Accelerated Stop Distance Required</a></li>
+
+                    <li><a href="#climb-roc">Rate Of Climb</a></li>
+                    <li><a href="#climb-oei-roc">OEI Rate Of Climb</a></li>
+                    <li><a href="#service-ceiling">Service Ceiling</a></li>
+
+                    <li><a href="#fuel-consumption">Fuel Consumption</a></li>
+                    <li><a href="#true-airspeed">True Airspeed</a></li>
+                    <li><a href="#power-setting">Power Setting</a></li>
                 </ul>
                 <p>&nbsp;</p>
                 <hr />
@@ -1629,6 +1639,89 @@
             <hr class="screen-only" />
             <div class="page-break"></div>
 
+            <div class="row" id="asdr">
+                <div class="col-sm-6">
+                    <h4>Accelerated Stop Distance Required <small class="text-muted">Corrections</small></h4>
+                    <b class="bold">Uncorrected</b>
+                    <div class="result-weight-sector">
+                        <table class="table table-sm">
+                            <tr>
+                                <td>T/O Groundroll</td>
+                                <td class="to-g-w3-alt3-temp3">-</td>
+                            </tr>
+                            <tr>
+                                <td>Landing Groundroll</td>
+                                <td class="ldg-g-w3-alt3-temp3">-</td>
+                            </tr>
+                            <tr class="table-secondary">
+                                <td><b>Summed up</b></td>
+                                <td class="asdr-uncorrected">-</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <b class="bold">Corrections</b>
+                    <div class="result-weight-sector">
+                        <table class="table table-sm">
+                            <thead>
+                                <th>Correction</th>
+                                <th>Factor</th>
+                                <th>Distance</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Ref LDG Speed down to 65</td>
+                                    <td><em>According to AFM</em></td>
+                                    <td class="asdr-correction-ldg-spd">-</td>
+                                </tr>
+                                <tr class="correction-wind-row">
+                                    <td class="to-corrections-windlabel">Wind</td>
+                                    <td><em>According to AFM for T/O</em></td>
+                                    <td class="asdr-corrections-wind">-</td>
+                                </tr>
+                                <tr class="table-secondary">
+                                    <td colspan="2">Sum</td>
+                                    <td class="asdr-correction-sum-before-safety">-</td>
+                                </tr>
+                                <tr>
+                                    <td>Safety Factor</td>
+                                    <td>1.25</td>
+                                    <td class="asdr-correction-sum-before-time">-</td>
+                                </tr>
+                                <!-- <tr class="table-secondary">
+                                    <td colspan="2">Sum</td>
+                                    <td class="asdr-correction-sum-before-time">-</td>
+                                </tr> -->
+                                <tr>
+                                    <td>Reaction Time</td>
+                                    <td>3s @ 65 kts</td>
+                                    <td class="asdr-correction-time-factor">-</td>
+                                </tr>
+                                <tr class="table-secondary">
+                                    <td colspan="2"><b>Corrected ASDR</b></td>
+                                    <td class="asdr-corrected">-</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="alert alert-warning">
+                        <em>The calcultion above for ASDR is not official and has not been approved.</em>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div style="margin-top: 95px;">&nbsp;</div>
+                    <div class="asdr-groundroll-sum-equation"></div>
+                    <div style="margin-top: 35px;">&nbsp;</div>
+                    <div class="asdr-ldg-spd-equation"></div>
+                    <div class="asdr-wind-correction-equation"></div>
+                    <div style="margin-top: -20px;">&nbsp;</div>
+                    <div class="asdr-safety-factor-equation"></div>
+                    <div class="asdr-time-correction-equation"></div>
+                    <div class="asdr-corrected-equation"></div>
+                </div>
+            </div>
+            <hr class="screen-only" />
+            <div class="page-break"></div>                            
+
             <div class="row" id="climb-roc">
                 <div class="col-sm-6">
                     <h4>Rate Of Climb <small class="text-muted">V<sub>y</sub></small></h4>
@@ -2075,7 +2168,8 @@
             <!-- Space for more data... -->
             <hr>
             <div class="page-break"></div>
-            <div class="row" id="fuelConsumption">
+
+            <div class="row" id="fuel-consumption">
                 <div class="col-sm-6">
                     <h4>Fuel Consumption</h4>
                     <b class="FC-alt1">-</b>
@@ -2203,7 +2297,8 @@
             </div>
             <hr>
             <div class="page-break"></div>
-            <div class="row" id="KTAS">
+
+            <div class="row" id="true-airspeed">
                 <div class="col-sm-6">
                     <h4>True Airspeed</h4>
                     <b class="KTAS-alt1">-</b>
@@ -2330,7 +2425,8 @@
             </div>
             <hr>
             <div class="page-break"></div>
-            <div class="row" id="PWR">
+
+            <div class="row" id="power-setting">
                 <div class="col-sm-6">
                     <h4>Power Setting</h4>
                     <b class="PWR-alt1">-</b>
