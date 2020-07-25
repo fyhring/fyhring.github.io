@@ -107,6 +107,10 @@ function calculateFromInputs()
         if (pressureElevation < 0) {
             pressureElevation = 0;
         }
+    } else {
+        if (useFL) {
+            pressureAltitude = cruiseInput * 100;
+        }
     }
 
     var data = calculateAll(pressureElevation, pressureAltitude, pressureMSA, tempIsaDeviation, weightInput);
