@@ -754,7 +754,7 @@ function calculateFromInputs()
     $('.asdr-groundroll-sum-equation').html(MathJax.tex2svg(takeOffLandingUIPairs['to-g-w3-alt3-temp3'][0]+'m +'+ takeOffLandingUIPairs['ldg-g-w3-alt3-temp3'][0]+'m = '+ takeOffLandingUIPairs['asdr-uncorrected'][0]+ 'm'));
     $('.asdr-ldg-spd-equation').html(MathJax.tex2svg('-5\\tfrac{m}{kt} \\cdot 5 kts = -25 m'));
     $('.asdr-wind-correction-equation').html(MathJax.tex2svg((getWindComponents().head>0 ? '-2.5\\tfrac{m}{kt} \\cdot '+ takeOffLandingUIPairs['env-headwind-component'][0] +'kts' : '10\\tfrac{m}{kt} \\cdot ' + takeOffLandingUIPairs['env-headwind-component'][0] + 'kts')+' = '+ takeOffLandingUIPairs['to-corrections-wind'][0]+'m', {display: true}));
-    $('.asdr-safety-factor-equation').html(MathJax.tex2svg(takeOffLandingUIPairs['asdr-correction-sum-before-safety'][0] +' \\cdot 1.25 = '+ takeOffLandingUIPairs['asdr-correction-sum-before-time'][0] +'m'));
+    $('.asdr-safety-factor-equation').html(MathJax.tex2svg(takeOffLandingUIPairs['asdr-correction-sum-before-safety'][0] +'m \\cdot 1.25 = '+ takeOffLandingUIPairs['asdr-correction-sum-before-time'][0] +'m'));
     $('.asdr-time-correction-equation').html(MathJax.tex2svg('\\tfrac{65kts}{3600\\tfrac{s}{h}} \\cdot 3s \\cdot 1852\\tfrac{m}{nm} = '+ takeOffLandingUIPairs['asdr-correction-time-factor'][0] +'m'));
 
 
