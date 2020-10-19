@@ -28,7 +28,8 @@ var elevationInput,
     rwyDirInput,
     weightInput,
     cruiseInput,
-    msaInput;
+    msaInput,
+    daMdaInput;
 
 $(document).ready(function()
 {
@@ -57,6 +58,7 @@ function calculateFromInputs()
     windDirInput   = parseInt($('#performanceForm input[name="windDirInput"]').val(), 10),
     windSpdInput   = parseInt($('#performanceForm input[name="windSpdInput"]').val(), 10),
     rwyDirInput    = parseInt($('#performanceForm input[name="rwyDirInput"]').val(), 10),
+    daMdaInput     = parseInt($('#performanceForm input[name="daMdaInput"]').val(), 10),
     weightInput    = window.acTotalMass;
 
     if (
@@ -68,6 +70,7 @@ function calculateFromInputs()
         (isNaN(windDirInput)) ||
         (isNaN(windSpdInput)) ||
         (isNaN(rwyDirInput)) ||
+        (isNaN(daMdaInput)) ||
         (weightInput == null)
     ) {
 
@@ -75,7 +78,9 @@ function calculateFromInputs()
             ['to-groundroll', null, 'm'],
             ['to-distance', null, 'm'],
             ['ldg-groundroll', null, 'm'],
-            ['ldg-distance', null, 'm']
+            ['ldg-distance', null, 'm'],
+            ['minima-uncorrected', null, 'ft'],
+            ['tempCorrectionToMinima', null, 'ft']
         ];
     
         updateUIValues(takeOffLandingUIPairs);
@@ -115,7 +120,7 @@ function calculateFromInputs()
         }
     }
 
-    var data = calculateAll(pressureElevation, pressureAltitude, pressureMSA, tempIsaDeviation, weightInput);
+    var data = calculateAll(pressureElevation, pressureAltitude, pressureMSA, tempIsaDeviation, weightInput, daMdaInput);
 
     var rocAltitude = toTrueAltitude(getROCAltitude(pressureMSA, pressureAltitude, pressureElevation)),
         rocPressureAlt = toPressureAltitude(rocAltitude);
@@ -147,6 +152,8 @@ function calculateFromInputs()
         'ldg-distance': [Math.ceil(data.landing.distance), 'm'],
         'to-asdr': [Math.ceil(data.ASDR.corrected), 'm'],
         'to-asdr-uncorrected': [Math.ceil(data.ASDR.uncorrected), 'm'],
+        'minima-uncorrected': [daMdaInput,'ft'],
+        'tempCorrectionToMinima': [math.ceiling(data.tempCorrectionToMinima),'ft'],
         'oei-serviceceil': [ceilingCheck(data.OEIserviceCeiling), 'ft'],
         'oei-absceil': [ceilingCheck(data.OEIabsoluteCeiling), 'ft'],
         'vyse': [Math.round(data.VySe.result), 'kias'],
@@ -1888,7 +1895,7 @@ function getTempAtAlt(temp,altAbove){
     return Math.ceil(temp - (1.98 * (altAbove/1000)));
 }
 
-function calculateAll(pe, pa, msa, isaDeviation, tom, useTwoThirds)
+function calculateAll(pe, pa, msa, isaDeviation, tom, daMda)
 {
     var rocAltitude = getROCAltitude(msa, pa, pe);
     //var rocISADeviation = isaDeviation - (1.98 * (rocAltitude / 1000));
@@ -1908,6 +1915,7 @@ function calculateAll(pe, pa, msa, isaDeviation, tom, useTwoThirds)
         //Takeoff and landing distances
         'takeoff': takeoffCorrectedCalculations(pe, isaDeviation, tom, null),
         'landing': landingCorrectedCalculations(pe, isaDeviation, tom, null),
+        'tempCorrectionToMinima': calculateTempCorrectionToMinima(pe, isaDeviation, daMda),
 
         //Climb performance numbers, all with max cont. power setting and gear up
         //Takeoff Vy (flaps takeoff)
