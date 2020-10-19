@@ -83,8 +83,10 @@ function calculateFromInputs()
         return false;
     }
 
+    let StdLapseRate = 0.00198 //Standard temperature lapse rate per ft altitude
+
     // Temp ISA Deviation
-    var tempIsaDeviation = temperatureInput - 15;
+    var tempIsaDeviation = temperatureInput + Math.round(pressureElevation * StdLapseRate) - 15;
 
     // Calculate pressure altitude of AD elevation.
     var pressureElevation = elevationInput,
