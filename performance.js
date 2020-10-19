@@ -1420,12 +1420,12 @@ function calculateTempCorrectionToMinima(pe, isaDeviation, daMda) {
     //This is the most accurate formula mentioned in ICAO PANS-OPS, Volume III, Section2, Chapter 4, 4.3, “Temperature correction”
     //The formula is devised by the Engineering Sciences Data Unit (ESDU), and published in their publication "Performance", volume 2, as item number 77022
 
-    return (daMda - pe) * ( (30 - isaDeviation) / (273 + isaDeviation+15 - 0.5 * StdLapseRate * pe) )
+    return (daMda - pe) * ( (isaDeviation * -1) / (273 + isaDeviation+15 - 0.5 * StdLapseRate * pe) )
     //This is the second most accurate formula mentioned in ICAO PANS-OPS, Volume III, Section2, Chapter 4, 4.3, “Temperature correction”
     //According to ICAO, this formula produces results accurate to within 5% of the correction, up to elevations of 10,000ft and Heights above elevation of 5,000ft
     //Table 2-4-1 b is based on this formula
 
-    return 0.04 * (isaDeviation/10) * (daMda - pe)
+    return 0.04 * (isaDeviation/-10) * (daMda - pe)
     //In cases where the measured temperature at the station is higher than -15C, correcting the height by 4% for every 10C below ISA is accaptable by ICAO, regardless of the elevation, but in my opinion, any of the other methods are preferable
 }
 
