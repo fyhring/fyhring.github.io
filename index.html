@@ -189,6 +189,18 @@
                 <li>Finally, the result of those formulas are interpolated between weights:<br>
                     $$value_{actual} = {value_{heavy} - value_{light} \over mass_{heavy} - mass_{light}} \cdot (mass_{actual} - mass_{light})+value_{light}$$</li>
             </ul>
+            <h6>Temperature correction to minimum altitude</h6>
+            <ul>
+                <li>The following formula is used to calculae the correction to be applied to the DA/MDA ( *$x_{pa}$ -> as pressure altitude):<br>
+                $$correction = {-ISA deviaton \over \tfrac{1.98^\circ C}{1000ft}} \cdot \ln\left(1+{\tfrac{1.98^\circ C}{1000ft} \cdot DA/MDA_{pa} \over 15^\circ C + \tfrac{1.98^\circ C}{1000ft} \cdot Elevation_{pa} }\right)$$
+                We use this formula, because it is the most versatile and accurate formula referenced by <em>ICAO PANS-OPS, Volume III, Section2, Chapter 4, 4.3, “Temperature correction”</em>, which is the document referenced in doc8168<br><br></li>
+                <li>Another forumla, which is referenced in <em>ICAO PANS-OPS, Volume III, Section2, Chapter 4, 4.3, “Temperature correction”</em>, but not used on this site is:<br>
+                $$correction = DH/MDH_{pa} \cdot \left( { -ISA deviation \over Temp_{SeaLevel_{^\circ K}} - 0.5 \cdot \tfrac{1.98^\circ C}{1000ft} \cdot DA/MDA_{pa} } \right)$$
+                This formula is (according to ICAO) accurate to within 5% of the actual value, for pressure-elevations up to 10.000ft and for DH/MDH's up to 5.000ft, which is also the range of heights where it is approved for use<br>
+                This formula, when applied to an aerodrome at sea level, is also the basis for <em>ICAO PANS-OPS, Volume III, Section2, Chapter 4, table 2-4-1b</em>, where the values have been rounded up to the nearest 10ft. When within limits, this formula yeilds a slightly larger correction than the first one.<br><br></li>
+                <li>It is also worth considering that for temperatures above -15C it is also permissible (and much simpler) to add 4% per 10 degrees below ISA to the DH/MDH, regardless of aerodrome elevation, as shown here:<br>
+                $$correction = DH/MDH_{pa} \cdot 4 \% \cdot \left( {-ISAdeviation \over 10^\circ C} \right)$$</li>
+            </ul>
             <h6>Rate of Climb Calculations</h6>
             <ul>
                 <li>First, the climbrates are interpolated between altitudes, for each temperature and weight:<br>
@@ -416,6 +428,15 @@
                         </div>
                     </div>    
                 </div>
+                <div class="form-group row">
+                    <div class="col-sm-6 input-group">
+                        <input type="number" class="form-control" step="100" name="daMdaInput" placeholder="DA / MDA" />
+                        <div class="input-group-append">
+                            <span class="input-group-text">ft</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6"></div>
+                </div>
                 <div class="settings">
                     <details class="settings-box" open>
                         <summary>Settings</summary>
@@ -490,6 +511,19 @@
                                 <div class="col-sm-6 col-md-3 to-asdr-uncorrected">-</div>
                                 <div class="col-sm-6 col-md-9">Corrected ASDR</div>
                                 <div class="col-sm-6 col-md-3 to-asdr">-</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-box col-sm-12 col-md-6">
+                        <div class="ui-box-header">Correction to Minima</div>
+                        <div class="ui-box-content">
+                            <div class="row">
+                                <!-- <div class="col-sm-6 col-md-9">ASDA</div>
+                                <div class="col-sm-6 col-md-3 to-asda">{get runway/intersection length}</div> -->
+                                <div class="col-sm-6 col-md-9">Uncorrected DA/MDA</div>
+                                <div class="col-sm-6 col-md-3 minima-uncorrected">-</div>
+                                <div class="col-sm-6 col-md-9">Temp-Correction to DA/MDA</div>
+                                <div class="col-sm-6 col-md-3 tempCorrectionToMinima">-</div>
                             </div>
                         </div>
                     </div>
