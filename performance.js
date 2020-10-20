@@ -110,10 +110,12 @@ function calculateFromInputs()
             pressureAltitude = cruiseInput * 100;
         }
 
+        /* I dont think we need this code anymore, as we can extrapolate outside matrix data
         // Pressure Elevation must not be less than 0, no data in matrix below 0.
         if (pressureElevation < 0) {
             pressureElevation = 0;
         }
+        */
     } else {
         if (useFL) {
             pressureAltitude = cruiseInput * 100;
@@ -153,7 +155,11 @@ function calculateFromInputs()
         'to-asdr': [Math.ceil(data.ASDR.corrected), 'm'],
         'to-asdr-uncorrected': [Math.ceil(data.ASDR.uncorrected), 'm'],
         'minima-uncorrected': [daMdaInput,'ft'],
+        'minima-agl-uncorrected': [daMdaInput-elevationInput, 'ft'],
+        'minima-pa-uncorrected': [toPressureAltitude(daMdaInput),'ft'],
+        'minima-ph-uncorrected': [toPressureAltitude(daMdaInput)-toPressureAltitude(elevationInput),'ft'],
         'tempCorrectionToMinima': [Math.ceil(data.tempCorrectionToMinima),'ft'],
+        'minima-corrected': [daMdaInput + Math.ceil(data.tempCorrectionToMinima), 'ft'],
         'oei-serviceceil': [ceilingCheck(data.OEIserviceCeiling), 'ft'],
         'oei-absceil': [ceilingCheck(data.OEIabsoluteCeiling), 'ft'],
         'vyse': [Math.round(data.VySe.result), 'kias'],
@@ -766,6 +772,11 @@ function calculateFromInputs()
     $('.asdr-safety-factor-equation').html(MathJax.tex2svg(takeOffLandingUIPairs['asdr-correction-sum-before-safety'][0] +'m \\cdot 1.25 = '+ takeOffLandingUIPairs['asdr-correction-sum-before-time'][0] +'m'));
     $('.asdr-time-correction-equation').html(MathJax.tex2svg('\\tfrac{65kts}{3600\\tfrac{s}{h}} \\cdot 3s \\cdot 1852\\tfrac{m}{nm} = '+ takeOffLandingUIPairs['asdr-correction-time-factor'][0] +'m'));
 
+
+    //Temperature correction to Minima DA/MDA
+    //$('.minima-temp-correction-general-equation').html(MathJax.tex2svg('correction = {-ISA deviaton \\over \\tfrac{1.98^\\circ C}{1000ft}} \\cdot \\ln\\left(1+{\\tfrac{1.98^\\circ C}{1000ft} \\cdot DH/MDH_{pa} \\over 273 ^\\circ _{C \\rightarrow K} + 15^\\circ C + \\tfrac{1.98^\\circ C}{1000ft} \\cdot Elevation_{pa} }\\right)', {display: true}));
+    $('.minima-temp-correction-equation').html(MathJax.tex2svg('{'+tempIsaDeviation*-1+'^\\circ C \\over \\tfrac{1.98^\\circ C}{1000ft}} \\cdot \\ln\\left(1+{\\tfrac{1.98^\\circ C}{1000ft} \\cdot '+takeOffLandingUIPairs['minima-ph-uncorrected'][0]+'ft \\over 273 ^\\circ _{C \\rightarrow K} + 15^\\circ C + \\tfrac{1.98^\\circ C}{1000ft} \\cdot '+takeOffLandingUIPairs['env-pressure-elevation'][0]+'ft }\\right) = '+takeOffLandingUIPairs['tempCorrectionToMinima'][0]+'ft', {display: true}));
+    $('.minima-temp-correction-summing-equation').html(MathJax.tex2svg(takeOffLandingUIPairs['minima-uncorrected'][0]+'ft + '+takeOffLandingUIPairs['tempCorrectionToMinima'][0]+'ft = '+takeOffLandingUIPairs['minima-corrected'][0]+'ft', {display: true}))
 
     // WIP
 
@@ -1408,13 +1419,13 @@ function calculateLandingDist(pa,isaDeviation,tom) {
     return interpolate3D(pa,sfcTemp,tom,landingFiftyFtMatrix)
 }
 
-//Minimums temperature correction
+//Minimums temperature correction.
 function calculateTempCorrectionToMinima(pe, isaDeviation, daMda) {
     //pe -> pressure elevation
     //isaDeviation -> temperature deviation from ISA
     //daMda -> altitude to be corrected
 
-    let StdLapseRate = 0.00198
+    let StdLapseRate = 0.00198 // 0.00198 degrees per foot, equivalent to 1.98 degrees per 1000ft
 
     return ((isaDeviation * -1)/StdLapseRate)*Math.log(1+(StdLapseRate*(toPressureAltitude(daMda)-pe))/(273+15+StdLapseRate*pe))
     //This is the most accurate formula mentioned in ICAO PANS-OPS, Volume III, Section2, Chapter 4, 4.3, “Temperature correction”
