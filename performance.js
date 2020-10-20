@@ -91,7 +91,7 @@ function calculateFromInputs()
     let StdLapseRate = 0.00198 //Standard temperature lapse rate per ft altitude
 
     // Temp ISA Deviation
-    var tempIsaDeviation = temperatureInput + Math.round(pressureElevation * StdLapseRate) - 15;
+    var tempIsaDeviation = temperatureInput + Math.round(elevationInput * StdLapseRate) - 15;
 
     // Calculate pressure altitude of AD elevation.
     var pressureElevation = elevationInput,
@@ -153,7 +153,7 @@ function calculateFromInputs()
         'to-asdr': [Math.ceil(data.ASDR.corrected), 'm'],
         'to-asdr-uncorrected': [Math.ceil(data.ASDR.uncorrected), 'm'],
         'minima-uncorrected': [daMdaInput,'ft'],
-        'tempCorrectionToMinima': [math.ceiling(data.tempCorrectionToMinima),'ft'],
+        'tempCorrectionToMinima': [Math.ceil(data.tempCorrectionToMinima),'ft'],
         'oei-serviceceil': [ceilingCheck(data.OEIserviceCeiling), 'ft'],
         'oei-absceil': [ceilingCheck(data.OEIabsoluteCeiling), 'ft'],
         'vyse': [Math.round(data.VySe.result), 'kias'],
