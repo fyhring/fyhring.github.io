@@ -776,7 +776,7 @@ function calculateFromInputs()
     //Temperature correction to Minima DA/MDA
     //$('.minima-temp-correction-general-equation').html(MathJax.tex2svg('correction = {-ISA deviaton \\over \\tfrac{1.98^\\circ C}{1000ft}} \\cdot \\ln\\left(1+{\\tfrac{1.98^\\circ C}{1000ft} \\cdot DH/MDH_{pa} \\over 273 ^\\circ _{C \\rightarrow K} + 15^\\circ C + \\tfrac{1.98^\\circ C}{1000ft} \\cdot Elevation_{pa} }\\right)', {display: true}));
     $('.minima-temp-correction-equation').html(MathJax.tex2svg('{'+tempIsaDeviation*-1+'^\\circ C \\over \\tfrac{1.98^\\circ C}{1000ft}} \\cdot \\ln\\left(1+{\\tfrac{1.98^\\circ C}{1000ft} \\cdot '+takeOffLandingUIPairs['minima-ph-uncorrected'][0]+'ft \\over 273 ^\\circ _{C \\rightarrow K} + 15^\\circ C + \\tfrac{1.98^\\circ C}{1000ft} \\cdot '+takeOffLandingUIPairs['env-pressure-elevation'][0]+'ft }\\right) = '+takeOffLandingUIPairs['tempCorrectionToMinima'][0]+'ft', {display: true}));
-    $('.minima-temp-correction-summing-equation').html(MathJax.tex2svg(takeOffLandingUIPairs['minima-uncorrected'][0]+'ft + '+takeOffLandingUIPairs['tempCorrectionToMinima'][0]+'ft = '+takeOffLandingUIPairs['minima-corrected'][0]+'ft', {display: true}))
+    $('.minima-temp-correction-summing-equation').html(MathJax.tex2svg(takeOffLandingUIPairs['minima-uncorrected'][0]+'ft + '+takeOffLandingUIPairs['tempCorrectionToMinima'][0]+'ft = '+takeOffLandingUIPairs['minima-corrected'][0]+'ft', {display: true}));
 
     // WIP
 
