@@ -88,10 +88,8 @@ function calculateFromInputs()
         return false;
     }
 
-    let StdLapseRate = 0.00198 //Standard temperature lapse rate per ft altitude
-
     // Temp ISA Deviation
-    var tempIsaDeviation = temperatureInput + Math.round(elevationInput * StdLapseRate) - 15;
+    var tempIsaDeviation = toISAdeviation(temperatureInput, elevationInput);
 
     // Calculate pressure altitude of AD elevation.
     var pressureElevation = elevationInput,
@@ -430,10 +428,105 @@ function calculateFromInputs()
         'asdr-correction-sum-before-time': [Math.ceil(data.ASDR.beforeTimeCorrection), 'm'],
         'asdr-correction-time-factor': [Math.ceil(data.ASDR.corrections.timeFactor), 'm'],
         'asdr-corrected': [Math.ceil(data.ASDR.corrected), 'm'],
-        
+
+        //MINIMA corrections
+        'minima-temp-0': [data.minimaCorrectionTable.temps[0],'&deg;C'],
+        'minima-temp-1': [data.minimaCorrectionTable.temps[1],'&deg;C'],
+        'minima-temp-2': [data.minimaCorrectionTable.temps[2],'&deg;C'],
+        'minima-temp-3': [data.minimaCorrectionTable.temps[3],'&deg;C'],
+        'minima-temp-4': [data.minimaCorrectionTable.temps[4],'&deg;C'],
+        'minima-alt-0': [data.minimaCorrectionTable.altitudes[0], 'ft'],
+        'minima-alt-1': [data.minimaCorrectionTable.altitudes[1], 'ft'],
+        'minima-alt-2': [data.minimaCorrectionTable.altitudes[2], 'ft'],
+        'minima-alt-3': [data.minimaCorrectionTable.altitudes[3], 'ft'],
+        'minima-alt-4': [data.minimaCorrectionTable.altitudes[4], 'ft'],
+        'minima-alt-5': [data.minimaCorrectionTable.altitudes[5], 'ft'],
+        'minima-alt-6': [data.minimaCorrectionTable.altitudes[6], 'ft'],
+        'minima-alt-7': [data.minimaCorrectionTable.altitudes[7], 'ft'],
+        'minima-alt-8': [data.minimaCorrectionTable.altitudes[8], 'ft'],
+        'minima-alt-9': [data.minimaCorrectionTable.altitudes[9], 'ft'],
+        'minima-alt-10': [data.minimaCorrectionTable.altitudes[10], 'ft'],
+        'minima-alt-11': [data.minimaCorrectionTable.altitudes[11], 'ft'],
+        'minima-alt-12': [data.minimaCorrectionTable.altitudes[12], 'ft'],
+        'minima-alt-13': [data.minimaCorrectionTable.altitudes[13], 'ft'],
+        'minima-alt-14': [data.minimaCorrectionTable.altitudes[14], 'ft'],
+        'minima-corr-0-0': [data.minimaCorrectionTable.values[0][0],'ft'],
+        'minima-corr-1-0': [data.minimaCorrectionTable.values[1][0],'ft'],
+        'minima-corr-2-0': [data.minimaCorrectionTable.values[2][0],'ft'],
+        'minima-corr-3-0': [data.minimaCorrectionTable.values[3][0],'ft'],
+        'minima-corr-4-0': [data.minimaCorrectionTable.values[4][0],'ft'],
+        'minima-corr-5-0': [data.minimaCorrectionTable.values[5][0],'ft'],
+        'minima-corr-6-0': [data.minimaCorrectionTable.values[6][0],'ft'],
+        'minima-corr-7-0': [data.minimaCorrectionTable.values[7][0],'ft'],
+        'minima-corr-8-0': [data.minimaCorrectionTable.values[8][0],'ft'],
+        'minima-corr-9-0': [data.minimaCorrectionTable.values[9][0],'ft'],
+        'minima-corr-10-0': [data.minimaCorrectionTable.values[10][0],'ft'],
+        'minima-corr-11-0': [data.minimaCorrectionTable.values[11][0],'ft'],
+        'minima-corr-12-0': [data.minimaCorrectionTable.values[12][0],'ft'],
+        'minima-corr-13-0': [data.minimaCorrectionTable.values[13][0],'ft'],
+        'minima-corr-14-0': [data.minimaCorrectionTable.values[14][0],'ft'],
+        'minima-corr-0-1': [data.minimaCorrectionTable.values[0][1],'ft'],
+        'minima-corr-1-1': [data.minimaCorrectionTable.values[1][1],'ft'],
+        'minima-corr-2-1': [data.minimaCorrectionTable.values[2][1],'ft'],
+        'minima-corr-3-1': [data.minimaCorrectionTable.values[3][1],'ft'],
+        'minima-corr-4-1': [data.minimaCorrectionTable.values[4][1],'ft'],
+        'minima-corr-5-1': [data.minimaCorrectionTable.values[5][1],'ft'],
+        'minima-corr-6-1': [data.minimaCorrectionTable.values[6][1],'ft'],
+        'minima-corr-7-1': [data.minimaCorrectionTable.values[7][1],'ft'],
+        'minima-corr-8-1': [data.minimaCorrectionTable.values[8][1],'ft'],
+        'minima-corr-9-1': [data.minimaCorrectionTable.values[9][1],'ft'],
+        'minima-corr-10-1': [data.minimaCorrectionTable.values[10][1],'ft'],
+        'minima-corr-11-1': [data.minimaCorrectionTable.values[11][1],'ft'],
+        'minima-corr-12-1': [data.minimaCorrectionTable.values[12][1],'ft'],
+        'minima-corr-13-1': [data.minimaCorrectionTable.values[13][1],'ft'],
+        'minima-corr-14-1': [data.minimaCorrectionTable.values[14][1],'ft'],
+        'minima-corr-0-2': [data.minimaCorrectionTable.values[0][2],'ft'],
+        'minima-corr-1-2': [data.minimaCorrectionTable.values[1][2],'ft'],
+        'minima-corr-2-2': [data.minimaCorrectionTable.values[2][2],'ft'],
+        'minima-corr-3-2': [data.minimaCorrectionTable.values[3][2],'ft'],
+        'minima-corr-4-2': [data.minimaCorrectionTable.values[4][2],'ft'],
+        'minima-corr-5-2': [data.minimaCorrectionTable.values[5][2],'ft'],
+        'minima-corr-6-2': [data.minimaCorrectionTable.values[6][2],'ft'],
+        'minima-corr-7-2': [data.minimaCorrectionTable.values[7][2],'ft'],
+        'minima-corr-8-2': [data.minimaCorrectionTable.values[8][2],'ft'],
+        'minima-corr-9-2': [data.minimaCorrectionTable.values[9][2],'ft'],
+        'minima-corr-10-2': [data.minimaCorrectionTable.values[10][2],'ft'],
+        'minima-corr-11-2': [data.minimaCorrectionTable.values[11][2],'ft'],
+        'minima-corr-12-2': [data.minimaCorrectionTable.values[12][2],'ft'],
+        'minima-corr-13-2': [data.minimaCorrectionTable.values[13][2],'ft'],
+        'minima-corr-14-2': [data.minimaCorrectionTable.values[14][2],'ft'],
+        'minima-corr-0-3': [data.minimaCorrectionTable.values[0][3],'ft'],
+        'minima-corr-1-3': [data.minimaCorrectionTable.values[1][3],'ft'],
+        'minima-corr-2-3': [data.minimaCorrectionTable.values[2][3],'ft'],
+        'minima-corr-3-3': [data.minimaCorrectionTable.values[3][3],'ft'],
+        'minima-corr-4-3': [data.minimaCorrectionTable.values[4][3],'ft'],
+        'minima-corr-5-3': [data.minimaCorrectionTable.values[5][3],'ft'],
+        'minima-corr-6-3': [data.minimaCorrectionTable.values[6][3],'ft'],
+        'minima-corr-7-3': [data.minimaCorrectionTable.values[7][3],'ft'],
+        'minima-corr-8-3': [data.minimaCorrectionTable.values[8][3],'ft'],
+        'minima-corr-9-3': [data.minimaCorrectionTable.values[9][3],'ft'],
+        'minima-corr-10-3': [data.minimaCorrectionTable.values[10][3],'ft'],
+        'minima-corr-11-3': [data.minimaCorrectionTable.values[11][3],'ft'],
+        'minima-corr-12-3': [data.minimaCorrectionTable.values[12][3],'ft'],
+        'minima-corr-13-3': [data.minimaCorrectionTable.values[13][3],'ft'],
+        'minima-corr-14-3': [data.minimaCorrectionTable.values[14][3],'ft'],
+        'minima-corr-0-4': [data.minimaCorrectionTable.values[0][4],'ft'],
+        'minima-corr-1-4': [data.minimaCorrectionTable.values[1][4],'ft'],
+        'minima-corr-2-4': [data.minimaCorrectionTable.values[2][4],'ft'],
+        'minima-corr-3-4': [data.minimaCorrectionTable.values[3][4],'ft'],
+        'minima-corr-4-4': [data.minimaCorrectionTable.values[4][4],'ft'],
+        'minima-corr-5-4': [data.minimaCorrectionTable.values[5][4],'ft'],
+        'minima-corr-6-4': [data.minimaCorrectionTable.values[6][4],'ft'],
+        'minima-corr-7-4': [data.minimaCorrectionTable.values[7][4],'ft'],
+        'minima-corr-8-4': [data.minimaCorrectionTable.values[8][4],'ft'],
+        'minima-corr-9-4': [data.minimaCorrectionTable.values[9][4],'ft'],
+        'minima-corr-10-4': [data.minimaCorrectionTable.values[10][4],'ft'],
+        'minima-corr-11-4': [data.minimaCorrectionTable.values[11][4],'ft'],
+        'minima-corr-12-4': [data.minimaCorrectionTable.values[12][4],'ft'],
+        'minima-corr-13-4': [data.minimaCorrectionTable.values[13][4],'ft'],
+        'minima-corr-14-4': [data.minimaCorrectionTable.values[14][4],'ft'],
 
         //CLIMB PERFORMANCE OUTPUTS
-
         // ROC Vy
         'roc-vy-w1-alt1-temp1': [Math.floor(data.rocVy.data['1D1'][ROCVyTemperatures[0]+'-raw'][0]), 'fpm'],
         'roc-vy-w1-alt1-temp2': [Math.floor(data.rocVy.data['1D1'][ROCVyTemperatures[1]+'-raw'][0]), 'fpm'],
@@ -1015,6 +1108,12 @@ function toPressureAltitude(ta)
     return ta - getPressureCorrection();
 }
 
+function toISAdeviation(temp, elev)
+{
+    let StdLapseRate = 0.00198
+    return temp + Math.round(elev * StdLapseRate) - 15;
+}
+
 function toDegrees(angle)
 {
     return angle * (180 / Math.PI);
@@ -1438,6 +1537,34 @@ function calculateTempCorrectionToMinima(pe, isaDeviation, daMda) {
 
     return 0.04 * (isaDeviation/-10) * (toPressureAltitude(daMda) - pe)
     //In cases where the measured temperature at the station is higher than -15C, correcting the height by 4% for every 10C below ISA is accaptable by ICAO, regardless of the elevation, but in my opinion, any of the other methods are preferable
+}
+
+//WIP
+function generateTempCorrectionTable(elevation, temp, daMda) {
+    
+    var altitudes = [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1500, 2000, 2500, 3000]
+    altitudes.push(daMda)
+    altitudes.sort(function(a,b){
+        return a - b
+    })
+
+    var temps = [temp-4, temp-2, temp, temp+2, temp+4]
+
+    var correctionTableArray = []
+
+    altitudes.forEach(function(a){
+        var array = []
+        temps.forEach(function(t){
+            array.push(Math.ceil(calculateTempCorrectionToMinima(toPressureAltitude(elevation),toISAdeviation(t,elevation),toPressureAltitude(a))))
+        })
+        correctionTableArray.push(array)
+    })
+
+    return {
+        'altitudes': altitudes,
+        'temps': temps,
+        'values': correctionTableArray
+    }
 }
 
 //Climb speeds
@@ -1927,6 +2054,7 @@ function calculateAll(pe, pa, msa, isaDeviation, tom, daMda)
         'takeoff': takeoffCorrectedCalculations(pe, isaDeviation, tom, null),
         'landing': landingCorrectedCalculations(pe, isaDeviation, tom, null),
         'tempCorrectionToMinima': calculateTempCorrectionToMinima(pe, isaDeviation, daMda),
+        'minimaCorrectionTable': generateTempCorrectionTable(elevationInput, temperatureInput, daMda),
 
         //Climb performance numbers, all with max cont. power setting and gear up
         //Takeoff Vy (flaps takeoff)
@@ -1970,6 +2098,8 @@ function calculateAll(pe, pa, msa, isaDeviation, tom, daMda)
     };
 
     data['ASDR'] = calculateASDR(data['takeoff'], data['landing'])
+
+    console.log(generateTempCorrectionTable(pe,isaDeviation, daMda))
 
     return data;
 }
