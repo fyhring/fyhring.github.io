@@ -868,7 +868,7 @@ function calculateFromInputs()
 
     //Temperature correction to Minima DA/MDA
     //$('.minima-temp-correction-general-equation').html(MathJax.tex2svg('correction = {-ISA deviaton \\over \\tfrac{1.98^\\circ C}{1000ft}} \\cdot \\ln\\left(1+{\\tfrac{1.98^\\circ C}{1000ft} \\cdot DH/MDH_{pa} \\over 273 ^\\circ _{C \\rightarrow K} + 15^\\circ C + \\tfrac{1.98^\\circ C}{1000ft} \\cdot Elevation_{pa} }\\right)', {display: true}));
-    $('.minima-temp-correction-equation').html(MathJax.tex2svg('{'+tempIsaDeviation*-1+'^\\circ C \\over \\tfrac{1.98^\\circ C}{1000ft}} \\cdot \\ln\\left(1+{\\tfrac{1.98^\\circ C}{1000ft} \\cdot '+takeOffLandingUIPairs['minima-ph-uncorrected'][0]+'ft \\over 273 ^\\circ _{C \\rightarrow K} + 15^\\circ C + \\tfrac{1.98^\\circ C}{1000ft} \\cdot '+takeOffLandingUIPairs['env-pressure-elevation'][0]+'ft }\\right) = '+takeOffLandingUIPairs['tempCorrectionToMinima'][0]+'ft', {display: true}));
+    $('.minima-temp-correction-equation').html(MathJax.tex2svg('{'+tempIsaDeviation*-1+'^\\circ C \\over \\tfrac{1.98^\\circ C}{1000ft}} \\cdot \\ln\\left(1+{\\tfrac{1.98^\\circ C}{1000ft} \\cdot '+takeOffLandingUIPairs['minima-ph-uncorrected'][0]+'ft \\over 273 ^\\circ _{C \\rightarrow K} + 15^\\circ C + \\tfrac{1.98^\\circ C}{1000ft} \\cdot '+takeOffLandingUIPairs['env-elevation'][0]+'ft }\\right) = '+takeOffLandingUIPairs['tempCorrectionToMinima'][0]+'ft', {display: true}));
     $('.minima-temp-correction-summing-equation').html(MathJax.tex2svg(takeOffLandingUIPairs['minima-uncorrected'][0]+'ft + '+takeOffLandingUIPairs['tempCorrectionToMinima'][0]+'ft = '+takeOffLandingUIPairs['minima-corrected'][0]+'ft', {display: true}));
 
     // WIP
@@ -1526,7 +1526,7 @@ function calculateTempCorrectionToMinima(pe, isaDeviation, daMda) {
 
     let StdLapseRate = 0.00198 // 0.00198 degrees per foot, equivalent to 1.98 degrees per 1000ft
 
-    return ((isaDeviation * -1)/StdLapseRate)*Math.log(1+(StdLapseRate*(toPressureAltitude(daMda)-pe))/(273+15+StdLapseRate*pe))
+    return ((isaDeviation * -1)/StdLapseRate)*Math.log(1+(StdLapseRate*(toPressureAltitude(daMda)-pe))/(273+15+StdLapseRate*toTrueAltitude(pe)))
     //This is the most accurate formula mentioned in ICAO PANS-OPS, Volume III, Section2, Chapter 4, 4.3, “Temperature correction”
     //The formula is devised by the Engineering Sciences Data Unit (ESDU), and published in their publication "Performance", volume 2, as item number 77022
 
@@ -1539,10 +1539,9 @@ function calculateTempCorrectionToMinima(pe, isaDeviation, daMda) {
     //In cases where the measured temperature at the station is higher than -15C, correcting the height by 4% for every 10C below ISA is accaptable by ICAO, regardless of the elevation, but in my opinion, any of the other methods are preferable
 }
 
-//WIP
 function generateTempCorrectionTable(elevation, temp, daMda) {
     
-    var altitudes = [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1500, 2000, 2500, 3000]
+    var altitudes = [200, 300, 400, 500, 600, 700, 800, 900, 1000, 1500, 2000, 2500, 3000, 3500]
     altitudes.push(daMda)
     altitudes.sort(function(a,b){
         return a - b
@@ -1555,7 +1554,7 @@ function generateTempCorrectionTable(elevation, temp, daMda) {
     altitudes.forEach(function(a){
         var array = []
         temps.forEach(function(t){
-            array.push(Math.ceil(calculateTempCorrectionToMinima(toPressureAltitude(elevation),toISAdeviation(t,elevation),toPressureAltitude(a))))
+            array.push(Math.ceil(calculateTempCorrectionToMinima(toPressureAltitude(elevation),toISAdeviation(t,elevation),a)))
         })
         correctionTableArray.push(array)
     })

@@ -192,11 +192,11 @@
             <h6>Temperature correction to minimum altitude</h6>
             <ul>
                 <li>The following formula is used to calculae the correction to be applied to the DA/MDA ( *$x_{pa}$ -> as pressure altitude):<br>
-                $$correction = {-ISA deviaton \over \tfrac{1.98^\circ C}{1000ft}} \cdot \ln\left(1+{\tfrac{1.98^\circ C}{1000ft} \cdot DH/MDH \over 273 ^\circ _{C \rightarrow K} + 15^\circ C + \tfrac{1.98^\circ C}{1000ft} \cdot Elevation_{pa} }\right)$$
+                $$correction = {-ISA deviaton \over \tfrac{1.98^\circ C}{1000ft}} \cdot \ln\left(1+{\tfrac{1.98^\circ C}{1000ft} \cdot DH/MDH \over 273 ^\circ _{C \rightarrow K} + 15^\circ C + \tfrac{1.98^\circ C}{1000ft} \cdot Elevation }\right)$$
                 We use this formula, because it is the most versatile and accurate formula referenced by <em>ICAO PANS-OPS, Volume III, Section2, Chapter 4, 4.3, “Temperature correction”</em>, which is the document referenced in doc8168<br><br></li>
 
                 <li>Another forumla, which is referenced in <em>ICAO PANS-OPS, Volume III, Section2, Chapter 4, 4.3, “Temperature correction”</em>, but not used on this site is:<br>
-                $$correction = DH/MDH \cdot \left( { -ISA deviation \over Temp_{SeaLevel_{^\circ K}} - 0.5 \cdot \tfrac{1.98^\circ C}{1000ft} \cdot DA/MDA_{pa} } \right)$$
+                $$correction = DH/MDH \cdot \left( { -ISA deviation \over Temp_{SeaLevel_{^\circ K}} - 0.5 \cdot \tfrac{1.98^\circ C}{1000ft} \cdot DA/MDA } \right)$$
                 This formula is (according to ICAO) accurate to within 5% of the actual value, for pressure-elevations up to 10.000ft and for DH/MDH's up to 5.000ft, which is also the range of heights where it is approved for use<br>
                 This formula, when applied to an aerodrome at sea level, is also the basis for <em>ICAO PANS-OPS, Volume III, Section2, Chapter 4, table 2-4-1b</em>, where the values have been rounded up to the nearest 10ft. When within limits, this formula yeilds a slightly larger correction than the first one.<br><br></li>
 
@@ -1809,6 +1809,7 @@
                             </tr>
                         </table>
                     </div>
+                    <span class="bold">Correction table valid for elevation </span><span class="bold env-elevation"></span><span class="bold">, altitudes AMSL</span>
                     <div class="result-weight-sector">
                         <table class="table table-sm">
                             <thead>
