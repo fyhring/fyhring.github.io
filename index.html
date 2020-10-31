@@ -190,8 +190,9 @@
                     $$value_{actual} = {value_{heavy} - value_{light} \over mass_{heavy} - mass_{light}} \cdot (mass_{actual} - mass_{light})+value_{light}$$</li>
             </ul>
             <h6>Temperature correction to minimum altitude</h6>
+            <small>*At the time of this update, GreyBird has not published a standard procedure for temperature corrections, so these calculations are provided for reference only</small>
             <ul>
-                <li>The following formula is used to calculae the correction to be applied to the DA/MDA ( *$x_{pa}$ -> as pressure altitude):<br>
+                <li>The following formula is used to calculae the correction to be applied to the DA/MDA:<br>
                 $$correction = {-ISA deviaton \over \tfrac{1.98^\circ C}{1000ft}} \cdot \ln\left(1+{\tfrac{1.98^\circ C}{1000ft} \cdot DH/MDH \over 273 ^\circ _{C \rightarrow K} + 15^\circ C + \tfrac{1.98^\circ C}{1000ft} \cdot Elevation }\right)$$
                 We use this formula, because it is the most versatile and accurate formula referenced by <em>ICAO PANS-OPS, Volume III, Section2, Chapter 4, 4.3, “Temperature correction”</em>, which is the document referenced in doc8168<br><br></li>
 
@@ -1949,6 +1950,16 @@
                     <div class="minima-temp-correction-equation"></div>
                     <hr>
                     <div class="minima-temp-correction-summing-equation"></div>
+                    <div style="margin-top: 95px;">&nbsp;</div>
+                    <p>Notes in using the provided table:</p>
+                    <ul>
+                        <li>The values has been calculated by use of the most precise (and complicated) formula available in ICAO doc 8168, Vol III, Chapter 4 and it is not expected to be identical to Table 2-4-1b</li>
+                        <li>According to ICAO doc8168 vol III chapter 4, it is appropriate to disregard any correction less than 20% of the Minimum Obstacle Clearance (MOC)*</li>
+                        <li>At the time of this update, GreyBird has not published a standard procedure for temperature corrections, so these calculations are provided for reference only</li>
+                        <li>The altitudes listed are AMSL, and not AGL, like in Table 2-4-1b</li>
+                        <li>The values are valid for any QNH, but only for the selected elevation and listed temperatures</li>
+                    </ul>
+                    <p>*e.g. MOC for circling 295ft &#8594; 20% of 295 is 59 &#8594; corrections less than 59ft can be disregarded for MDA in circling approach</p>
                 </div>
             </div>
             <hr class="screen-only" />
