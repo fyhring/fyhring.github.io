@@ -1717,6 +1717,16 @@
                                     <td><em>According to AFM for T/O</em></td>
                                     <td class="asdr-corrections-wind">-</td>
                                 </tr>
+                                <tr class="correction-paved-rwy-row">
+                                    <td class="">Paved RWY</td>
+                                    <td><em>According to AFM for T/O</em></td>
+                                    <td class="asdr-corrections-paved-to">-</td>
+                                </tr>
+                                <tr class="correction-paved-rwy-row">
+                                    <td class="">Paved RWY</td>
+                                    <td><em>According to AFM for Landing</em></td>
+                                    <td class="asdr-corrections-paved-ldg">-</td>
+                                </tr>
                                 <tr class="table-secondary">
                                     <td colspan="2">Sum</td>
                                     <td class="asdr-correction-sum-before-safety">-</td>
@@ -1749,6 +1759,8 @@
                     <div style="margin-top: 35px;">&nbsp;</div>
                     <div class="asdr-ldg-spd-equation"></div>
                     <div class="asdr-wind-correction-equation"></div>
+                    <div class="to-correction-paved-equation"></div>
+                    <div class="ldg-correction-paved-equation"></div>
                     <div style="margin-top: -20px;">&nbsp;</div>
                     <div class="asdr-safety-factor-equation"></div>
                     <div class="asdr-time-correction-equation"></div>
@@ -2819,7 +2831,7 @@
     </script>
     <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
     <script>
-        var version = 2.91;
+        var version = 2.10;
 
         var scripts = [
             './polyfill.js',
