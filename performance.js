@@ -355,7 +355,7 @@ function calculateFromInputs()
         'to-corrections-sloped-rwy': [Math.ceil(data.takeoff.corrections.slopeCorrection), 'm'],
         'to-corrections-soft-rwy': [Math.ceil(data.takeoff.corrections.softSfcCorrection), 'm'],
         'to-corrections-windlabel': [(Math.abs(getWindComponents().head)),'kts '+(getWindComponents().head > 0 ? 'headwind' : 'tailwind')],
-        'to-corrections-wind': [Math.ceil(data.takeoff.corrections.windCorrection), 'm'],
+        'to-corrections-wind': [floorOrCeil(data.takeoff.corrections.windCorrection), 'm'],
         'to-corrections-combined': [Math.ceil(data.takeoff.corrections.combined), 'm'],
         //Corrected distances
         'to-g-corrected': [Math.ceil(data.takeoff.uncorrectedGround.data['3D']['result'] + data.takeoff.corrections.combined), 'm'],
@@ -408,7 +408,7 @@ function calculateFromInputs()
         'ldg-corrections-sloped-rwy': [Math.ceil(data.landing.corrections.slopeCorrection), 'm'],
         'ldg-corrections-soft-rwy': [Math.ceil(data.landing.corrections.softSfcCorrection), 'm'],
         'ldg-corrections-windlabel': [Math.abs(getWindComponents().head),'kts '+(getWindComponents().head > 0 ? 'headwind' : 'tailwind')],
-        'ldg-corrections-wind': [Math.ceil(data.landing.corrections.windCorrection), 'm'],
+        'ldg-corrections-wind': [floorOrCeil(data.landing.corrections.windCorrection), 'm'],
         'ldg-corrections-app-spd': [Math.ceil(data.landing.corrections.appSpeedCorrection), 'm'],
         'ldg-corrections-combined': [floorOrCeil(data.landing.corrections.combined), 'm'],
         //Corrected distances
@@ -422,7 +422,9 @@ function calculateFromInputs()
         // ASDR
         'asdr-uncorrected': [Math.ceil(data.ASDR.uncorrected), 'm'],
         'asdr-correction-ldg-spd': [Math.ceil(data.ASDR.corrections.ldgCorrection), 'm'],
-        'asdr-corrections-wind': [Math.ceil(data.ASDR.corrections.wind), 'm'],
+        'asdr-corrections-wind': [floorOrCeil(data.ASDR.corrections.wind), 'm'],
+        'asdr-corrections-paved-to': [Math.ceil(data.ASDR.corrections.toPavedRwyCorrection), 'm'],
+        'asdr-corrections-paved-ldg': [Math.ceil(data.ASDR.corrections.ldgPavedRwyCorrection), 'm'],
         'asdr-correction-sum-before-safety': [Math.ceil(data.ASDR.beforeSafetyCorrection), 'm'],
         'asdr-correction-safety-factor': [Math.ceil(data.ASDR.corrections.safetyFactor), 'm'],
         'asdr-correction-sum-before-time': [Math.ceil(data.ASDR.beforeTimeCorrection), 'm'],
@@ -1838,9 +1840,9 @@ function takeoffCorrectedCalculations(pa, isaDeviation, tom, slope)
         //Correction for wind component, according to AFM
         var windComponents = getWindComponents();
         if (windComponents.head > 0) {                           //If there is headwind
-            windCorrection = windComponents.head * -2.5;         //Remove 2,5m per kt
+            windCorrection = floorOrCeil(windComponents.head * -2.5);         //Remove 2,5m per kt
         } else {                                                 //Else (If there is tailwind)
-            windCorrection = (windComponents.head * -1) * 10;    //Add 10m per kt
+            windCorrection = floorOrCeil((windComponents.head * -1) * 10);    //Add 10m per kt
         }    
     }
     
@@ -1848,14 +1850,14 @@ function takeoffCorrectedCalculations(pa, isaDeviation, tom, slope)
     //Correction for paved runway, according to AFM
     var pavedRwyCorrection = 0;
     if (usePavedRWY) {                                       //If runway is paved
-        pavedRwyCorrection = groundroll.result * -0.06       //Remove 6% of Groundroll
+        pavedRwyCorrection = floorOrCeil(groundroll.result * -0.06)       //Remove 6% of Groundroll
     }
 
     var slopeCorrection = 0;
     if (useSlope) {
         //Correction for Runway slope, according to AFM
         if (slope > 0) {
-            slopeCorrection = slope / 0.01 * 0.05 * groundroll.result;  //Add 5% of groundroll per 1% upslope
+            slopeCorrection = floorOrCeil(slope / 0.01 * 0.05 * groundroll.result);  //Add 5% of groundroll per 1% upslope
         }    
     }
     else {
@@ -1866,7 +1868,7 @@ function takeoffCorrectedCalculations(pa, isaDeviation, tom, slope)
     //Correction for soft surface, according to GreyBird procedure
     var softSfcCorrection = 0;
     if (useSoftSfc) {                                       //If the surface is soft
-        softSfcCorrection = groundroll.result * 0.25;       //Add 25% of groundroll
+        softSfcCorrection = floorOrCeil(groundroll.result * 0.25);       //Add 25% of groundroll
     }
 
     /*
@@ -1911,10 +1913,10 @@ function landingCorrectedCalculations(pa, isaDeviation, tom, slope) {
         //Correction for wind component, according to AFM
         var windComponents = getWindComponents()
         if (windComponents.head > 0) {                          //If there is headwind
-            windCorrection = windComponents.head * -5;          //Remove 5m per kt
+            windCorrection = floorOrCeil(windComponents.head * -5);          //Remove 5m per kt
         }
         else {                                                  //Else (If there is tailwind)
-            windCorrection = (windComponents.head * -1) * 11;   //Add 11m per kt
+            windCorrection = floorOrCeil((windComponents.head * -1) * 11);   //Add 11m per kt
         }
     }
 
@@ -1927,21 +1929,21 @@ function landingCorrectedCalculations(pa, isaDeviation, tom, slope) {
     //Correction for paved runway, according to AFM
     var pavedRwyCorrection = 0;
     if (usePavedRWY) {                                       //If runway is paved
-        pavedRwyCorrection = groundroll.result * -0.02       //Remove 2% of Groundroll
+        pavedRwyCorrection = floorOrCeil(groundroll.result * -0.02)       //Remove 2% of Groundroll
     }
 
     var slopeCorrection = 0;
     if (useSlope) {
         //Correction for Runway slope, according to GreyBird Procedures
         if (slope < 0) {                                                //if there is downslope
-            slopeCorrection = slope / 0.02 * 0.10 * groundroll.result;  //Add 10% of groundroll per 2% upslope
-        } 
+            slopeCorrection = floorOrCeil(slope / 0.02 * 0.10 * groundroll.result);  //Add 10% of groundroll per 2% upslope
+        }
     }
     
     //Correction for soft surface or snow, according to GreyBird procedure
     var softSfcCorrection = 0;
     if (useSoftSfc || useSnowCorrection) {                  //If the surface is soft, or there is snow
-        softSfcCorrection = groundroll.result * 0.25;       //Add 25% of groundroll
+        softSfcCorrection = floorOrCeil(groundroll.result * 0.25);       //Add 25% of groundroll
     }
 
     var corrections = {
@@ -1992,6 +1994,21 @@ function calculateASDR(takeoff, landing)
         ASDR = ASDR + windCorrection;
     }
 
+    // T/O Correction for paved runway, according to AFM
+    var toPavedRwyCorrection = 0;
+    if (usePavedRWY) {                                                        //If runway is paved
+        toPavedRwyCorrection = floorOrCeil(takeoff.uncorrectedGround.result * -0.06)       //Remove 6% of Groundroll
+    }
+    ASDR = ASDR + toPavedRwyCorrection;
+
+    //Landing Correction for paved runway, according to AFM
+    var ldgPavedRwyCorrection = 0;
+    if (usePavedRWY) {                                                         //If runway is paved
+        ldgPavedRwyCorrection = floorOrCeil(landing.uncorrectedGround.result * -0.02)       //Remove 2% of Groundroll
+    }
+    ASDR = ASDR + ldgPavedRwyCorrection;
+
+
     // Safety Factor
     var beforeSafetyASDR = ASDR;
     var safetyFactor = ASDR * 0.25;
@@ -2010,6 +2027,8 @@ function calculateASDR(takeoff, landing)
         'beforeSafetyCorrection': beforeSafetyASDR,
         'corrections': {
             'ldgCorrection': ldgGRCorrection,
+            'toPavedRwyCorrection': toPavedRwyCorrection,
+            'ldgPavedRwyCorrection': ldgPavedRwyCorrection,
             'wind': windCorrection,
             'safetyFactor': safetyFactor,
             'timeFactor': timeFactor
