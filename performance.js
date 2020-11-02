@@ -2117,7 +2117,7 @@ function calculateAll(pe, pa, msa, isaDeviation, tom, daMda)
 
     data['ASDR'] = calculateASDR(data['takeoff'], data['landing'])
 
-    console.log(generateTempCorrectionTable(pe,isaDeviation, daMda))
+    // console.log(generateTempCorrectionTable(pe,isaDeviation, daMda))
 
     return data;
 }
