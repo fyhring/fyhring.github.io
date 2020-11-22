@@ -715,7 +715,6 @@ function calculateFromInputs()
     };
     
     updateUIValues(takeOffLandingUIPairs);
-    // console.log(data.rocVySe.data);
 
 
     /**********************
@@ -2131,12 +2130,5 @@ function calculateAll(pe, pa, msa, isaDeviation, tom, daMda)
 
     data['ASDR'] = calculateASDR(data['takeoff'], data['landing'])
 
-    console.log(generateTempCorrectionTable(pe,isaDeviation, daMda))
-
     return data;
 }
-
-/*
-KNOWN BUGS:
-
-*/
