@@ -773,7 +773,7 @@ function calculateFromInputs()
 
     
     if (useFL) {
-        $('.env-true-altitude-roc-equation').html(MathJax.tex2svg('(FL'+(data.env.cruiseAlt*100)+' - '+data.env.elevation+'ft) \\cdot \\frac{2}{3} + '+data.env.elevation+'ft = '+Math.round(rocAltitude)+'ft'));
+        $('.env-true-altitude-roc-equation').html(MathJax.tex2svg('(FL'+data.env.cruiseAlt+' - '+data.env.elevation+'ft) \\cdot \\frac{2}{3} + '+data.env.elevation+'ft = '+Math.round(rocAltitude)+'ft'));
     } else {
         $('.env-true-altitude-roc-equation').html(MathJax.tex2svg('('+data.env.cruiseAlt+'ft - '+data.env.elevation+'ft) \\cdot \\frac{2}{3} + '+data.env.elevation+'ft = '+Math.round(rocAltitude)+'ft'));
     }
