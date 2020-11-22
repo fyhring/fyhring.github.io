@@ -768,11 +768,11 @@ function calculateFromInputs()
     }
 
     //Enviromental
-    $('.env-pressure-elevation-equation').html(MathJax.tex2svg(''+elevationInput+'ft'+pc+'='+pressureElevation+'ft'));
+    $('.env-pressure-elevation-equation').html(MathJax.tex2svg(''+data.env.elevation+'ft'+pc+'='+pressureElevation+'ft'));
     if (useFL) {
-        $('.env-pressure-altitude-cruise-equation').html(MathJax.tex2svg(''+cruiseInput*100+'ft '+pcInv+'='+toTrueAltitude(pressureAltitude)+'ft'));
+        $('.env-pressure-altitude-cruise-equation').html(MathJax.tex2svg(''+data.env.cruiseAlt*100+'ft '+pcInv+'='+toTrueAltitude(pressureAltitude)+'ft'));
     } else {
-        $('.env-pressure-altitude-cruise-equation').html(MathJax.tex2svg(''+cruiseInput+'ft'+pc+'='+pressureAltitude+'ft'));
+        $('.env-pressure-altitude-cruise-equation').html(MathJax.tex2svg(''+data.env.cruiseAlt+'ft'+pc+'='+pressureAltitude+'ft'));
     }
 
     
