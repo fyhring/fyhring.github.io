@@ -135,8 +135,8 @@ function calculateFromInputs()
         pressureElevation: pressureElevation,
         cruiseAlt: cruiseInput,
         cruisePressureAltitude: pressureAltitude,
-        rocAlt: Math.floor(rocAltitude),
-        rocPressureAlt: Math.floor(rocPressureAlt)
+        rocAlt: Math.round(rocAltitude),
+        rocPressureAlt: Math.round(rocPressureAlt)
     };
 
     var temperatures = Object.keys(data.takeoff.uncorrectedGround.data['1D1']);
@@ -303,7 +303,8 @@ function calculateFromInputs()
         'env-elevation': [data.env.elevation, 'ft'],
         'env-pressure-elevation': [data.env.pressureElevation, 'ft'],
         'env-cruise-alt': (!useFL ? [data.env.cruiseAlt, 'ft'] : ['FL'+ data.env.cruiseAlt, '']),
-        'env-cruise-pressure-alt': [data.env.cruisePressureAltitude, 'ft'],
+        'env-true-or-pressure-alt': (!useFL ? ['Cruise Pressure Alt.',''] : ['Cruise True Alt.','']),
+        'env-cruise-pressure-alt': (!useFL ? [data.env.cruisePressureAltitude, 'ft'] : [toTrueAltitude(data.env.cruisePressureAltitude), 'ft']),
         'env-roc-alt': [data.env.rocAlt, 'ft'],
         'env-pressure-roc-alt': [Math.round(data.env.rocPressureAlt), 'ft'],
         'env-headOrTail-component': [getWindComponents().headOrTail+' component',''],
@@ -714,7 +715,6 @@ function calculateFromInputs()
     };
     
     updateUIValues(takeOffLandingUIPairs);
-    // console.log(data.rocVySe.data);
 
 
     /**********************
@@ -755,20 +755,33 @@ function calculateFromInputs()
     $('.env-pressure-correction-equation').html(MathJax.tex2svg('('+STD_PRESSURE+'hPa - '+pressureInput+'hPa) \\cdot '+STD_HECTOPASCAL_HEIGHT+' \\tfrac{ft}{hPa} = '+getPressureCorrection()*-1+'ft'));
 
     var pc = '+0'
+    var pcInv = '-0'
 
     if (getPressureCorrection()*-1 >= 0){
         pc = '+'+(getPressureCorrection()*-1)+'ft'
+        pcInv = '-'+(getPressureCorrection()*-1)+'ft'
     }
     else {
         pc = '-'+getPressureCorrection()+'ft'
+        pcInv = '+'+(getPressureCorrection())+'ft'
     }
 
     //Enviromental
-    $('.env-pressure-elevation-equation').html(MathJax.tex2svg(''+elevationInput+'ft'+pc+'='+pressureElevation+'ft'));
-    $('.env-pressure-altitude-cruise-equation').html(MathJax.tex2svg(''+cruiseInput+'ft'+pc+'='+pressureAltitude+'ft'));
-    //the following equations is not used, but also not correct
-    $('.env-true-altitude-roc-equation').html(MathJax.tex2svg('('+pressureAltitude+'ft - '+pressureElevation+'ft) \\cdot \\frac{2}{3} + '+pressureElevation+'ft = '+rocPressureAlt+''));
-    $('.env-pressure-altitude-roc-equation').html(MathJax.tex2svg(''+Math.ceil(rocAltitude)+'ft'+pc+'='+Math.ceil(rocPressureAlt)+'ft'));
+    $('.env-pressure-elevation-equation').html(MathJax.tex2svg(''+data.env.elevation+'ft'+pc+'='+pressureElevation+'ft'));
+    if (useFL) {
+        $('.env-pressure-altitude-cruise-equation').html(MathJax.tex2svg(''+data.env.cruiseAlt*100+'ft '+pcInv+'='+toTrueAltitude(pressureAltitude)+'ft'));
+    } else {
+        $('.env-pressure-altitude-cruise-equation').html(MathJax.tex2svg(''+data.env.cruiseAlt+'ft'+pc+'='+pressureAltitude+'ft'));
+    }
+
+    
+    if (useFL) {
+        $('.env-true-altitude-roc-equation').html(MathJax.tex2svg('('+toTrueAltitude(data.env.cruisePressureAltitude)+'ft - '+data.env.elevation+'ft) \\cdot \\frac{2}{3} + '+data.env.elevation+'ft = '+Math.round(rocAltitude)+'ft'));
+    } else {
+        $('.env-true-altitude-roc-equation').html(MathJax.tex2svg('('+data.env.cruiseAlt+'ft - '+data.env.elevation+'ft) \\cdot \\frac{2}{3} + '+data.env.elevation+'ft = '+Math.round(rocAltitude)+'ft'));
+    }
+    $('.env-pressure-altitude-roc-equation').html(MathJax.tex2svg(''+Math.round(rocAltitude)+'ft'+pc+'='+Math.round(rocPressureAlt)+'ft'));
+    
     $('.env-headwind-component-equation').html(MathJax.tex2svg('cos( '+rwyDirInput+'^ \\circ -'+windDirInput+'^\\circ ) \\cdot '+windSpdInput+'kts = '+Math.abs(getWindComponents().head)+'kts'));
     $('.env-crosswind-component-equation').html(MathJax.tex2svg('sin( '+rwyDirInput+'^ \\circ -'+windDirInput+'^\\circ ) \\cdot '+windSpdInput+'kts = '+Math.abs(getWindComponents().cross)+'kts'));
 
@@ -2117,12 +2130,5 @@ function calculateAll(pe, pa, msa, isaDeviation, tom, daMda)
 
     data['ASDR'] = calculateASDR(data['takeoff'], data['landing'])
 
-    // console.log(generateTempCorrectionTable(pe,isaDeviation, daMda))
-
     return data;
 }
-
-/*
-KNOWN BUGS:
-
-*/
