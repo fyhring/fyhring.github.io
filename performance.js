@@ -1802,6 +1802,17 @@ function calculateOEIceiling(isaDeviation, tom) {
 
     // Set the service ceiling to be the correct one.
     serviceCeiling = interpolations[2][0];
+
+    // Fix when service ceiling is close to 7000. It can't fetch the 5th row and fails. Push dummy data.
+    if (interpolations.length != 5 && interpolations[3][0] == 7000) {
+        interpolations.push(['-', '-']);
+
+        // If row no 3 and 4 are equal, hide data in row no 4.
+        if (interpolations[2][0] == interpolations[3][0]) {
+            interpolations[3][0] = '-';
+            interpolations[3][1] = '-';
+        }
+    }
     
     //convert pressure altitude to true altitude
     var trueServiceCeiling = toTrueAltitude(serviceCeiling);
